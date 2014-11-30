@@ -9,6 +9,7 @@ ASSETS_DEBUG = config('ASSETS_DEBUG', default=False, cast=bool)
 SECRET_KEY = config('SECRET_KEY', default=False)
 
 GOOGLE_PLACES_API = config('GOOGLE_PLACES_API', default=None)
+GOOGLE_PLACES_API_PROXY = config('GOOGLE_PLACES_API_PROXY', default=None)
 
 TITLE = 'Find a Conference'
 LANGS = [

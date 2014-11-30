@@ -26,8 +26,6 @@ set_tooltips = ->
 center_content = ->
   view_port = $(window).height()
   page = $('nav').innerHeight() + $('main').innerHeight() + $('footer').innerHeight()
-  console.log view_port
-  console.log page
   if page < view_port
     diff = view_port - page
     margin = Math.round(diff / 2)
