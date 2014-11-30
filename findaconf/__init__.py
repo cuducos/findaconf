@@ -41,7 +41,7 @@ if not app.config['DEBUG']:
     handler.setLevel(logging.INFO)
     app.logger.setLevel(logging.INFO)
     app.logger.addHandler(handler)
-    app.logger.info('App {} started successfully.'.format(app.config['MINI_TITLE']))
+    app.logger.info('App {} started successfully.'.format(app.config['TITLE']))
 
 # load & register blueprints
 from blueprints.autocomplete import autocomplete_blueprint
