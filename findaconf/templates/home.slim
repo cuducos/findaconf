@@ -1,0 +1,50 @@
+- extends "base.slim"
+- block content
+
+  div.row
+    form.home.small-6.small-centered.columns action="{{ url_for('site.results') }}"
+
+      div.row
+        h2.small-12.columns
+          img src="{{ url_for('static', filename='imgs/findaconf_default.png') }}" alt="Find a conference!"
+
+      div.row
+        div.small-4.columns
+          label.right.inline for="query" Topics?
+        div.small-8.columns
+          input#query type="text" name="query" placeholder="Name of the conference or keywords..."
+
+      div.row
+        div.small-4.columns
+          label.right.inline When?
+        div.small-5.columns
+          select name="month"
+            option value="" Any month
+            - for month in months
+              option {{ month }}
+        div.small-3.columns
+          select name="year"
+            option value="" Any year
+            - for year in years
+              option {{ year }}
+
+      div.row
+        div.small-4.columns
+          label.right.inline Where?
+
+        div.small-8.columns
+          select name="region"
+            option value="" Anywhere
+            optgroup label="Continents"
+              - for continent in continents
+                option {{ continent }}
+            optgroup label="Countries"
+              - for country in countries
+                option {{ country }}
+
+          input#location type="text" name="location" placeholder="Any specific city or institution..."
+
+      div.row
+        div.small-12.columns.text-right
+          button.small type="submit"
+            |Find <i class="fi-play"></i>

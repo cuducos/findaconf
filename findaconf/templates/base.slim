@@ -1,0 +1,25 @@
+!5
+html lang="en" xmlns="http://www.w3.org/1999/html"
+
+  head
+    title {{ config['TITLE'] }}
+    meta http-equiv="x-ua-compatible" content="ie=edge"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    link rel="shortcut icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" type="image/x-icon"
+    link rel="icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}" type="image/x-icon"
+    link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Oxygen:400,300,700"
+
+    - assets "libs.css"
+      link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"
+    - assets "style"
+      link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"
+    - assets "libs.js"
+      %script type="text/javascript" src="{{ ASSET_URL }}"
+
+  body
+    - include '_header.slim'
+    main
+      @block content
+    - include '_footer.slim'
+    - assets "init"
+      %script type="text/javascript" src="{{ ASSET_URL }}"

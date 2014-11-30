@@ -1,0 +1,31 @@
+# Caches, compiled, compressed and databases
+*.db
+*.pyc
+findaconf/static/.webassets-cache
+findaconf/static/webassets-external
+findaconf/static/js
+findaconf/static/css
+
+# Bower
+bower_components
+
+# dev tools, ide etc.
+.env
+.floo
+.flooignore
+.idea
+.vagrant/
+.ropeproject
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.*~
+*~

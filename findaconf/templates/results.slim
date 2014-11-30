@@ -1,0 +1,110 @@
+- extends "base.slim"
+- block content
+
+  div.row
+
+    h1.result.small-12.columns 7 conferences matching your search:
+
+  / form
+
+  form.result.row action="{{ url_for('site.results') }}"
+
+    div.small-5.columns
+
+      div.row
+        div.small-2.columns
+          label.right.inline for="query" Topics?
+        div.small-10.columns
+          input#query type="text" name="query" placeholder="Name of the conference or keywords..." value="{{ query }}"
+
+      div.row
+        div.small-2.columns
+          label.right.inline When?
+        div.small-6.columns
+          select name="month"
+            option value="" Any month
+            - for m in months
+              - if m == month:
+                option selected="selected" {{ m }}
+              - else
+                option {{ m }}
+        div.small-4.columns
+          select name="year"
+            option value="" Any year
+            - for y in years
+              - if y == year
+                option selected="selected" {{ y }}
+              - else
+                option {{ y }}
+
+    div.small-5.columns
+
+      div.row
+        div.small-2.columns
+          label.right.inline Where?
+        div.small-10.columns
+          select name="region"
+            option value="" Anywhere
+            optgroup label="Continents"
+              - for c in continents
+                - if c == region
+                  option selected="selected" {{ c }}
+                - else
+                  option {{ c }}
+            optgroup label="Countries"
+              - for c in countries
+                - if c == region
+                  option selected="selected" {{ c }}
+                - else
+                  option {{ c }}
+
+          input#location type="text" name="location" placeholder="Any specific city or institution..." value="{{ location }}"
+
+    div.small-2.columns
+      button.small type="submit"
+        |Find <i class="fi-play"></i>
+
+  / results
+
+  - for conf in conferences
+    div.result.row
+
+      div.small-2.columns
+        img.cover alt="{{ conf.title }}" src="{{ conf.img }}?rand={{ conf.id }}"
+
+      div.small-8.columns
+        h2
+          a href="#" {{ conf.title }}
+        p.location
+          %i.fi-marker
+          |{{ conf.place }} &mdash; {{ conf.country }} <a href="#">map</a>
+        p.date
+          %i.fi-calendar
+          | From {{ conf.ini }} to {{ conf.end }}
+        p.deadline
+          %i.fi-page-export
+          |Submissions deadline: {{ conf.deadline }}
+        ul.keywords.inline-list
+          - for k in conf.keywords
+            li
+              a href="#"
+                %i.fi-price-tag
+                |{{ k }}
+
+      div.small-2.columns
+        ul.inline-list
+          - if conf.url
+            li
+              a.tooltipster href="#"
+                %i.fi-link
+                span Official website
+
+          - if conf.email
+            li
+              a.tooltipster href="#"
+                %i.fi-mail
+                span Send a message
+          li
+            a.tooltipster href="#"
+              %i.fi-plus
+              span More info

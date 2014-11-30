@@ -1,0 +1,33 @@
+libs.js:
+  output: js/libs.min.js
+  filters: rjsmin
+  contents:
+    - jquery/dist/jquery.js
+    - Autocompleter/src/jquery.autocompleter.js
+    - tooltipster/js/jquery.tooltipster.js
+
+init:
+  output: js/init.min.js
+  filters: coffeescript, rjsmin
+  contents: init.coffee
+
+libs.css:
+  output: css/libs.min.css
+  filters: cssmin
+  contents:
+    - foundation/css/normalize.css
+    - foundation/css/foundation.css
+    - foundation-icon-fonts/foundation-icons.css
+    - Autocompleter/src/jquery.autocompleter.css
+    - tooltipster/css/tooltipster.css
+
+style:
+  output: css/style.min.css
+  filters: pyscss, cssmin
+  contents:
+    - blocks.scss
+    - elements.scss
+    - modifiers.scss
+  depends:
+    - _colors.scss
+    - _mixins.scss

@@ -1,0 +1,21 @@
+nav
+  div.row
+    h1.small-6.columns
+      a href="{{ url_for('site.index') }}" Find a conference
+    ul
+      li
+        a href="#"
+          %i.fi-plus
+          |Add your conference
+      li
+        a href="#"
+          %i.fi-torso-female
+          |Sign in
+      li.lang
+        a href="#" title="English" EN
+        ul
+          - for lang in config['LANGS']
+            li
+              a href="#"
+                span {{ lang['code'] }}
+                |{{ lang['title'] }}

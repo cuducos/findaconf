@@ -1,0 +1,55 @@
+@mixin bg-cover() {
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+@mixin border-radius($pts) {
+  -moz-border-radius: $pts;
+  -webkit-border-radius: $pts;
+  border-radius: $pts;
+}
+
+@mixin border-radius-bottom($pts) {
+  -moz-border-radius-bottomleft: $pts;
+  -moz-border-radius-bottomright: $pts;
+  -webkit-border-bottom-left-radius: $pts;
+  -webkit-border-bottom-right-radius: $pts;
+  border-bottom-left-radius: $pts;
+  border-bottom-right-radius: $pts;
+}
+
+@mixin border-radius-top($pts) {
+  -moz-border-radius-topleft: $pts;
+  -moz-border-radius-topright: $pts;
+  -webkit-border-top-left-radius: $pts;
+  -webkit-border-top-right-radius: $pts;
+  border-top-left-radius: $pts;
+  border-top-right-radius: $pts;
+}
+
+@mixin box-shadow($color) {
+  -moz-box-shadow: 0 0 5px $color;
+  -webkit-box-shadow: 0 0 5px $color;
+  box-shadow: 0 0 5px $color;
+}
+
+@mixin font-size($sizeValue: 1.6) {
+  font-size: ($sizeValue * 10) + px;
+  font-size: $sizeValue + rem;
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
