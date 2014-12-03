@@ -2,11 +2,13 @@ $(document).ready ->
 
   $('#query').autocompleter {
     source: '/autocomplete/keywords',
+    offset: 'results',
     highlightMatches: true
   }
 
   $('#location').autocompleter {
-    source: '/autocomplete/googleplaces',
+    source: '/autocomplete/places',
+    offset: 'results',
     minLength: 4,
     highlightMatches: true
   }

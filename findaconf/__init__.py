@@ -14,6 +14,7 @@ app = SlimishApp('findaconf')
 app.config.from_object('config')
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # init manager
 manager = Manager(app)
