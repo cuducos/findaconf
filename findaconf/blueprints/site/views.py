@@ -59,10 +59,13 @@ def inject_fake_data():
     ]
     fh = open(app.config['BASEDIR'].child('contrib', 'countries.txt'))
     countries = [line.strip() for line in fh if line]
+    conferences = list()
+    while len(conferences) < 7:
+        conferences.append(Conf())
     return {
         'months': months,
         'years': [str(y) for y in range(2014, 2020)],
         'continents': sorted(continents),
         'countries': sorted(countries),
-        'conferences': [Conf()] * 7
+        'conferences': conferences
     }

@@ -31,7 +31,7 @@ class Conf:
     @staticmethod
     def _poster_generator():
         handler = open(app.config['BASEDIR'].child('contrib', 'posters.txt'))
-        posters = [p for p in handler if p]
+        posters = [p.strip() for p in handler if p]
         default = ['/poster.png'] * int(len(posters) / 3)
         return choice(default + posters)
 
