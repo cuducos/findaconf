@@ -5,13 +5,14 @@ from random import choice, randrange
 
 class Conf:
 
-    def __init__(self, id=None, title=None, img=None, place=None, country=None, ini=None, end=None, deadline=None,
-                 keywords=None, url=None, email=None):
+    def __init__(self):
+        unis = open(app.config['BASEDIR'].child('contrib', 'universities.txt'))
+        nations = open(app.config['BASEDIR'].child('contrib', 'countries.txt'))
         self.id = randrange(10000, 100000)
         self.title = self._title_generator()
         self.img = self._poster_generator()
-        self.place = choice([k.strip() for k in open(app.config['BASEDIR'].child('contrib', 'universities.txt')) if k])
-        self.country = choice([c.strip() for c in open(app.config['BASEDIR'].child('contrib', 'countries.txt')) if c])
+        self.place = choice([k.strip() for k in unis if k])
+        self.country = choice([c.strip() for c in nations if c])
         self.ini = self._date_generator()
         self.end = self._date_generator()
         self.deadline = self._date_generator()
@@ -21,21 +22,16 @@ class Conf:
 
     @staticmethod
     def _title_generator():
-        num = choice(['V', 'XVII', 'II', 'XIX', 'XXXVI', 'XXI', 'VIII', 'I', 'III', 'IV', 'XVIII'])
+        num = choice(['V', 'XVII', 'XIX', 'XXXVI', 'XXI', 'VIII', 'III', 'IV'])
         thing = choice(['Meeting', 'Conference', 'Seminar', 'Workshop'])
-        area = choice([c.strip() for c in open(app.config['BASEDIR'].child('contrib', 'keywords.txt')) if c])
+        handler = open(app.config['BASEDIR'].child('contrib', 'keywords.txt'))
+        area = choice([c.strip() for c in handler if c])
         return '{} {} on {}'.format(num, thing, area)
 
     @staticmethod
     def _poster_generator():
-        posters = [
-            'http://www2.warwick.ac.uk/newsandevents/events/challenging_orthodoxies/critical_governance_conference_poster.jpg',
-            'http://www.memics.cz/2009/img/memics09poster.jpg',
-            'http://www.memics.cz/2008/img/memics08-poster.jpg',
-            'http://www.wordsinspace.net/lib-arch-data/wordpress_libarchdata/wp-content/uploads/2011/03/Media-Histories_Conference-Poster1.jpg',
-            'http://www.memphis.edu/philosophy/images/spindel_2013_poster_thumb.jpg',
-            'http://www.physics.purdue.edu/conference/wip/files/images/poster%20-%20v.1.preview.jpg',
-            ]
+        handler = open(app.config['BASEDIR'].child('contrib', 'posters.txt'))
+        posters = [p for p in handler if p]
         default = ['/poster.png'] * int(len(posters) / 3)
         return choice(default + posters)
 
@@ -44,11 +40,12 @@ class Conf:
         y = randrange(2014, 2020)
         d = randrange(1, 365)
         dt = datetime(y, 1, 1) + timedelta(days=d)
-        return datetime.strftime(dt, '%d/%m/%Y')
+        return dt.strftime('%d/%m/%Y')
 
     @staticmethod
     def _keywords_generator():
-        keywords = [c.strip() for c in open(app.config['BASEDIR'].child('contrib', 'keywords.txt')) if c]
+        handler = open(app.config['BASEDIR'].child('contrib', 'keywords.txt'))
+        keywords = [c.strip() for c in handler if c]
         limit = randrange(3, 13)
         output = list()
         while len(output) < limit:

@@ -1,7 +1,7 @@
 from flask import Flask
 from flask.ext.assets import Environment
 from flask.ext.compress import Compress
-from flask.ext.script import Manager, Server
+from flask.ext.script import Manager
 from slimish_jinja import SlimishExtension
 
 
@@ -23,11 +23,12 @@ manager = Manager(app)
 Compress(app)
 
 # assets
+findaconf_path = app.config['BASEDIR'].child('findaconf')
 assets = Environment(app)
 assets.load_path = [
-    app.config['BASEDIR'].child('findaconf', 'blueprints', 'site', 'coffeescript'),
-    app.config['BASEDIR'].child('findaconf', 'blueprints', 'site', 'scss'),
-    app.config['BASEDIR'].child('findaconf', 'bower')
+    findaconf_path.child('blueprints', 'site', 'coffeescript'),
+    findaconf_path.child('blueprints', 'site', 'scss'),
+    findaconf_path.child('bower')
 ]
 assets.from_yaml(app.config['BASEDIR'].child('findaconf', 'assets.yaml'))
 
@@ -37,7 +38,8 @@ if not app.config['DEBUG']:
     from logging.handlers import RotatingFileHandler
     filepath = app.config['BASEDIR'].child('errors.log')
     handler = RotatingFileHandler(filepath, 'a', 1 * 1024 * 1024, 10)
-    formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
+    row = '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+    formatter = logging.Formatter(row)
     handler.setFormatter(formatter)
     handler.setLevel(logging.INFO)
     app.logger.setLevel(logging.INFO)

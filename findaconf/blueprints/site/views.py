@@ -64,5 +64,5 @@ def inject_fake_data():
         'years': [str(y) for y in range(2014, 2020)],
         'continents': sorted(continents),
         'countries': sorted(countries),
-        'conferences': [Conf() for i in range(3, 13)]
+        'conferences': [Conf()] * 7
     }

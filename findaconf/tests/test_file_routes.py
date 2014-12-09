@@ -34,19 +34,18 @@ class TestFileRoutes(unittest.TestCase):
         assert resp.mimetype == 'text/plain'
 
     def test_foundation_icons(self):
-        base_urls = ['/assets/css/', '/assets/webassets-external/']
+        base_url = '/assets/css/'
         extensions = ['eot', 'svg', 'ttf', 'woff', 'py']
-        for base_url in base_urls:
-            for ext in extensions:
-                path = '{}foundation-icons.{}'.format(base_url, ext)
-                resp = self.app.get(path)
-                print 'url:', path
-                print 'status:', resp.status_code
-                if ext != 'py':
-                    assert resp.status_code == 200
-                    if ext == 'svg':
-                        assert resp.mimetype == 'image/svg+xml'
-                    else:
-                        assert resp.mimetype == 'application/octet-stream'
+        for ext in extensions:
+            path = '{}foundation-icons.{}'.format(base_url, ext)
+            resp = self.app.get(path)
+            print 'url:', path
+            print 'status:', resp.status_code
+            if ext != 'py':
+                assert resp.status_code == 200
+                if ext == 'svg':
+                    assert resp.mimetype == 'image/svg+xml'
                 else:
-                    assert resp.status_code == 404
+                    assert resp.mimetype == 'application/octet-stream'
+            else:
+                assert resp.status_code == 404

@@ -2,10 +2,11 @@
 
 from cairosvg import svg2png
 from colour import Color
-from flask import abort, Blueprint, send_from_directory, render_template, Response
+from flask import (
+    abort, Blueprint, send_from_directory, render_template, Response
+)
 from findaconf import app
 from random import choice, randrange
-from unipath import Path
 
 
 files_blueprint = Blueprint('file_routes', __name__, static_folder='')
@@ -27,13 +28,14 @@ def poster():
     alpha = randrange(4, 7) / 10.0
 
     # create image
-    svg = render_template('poster.svg', background=bg.hex, foreground=fg.hex, transparency=alpha)
+    svg = render_template('poster.svg', bg=bg.hex, fg=fg.hex, alpha=alpha)
     return Response(svg2png(bytestring=svg), mimetype='image/png')
 
 
 @files_blueprint.route('/favicon.ico')
 def favicon():
-    return send_from_directory(app.config['SITE_STATIC'].child('imgs'), 'favicon.ico')
+    imgs_path = app.config['SITE_STATIC'].child('imgs')
+    return send_from_directory(imgs_path, 'favicon.ico')
 
 
 @files_blueprint.route('/robots.txt')
@@ -42,11 +44,11 @@ def robots():
 
 
 @files_blueprint.route('/assets/css/foundation-icons.<extension>')
-@files_blueprint.route('/assets/webassets-external/foundation-icons.<extension>')
 def foundation_icon(extension):
-    path = app.config['BASEDIR'].child('findaconf', 'bower', 'foundation-icon-fonts')
-    filename = 'foundation-icons.{}'.format(extension)
-    if path.child(filename).exists():
-        return send_from_directory(path, filename)
+    bower_path = app.config['BASEDIR'].child('findaconf', 'bower')
+    directory = 'foundation-icon-fonts'
+    file_name = 'foundation-icons.{}'.format(extension)
+    if bower_path.child(directory, file_name).exists():
+        return send_from_directory(bower_path.child(directory), file_name)
     else:
         abort(404)
