@@ -7,10 +7,12 @@ Flask==0.10.1
 Flask-Assets==0.10
 Flask-Compress==1.0.2
 Flask-Script==2.0.5
+nose==1.3.4
 gunicorn==19.1.1
 python-decouple==2.3
 pyScss==1.3.2
 PyYAML==3.11
+rednose==0.4.1
 requests==2.4.3
 slimish-jinja==1.0.2
 Unipath==1.0
