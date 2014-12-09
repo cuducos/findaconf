@@ -1,13 +1,10 @@
 # Caches, compiled, compressed and databases
+findaconf/static
 *.db
 *.pyc
-findaconf/static/.webassets-cache
-findaconf/static/webassets-external
-findaconf/static/js
-findaconf/static/css
 
 # Bower
-bower_components
+findaconf/bower
 
 # dev tools, ide etc.
 .env
