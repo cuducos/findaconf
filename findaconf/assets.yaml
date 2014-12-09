@@ -9,7 +9,9 @@ libs.js:
 init:
   output: js/init.min.js
   filters: coffeescript, rjsmin
-  contents: init.coffee
+  contents:
+    - init.coffee
+    - results.coffee
 
 libs.css:
   output: css/libs.min.css
