@@ -4,6 +4,8 @@ from unipath import Path
 from decouple import config
 
 BASEDIR = Path(__file__).parent
+SITE_STATIC = BASEDIR.child('findaconf', 'blueprints', 'site', 'static')
+
 DEBUG = config('DEBUG', default=False, cast=bool)
 ASSETS_DEBUG = config('ASSETS_DEBUG', default=False, cast=bool)
 SECRET_KEY = config('SECRET_KEY', default=False)

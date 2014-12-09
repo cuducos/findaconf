@@ -10,7 +10,7 @@ class SlimishApp(Flask):
     Flask.jinja_options['extensions'].append(SlimishExtension)
 
 # init the app
-app = SlimishApp('findaconf')
+app = SlimishApp('findaconf', static_folder='assets')
 app.config.from_object('config')
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
@@ -25,9 +25,9 @@ Compress(app)
 # assets
 assets = Environment(app)
 assets.load_path = [
-    app.config['BASEDIR'].child('findaconf', 'coffeescript'),
-    app.config['BASEDIR'].child('findaconf', 'scss'),
-    app.config['BASEDIR'].child('bower_components')
+    app.config['BASEDIR'].child('findaconf', 'blueprints', 'site', 'coffeescript'),
+    app.config['BASEDIR'].child('findaconf', 'blueprints', 'site', 'scss'),
+    app.config['BASEDIR'].child('findaconf', 'bower')
 ]
 assets.from_yaml(app.config['BASEDIR'].child('findaconf', 'assets.yaml'))
 
@@ -45,9 +45,9 @@ if not app.config['DEBUG']:
     app.logger.info('App {} started successfully.'.format(app.config['TITLE']))
 
 # load & register blueprints
-from blueprints.autocomplete import autocomplete_blueprint
-from blueprints.file_routes import file_routes_blueprint
-from blueprints.site import site_blueprint
+from blueprints.autocomplete.views import autocomplete_blueprint
+from blueprints.files.views import files_blueprint
+from blueprints.site.views import site_blueprint
 app.register_blueprint(autocomplete_blueprint, url_prefix='/autocomplete')
-app.register_blueprint(file_routes_blueprint)
+app.register_blueprint(files_blueprint)
 app.register_blueprint(site_blueprint)

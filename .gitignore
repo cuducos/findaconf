@@ -1,5 +1,5 @@
 # Caches, compiled, compressed and databases
-findaconf/static
+findaconf/assets
 *.db
 *.pyc
 

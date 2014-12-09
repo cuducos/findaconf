@@ -9,7 +9,12 @@ from htmlmin.minify import html_minify
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-site_blueprint = Blueprint('site', __name__)
+site_blueprint = Blueprint(
+    'site',
+    __name__,
+    template_folder='templates',
+    static_folder='static'
+)
 
 
 @site_blueprint.route('/')
