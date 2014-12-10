@@ -24,9 +24,10 @@ class TestFileRoutes(unittest.TestCase):
         assert resp.mimetype == 'image/png'
 
     def test_favicon(self):
+        types = ['image/vnd.microsoft.icon', 'image/x-icon']
         resp = self.app.get('/favicon.ico')
         assert resp.status_code == 200
-        assert resp.mimetype == 'image/x-icon'
+        assert resp.mimetype in types
 
     def test_robots(self):
         resp = self.app.get('/robots.txt')
@@ -36,16 +37,18 @@ class TestFileRoutes(unittest.TestCase):
     def test_foundation_icons(self):
         base_url = '/assets/css/'
         extensions = ['eot', 'svg', 'ttf', 'woff', 'py']
+        types = ['application/vnd.ms-fontobject',
+                 'application/octet-stream',
+                 'application/x-font-woff',
+                 'image/svg+xml']
         for ext in extensions:
             path = '{}foundation-icons.{}'.format(base_url, ext)
             resp = self.app.get(path)
             print 'url:', path
             print 'status:', resp.status_code
+            print 'mimetype:', resp.mimetype
             if ext != 'py':
                 assert resp.status_code == 200
-                if ext == 'svg':
-                    assert resp.mimetype == 'image/svg+xml'
-                else:
-                    assert resp.mimetype == 'application/octet-stream'
+                assert resp.mimetype in types
             else:
                 assert resp.status_code == 404
