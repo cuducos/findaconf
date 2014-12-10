@@ -1,5 +1,5 @@
 libs.js:
-  output: js/libs.min.js
+  output: libs.min.js
   filters: rjsmin
   contents:
     - jquery/dist/jquery.js
@@ -7,14 +7,14 @@ libs.js:
     - tooltipster/js/jquery.tooltipster.js
 
 init:
-  output: js/init.min.js
+  output: init.min.js
   filters: coffeescript, rjsmin
   contents:
     - init.coffee
     - results.coffee
 
 libs.css:
-  output: css/libs.min.css
+  output: libs.min.css
   filters: cssmin
   contents:
     - foundation/css/normalize.css
@@ -24,7 +24,7 @@ libs.css:
     - tooltipster/css/tooltipster.css
 
 style:
-  output: css/style.min.css
+  output: style.min.css
   filters: pyscss, cssmin
   contents:
     - blocks.scss
