@@ -30,42 +30,4 @@ def results():
     req_vars = [request.args.get(v) for v in url_vars]
     query = dict(zip(url_vars, req_vars))
 
-    return html_minify(render_template('results.slim', **query))
-
-
-@site_blueprint.context_processor
-def inject_fake_data():
-    months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-    ]
-    continents = [
-        'Africa',
-        'Asia',
-        'Europe',
-        'North America',
-        'Oceania',
-        'South America'
-    ]
-    fh = open(app.config['BASEDIR'].child('contrib', 'countries.txt'))
-    countries = [line.strip() for line in fh if line]
-    conferences = list()
-    while len(conferences) < 7:
-        conferences.append(Conf())
-    return {
-        'months': months,
-        'years': [str(y) for y in range(2014, 2020)],
-        'continents': sorted(continents),
-        'countries': sorted(countries),
-        'conferences': conferences
-    }
+    return html_minify(render_template('results.slim'))

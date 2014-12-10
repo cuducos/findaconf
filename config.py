@@ -5,6 +5,8 @@ from decouple import config
 
 BASEDIR = Path(__file__).parent
 SITE_STATIC = BASEDIR.child('findaconf', 'blueprints', 'site', 'static')
+SQLALCHEMY_DATABASE_URI = config('DATABASE_URL',
+                                 default='sqlite:///' + BASEDIR.child('app.db'))
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 ASSETS_DEBUG = config('ASSETS_DEBUG', default=False, cast=bool)
@@ -23,3 +25,18 @@ LANGS = [
     {'code': 'pt', 'title': 'Português'},
     {'code': 'ro', 'title': 'Română'}
 ]
+
+MONTHS = {
+    1: 'January',
+    2: 'February',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'November',
+    12: 'December'
+}

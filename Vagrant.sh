@@ -4,7 +4,8 @@
 apt-get update
 apt-get upgrade
 apt-get autoremove -y
-apt-get install -y wget curl git ipython build-essential libffi-dev libcairo2-dev
+apt-get install -y wget curl git ipython build-essential
+apt-get install -y libffi-dev libcairo2-dev
 
 # Python
 apt-get install -y python-setuptools python-dev
@@ -16,6 +17,11 @@ apt-get install -y nodejs
 npm install -g coffee-script
 npm install -g bower
 
+# PostgreSQL
+apt-get install -y postgresql postgresql-contrib libpq-dev
+apt-get install -y python-psycopg2
+sudo -u postgres createuser --superuser vagrant
+
 # install project dependencies
-cd /vagrant
-pip install -r requirements.txt
+pip install -r /vagrant/requirements.txt
+
