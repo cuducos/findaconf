@@ -1,7 +1,8 @@
-# Caches, compiled, compressed and databases
+# Caches, compiled, compressed, logs and databases
 findaconf/assets
 *.db
 *.pyc
+*.log
 
 # Bower
 findaconf/bower
