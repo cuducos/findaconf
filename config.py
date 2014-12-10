@@ -5,6 +5,8 @@ from decouple import config
 
 BASEDIR = Path(__file__).parent
 SITE_STATIC = BASEDIR.child('findaconf', 'blueprints', 'site', 'static')
+SQLALCHEMY_DATABASE_URI = config('DATABASE_URL',
+                                 default='sqlite:///' + BASEDIR.child('app.db'))
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 ASSETS_DEBUG = config('ASSETS_DEBUG', default=False, cast=bool)

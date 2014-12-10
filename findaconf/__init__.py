@@ -1,7 +1,9 @@
 from flask import Flask
 from flask.ext.assets import Environment
 from flask.ext.compress import Compress
+from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
+from flask.ext.sqlalchemy import SQLAlchemy
 from slimish_jinja import SlimishExtension
 
 
@@ -16,8 +18,14 @@ app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
+# init db
+db = SQLAlchemy(app)
+from findaconf import models
+
 # init manager
 manager = Manager(app)
+migrate = Migrate(app, db)
+manager.add_command('db', MigrateCommand)
 
 # enable gzip compression
 Compress(app)
