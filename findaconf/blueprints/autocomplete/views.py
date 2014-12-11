@@ -4,7 +4,9 @@ import requests
 import sys
 from flask import abort, Blueprint, jsonify, request
 from findaconf import app
+from findaconf.models import Conference, Keyword
 from hashlib import sha512
+from sqlalchemy import func
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -16,21 +18,23 @@ autocomplete_blueprint = Blueprint('autocomplete', __name__)
 def ajax_keywords():
 
     # basic vars
-    query = request.args.get('query')
+    query = '%{}%'.format(request.args.get('query').lower())
     limit = int(request.args.get('limit'))
-    keywords = list()
 
-    # load keywords
-    if query:
-        filename = app.config['BASEDIR'].child('contrib', 'keywords.txt')
-        with open(filename) as file_handler:
-            for line in file_handler:
-                if query.lower() in line.lower():
-                    keywords.append(line.strip())
+    # query keywords
+    keywords = Keyword.query\
+                      .filter(func.lower(Keyword.title).like(query))\
+                      .order_by(Keyword.title)[0:limit]
 
+    # query conference title
+    title = func.lower(Conference.title)
+    conferences = Conference.query\
+                            .filter(title.like(query))\
+                            .order_by(Conference.title)[0:limit]
     # return
-    keywords = keywords[:limit]
-    return jsonify(results=[{'label': k} for k in keywords])
+    results = [k.title for k in keywords] + [c.title for c in conferences]
+    sorted_results = sorted(results)
+    return jsonify(results=[{'label': r} for r in sorted_results[0:limit]])
 
 
 @autocomplete_blueprint.route('/places', methods=['GET'])

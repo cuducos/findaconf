@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import unittest
-from findaconf import app
+from findaconf import app, db
 
 
 class TestAutoCompleteRoutes(unittest.TestCase):
@@ -10,10 +10,12 @@ class TestAutoCompleteRoutes(unittest.TestCase):
 
         # init
         app.testing = True
+        app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DB_TESTS']
         self.app = app.test_client()
+        db.create_all()
 
     def tearDown(self):
-        pass
+        db.drop_all()
 
     # test routes from blueprint/autocomplete.py
 
