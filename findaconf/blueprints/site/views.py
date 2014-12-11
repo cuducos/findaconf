@@ -1,8 +1,7 @@
 # coding: utf-8
 
 import sys
-from findaconf import app
-from findaconf.mockup import Conf
+from findaconf.models import Conference
 from flask import Blueprint, render_template, request
 from htmlmin.minify import html_minify
 
@@ -19,6 +18,12 @@ site_blueprint = Blueprint(
 
 @site_blueprint.route('/')
 def index():
+
+    # years
+    years = Conference.query.all()
+    for year in years:
+        print year.starts, year.ends
+
     return html_minify(render_template('home.slim'))
 
 
