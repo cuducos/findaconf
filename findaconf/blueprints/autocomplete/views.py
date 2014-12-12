@@ -18,19 +18,17 @@ autocomplete_blueprint = Blueprint('autocomplete', __name__)
 def ajax_keywords():
 
     # basic vars
-    query = '%{}%'.format(request.args.get('query').lower())
+    query = '%{}%'.format(request.args.get('query'))
     limit = int(request.args.get('limit'))
 
     # query keywords
-    keywords = Keyword.query\
-                      .filter(func.lower(Keyword.title).like(query))\
-                      .order_by(Keyword.title)[0:limit]
+    keywords = Keyword.query.filter(Keyword.title.ilike(query))\
+                            .order_by(Keyword.title)[0:limit]
 
     # query conference title
-    title = func.lower(Conference.title)
-    conferences = Conference.query\
-                            .filter(title.like(query))\
-                            .order_by(Conference.title)[0:limit]
+    conferences = Conference.query.filter(Conference.title.ilike(query))\
+                                  .order_by(Conference.title)[0:limit]
+
     # return
     results = [k.title for k in keywords] + [c.title for c in conferences]
     sorted_results = sorted(results)
