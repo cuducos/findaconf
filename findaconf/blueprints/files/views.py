@@ -43,7 +43,7 @@ def robots():
     return send_from_directory(app.config['SITE_STATIC'], 'robots.txt')
 
 
-@files_blueprint.route('/assets/css/foundation-icons.<extension>')
+@files_blueprint.route('/assets/foundation-icons.<extension>')
 def foundation_icon(extension):
     bower_path = app.config['BASEDIR'].child('findaconf', 'bower')
     directory = 'foundation-icon-fonts'
