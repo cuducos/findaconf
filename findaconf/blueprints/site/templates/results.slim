@@ -23,19 +23,19 @@
         div.small-6.columns
           select name="month"
             option value="" Any month
-            - for m in months
-              - if m == month:
-                option selected="selected" {{ m }}
+            - for i in range(1,13)
+              - if i|int == month|int:
+                option value="{{ i }}" selected="selected" {{ months[i] }}
               - else
-                option {{ m }}
+                option value="{{ i }}" {{ months[i] }}
         div.small-4.columns
           select name="year"
             option value="" Any year
             - for y in years
-              - if y == year
-                option selected="selected" {{ y }}
+              - if y|int == year|int
+                option value="{{ y }}" selected="selected" {{ y }}
               - else
-                option {{ y }}
+                option value="{{ y }}" {{ y }}
 
     div.small-5.columns
 
@@ -47,16 +47,16 @@
             option value="" Anywhere
             optgroup label="Continents"
               - for c in continents
-                - if c == region
-                  option selected="selected" {{ c }}
+                - if '_' + c.alpha2 == region
+                  option value="_{{ c.alpha2 }}" selected="selected" {{ c.title }}
                 - else
-                  option {{ c }}
+                  option value="_{{ c.alpha2 }}" {{ c.title }}
             optgroup label="Countries"
               - for c in countries
-                - if c == region
-                  option selected="selected" {{ c }}
+                - if c.alpha2 == region
+                  option value="{{ c.alpha2 }}" selected="selected" {{ c.title }}
                 - else
-                  option {{ c }}
+                  option value="{{ c.alpha2 }}" {{ c.title }}
 
           input#location type="text" name="location" placeholder="Any specific city or institution..." value="{{ location }}"
 

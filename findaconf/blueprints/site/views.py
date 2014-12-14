@@ -1,7 +1,8 @@
 # coding: utf-8
 
 import sys
-from findaconf.models import Conference
+from findaconf import app
+from findaconf.models import Conference, Continent, Country, Year
 from flask import Blueprint, render_template, request
 from htmlmin.minify import html_minify
 
@@ -35,4 +36,13 @@ def results():
     req_vars = [request.args.get(v) for v in url_vars]
     query = dict(zip(url_vars, req_vars))
 
-    return html_minify(render_template('results.slim'))
+    return html_minify(render_template('results.slim', **query))
+
+@site_blueprint.context_processor
+def inject_main_vars():
+    return {
+        'continents': Continent.query.order_by(Continent.title).all(),
+        'countries': Country.query.order_by(Country.title).all(),
+        'months': app.config['MONTHS'],
+        'years': Year.query.order_by(Year.year).all()
+    }

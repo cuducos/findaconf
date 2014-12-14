@@ -20,13 +20,13 @@
         div.small-5.columns
           select name="month"
             option value="" Any month
-            - for month in months
-              option {{ month }}
+            - for i in range(1,13)
+              option value="{{ i }}" {{ months[i] }}
         div.small-3.columns
           select name="year"
             option value="" Any year
             - for year in years
-              option {{ year }}
+              option {{ year.year }}
 
       div.row
         div.small-4.columns
@@ -37,10 +37,10 @@
             option value="" Anywhere
             optgroup label="Continents"
               - for continent in continents
-                option {{ continent }}
+                option value="_{{ continent.alpha2 }}" {{ continent.title }}
             optgroup label="Countries"
               - for country in countries
-                option {{ country }}
+                option value="{{ country.alpha2 }}" {{ country.title }}
 
           input#location type="text" name="location" placeholder="Any specific city or institution..."
 
