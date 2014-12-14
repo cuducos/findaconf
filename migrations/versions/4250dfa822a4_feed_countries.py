@@ -35,7 +35,10 @@ def upgrade():
         csv = list(reader(file_handler))
         country_continent = [{'country': c[0], 'continent': c[1]} for c in csv]
 
-    # loop
+    # commit migrations so far to ensure that continents table is fed
+    op.execute('COMMIT')
+
+    # loop and feed countries table
     data = list()
     for item in country_continent:
 
