@@ -2,7 +2,7 @@
 
 # Update repository and add dev packages
 apt-get update
-apt-get upgrade
+apt-get upgrade -y
 apt-get autoremove -y
 apt-get install -y wget curl git ipython build-essential
 apt-get install -y libffi-dev libcairo2-dev
