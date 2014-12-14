@@ -89,6 +89,13 @@ class Keyword(db.Model):
         return '<Keyword #{}: {}>'.format(self.id, self.title)
 
 
+class Year(db.Model):
+
+    __tablename__ = 'year'
+    id = db.Column(db.Integer, primary_key=True)
+    year = db.Column(db.SmallInteger, index=True, unique=True)
+
+
 class Country(db.Model):
 
     __tablename__ = 'country'
