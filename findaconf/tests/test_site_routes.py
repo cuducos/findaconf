@@ -1,19 +1,17 @@
 # coding: utf-8
 
-import unittest
-from findaconf import app
+from unittest import TestCase
+from findaconf import app, db
+from findaconf.tests.config import set_app, unset_app
 
 
-class TestSiteRoutes(unittest.TestCase):
+class TestSiteRoutes(TestCase):
 
     def setUp(self):
-
-        # init
-        app.testing = True
-        self.app = app.test_client()
+        self.app = set_app(app, db)
 
     def tearDown(self):
-        pass
+        unset_app(db)
 
     # test routes from blueprint/site.py
 

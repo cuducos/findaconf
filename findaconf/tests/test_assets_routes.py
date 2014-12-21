@@ -1,19 +1,17 @@
 # coding: utf-8
 
-import unittest
+from unittest import TestCase
 from findaconf import app
+from findaconf.tests.config import set_app, unset_app
 
 
-class TestAssetsRoutes(unittest.TestCase):
+class TestAssetsRoutes(TestCase):
 
     def setUp(self):
-
-        # init
-        app.testing = True
-        self.app = app.test_client()
+        self.app = set_app(app)
 
     def tearDown(self):
-        pass
+        unset_app()
 
     # test assets from assets.yaml
 

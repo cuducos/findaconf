@@ -1,21 +1,17 @@
 # coding: utf-8
 
-import unittest
 from findaconf import app, db
+from unittest import TestCase
+from findaconf.tests.config import set_app, unset_app
 
 
-class TestAutoCompleteRoutes(unittest.TestCase):
+class TestAutoCompleteRoutes(TestCase):
 
     def setUp(self):
-
-        # init
-        app.testing = True
-        app.config['SQLALCHEMY_DATABASE_URI'] = app.config['DB_TESTS']
-        self.app = app.test_client()
-        db.create_all()
+        self.app = set_app(app, db)
 
     def tearDown(self):
-        db.drop_all()
+        unset_app(db)
 
     # test routes from blueprint/autocomplete.py
 
