@@ -35,7 +35,7 @@ class TestFileRoutes(unittest.TestCase):
         assert resp.mimetype == 'text/plain'
 
     def test_foundation_icons(self):
-        base_url = '/assets/css/'
+        base_url = '/assets/'
         extensions = ['eot', 'svg', 'ttf', 'woff', 'py']
         types = ['application/vnd.ms-fontobject',
                  'application/octet-stream',
