@@ -71,8 +71,8 @@ class Conference(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref='conferences')
     keywords = db.relationship('Keyword',
-                            secondary=conferences_keywords,
-                            backref=' conferences')
+                               secondary=conferences_keywords,
+                               backref=' conferences')
 
     def __repr__(self):
         return '<Conference #{}: {}>'.format(self.id, self.title)

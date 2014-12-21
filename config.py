@@ -2,7 +2,6 @@
 
 from unipath import Path
 from decouple import config
-from findaconf import app
 
 # file paths
 BASEDIR = Path(__file__).parent

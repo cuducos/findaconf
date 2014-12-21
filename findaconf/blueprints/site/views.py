@@ -38,6 +38,7 @@ def results():
 
     return html_minify(render_template('results.slim', **query))
 
+
 @site_blueprint.context_processor
 def inject_main_vars():
     return {

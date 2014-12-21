@@ -6,7 +6,6 @@ from flask import abort, Blueprint, jsonify, request
 from findaconf import app
 from findaconf.models import Conference, Keyword
 from hashlib import sha512
-from sqlalchemy import func
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
