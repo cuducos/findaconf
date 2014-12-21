@@ -11,7 +11,6 @@ SITE_STATIC = BASEDIR.child('findaconf', 'blueprints', 'site', 'static')
 # db settings
 uri = 'sqlite:///' + BASEDIR.child('app.db')
 SQLALCHEMY_DATABASE_URI = config('DATABASE_URL', default=uri)
-DB_TESTS = 'sqlite:///' + BASEDIR.child('tests.db')
 
 # debug settings
 DEBUG = config('DEBUG', default=False, cast=bool)
