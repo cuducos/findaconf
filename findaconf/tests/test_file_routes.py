@@ -44,9 +44,6 @@ class TestFileRoutes(unittest.TestCase):
         for ext in extensions:
             path = '{}foundation-icons.{}'.format(base_url, ext)
             resp = self.app.get(path)
-            print 'url:', path
-            print 'status:', resp.status_code
-            print 'mimetype:', resp.mimetype
             if ext != 'py':
                 assert resp.status_code == 200
                 assert resp.mimetype in types
