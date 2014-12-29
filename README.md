@@ -37,7 +37,7 @@ $ npm install -g coffee-script
 $ npm install -g bower
 ```
 
-Remember to meet the dependencies in [bower.json](/bower.json) (if you what, specify a different installation path using [.bowerrc](/.bowerrc)):
+Remember to meet the dependencies in [bower.json](/bower.json) (if you want, specify a different installation path using [.bowerrc](/.bowerrc)):
 
 ```
 $ bower install 
