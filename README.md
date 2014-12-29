@@ -1,4 +1,4 @@
-# Find a Conference - Mock-up
+# Find a Conference
 
 ## About
 
@@ -40,7 +40,7 @@ $ npm install -g bower
 Remember to meet the dependencies in [bower.json](/bower.json) (if you what, specify a different installation path using [.bowerrc](/.bowerrc)):
 
 ```
-bower install 
+$ bower install 
 ```
 
 Create and feed the database:
