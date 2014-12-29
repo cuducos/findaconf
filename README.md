@@ -32,7 +32,7 @@ Also install [Node.js](http://nodejs.org/), [CoffeeScript](http://coffeescript.o
 
 ```
 $ curl -sL https://deb.nodesource.com/setup | sudo bash - 
-$ apt-get install nodejs` should do the job.  
+$ apt-get install nodejs
 $ npm install -g coffee-script
 $ npm install -g bower
 ```
