@@ -3,6 +3,7 @@ cffi==0.8.6
 colour==0.0.6
 cssmin==0.2.0
 django-htmlmin==0.7.0
+fake-factory==0.4.2
 Flask==0.10.1
 Flask-AlchemyDumps==0.0.3
 Flask-Assets==0.10
