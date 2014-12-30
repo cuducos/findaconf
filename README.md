@@ -30,8 +30,8 @@ This application use a series of *environment variables*. This can easily be ach
 * `DEBUG`: sets if the application is started in debug mode (e.g. `True`)
 * `ASSETS_DEBUG`: sets if [webassets](http://webassets.readthedocs.org/en/latest/environment.html?highlight=debug#webassets.env.Environment.debug) runs in debug mode (e.g. `True`)
 * `SECRET_KEY`: [Flask's default secret key](http://flask.pocoo.org/docs/0.10/api/#flask.Flask.secret_key)
-* `DATABASE_URL: url and credentials to development database (e.g. `'postgres://vagrant:vagrant@localhost/findaconf'`)  
-* `DATABASE_URL_TEST: url and credentials to test database (e.g. `'postgres://vagrant:vagrant@localhost/findaconf_test'`)  
+* `DATABASE_URL: url and credentials to development database (e.g. `postgres://vagrant:vagrant@localhost/findaconf`)  
+* `DATABASE_URL_TEST: url and credentials to test database (e.g. `postgres://vagrant:vagrant@localhost/findaconf_test`)  
 * `GOOGLE_PLACES_API`: credentials to [Google Places API](https://developers.google.com/places/documentation/)
 * `GOOGLE_PLACES_API_PROXY`: if you want to access Google Places API through a proxy, set the proxy URL here (it might be useful as Heroku free applications has no fixed IP and a fixed IP – even if local ones such as `0.0.0.0` or `127.0.0.1` or `localhost` – are required by Google)
 
