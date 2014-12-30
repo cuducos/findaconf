@@ -6,54 +6,31 @@ _Find a Conference_ is under development.
 
 ## Installation
 
-First of all, make sure your system has the following tools installed properly:
+If you wanr to get a development version of *Find a Conference* running, this session might be helpful. If it is not, let us know.
 
-* Python 2.7+
+### Requirements
+
+* Python 2.7+ (but not Python 3)
 * PostgreSQL 9.3+
 * [virtualenv](https://virtualenv.pypa.io/) and [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/) are not required, but are recommended.
-* [pip](https://github.com/pypa/pip) is not required, but I’m using it in install instructions – if you want to install it, download [get-pip.py](https://bootstrap.pypa.io/get-pip.py) and run this command on your download folder `$ python get-pip.py`.
+* [pip](https://github.com/pypa/pip) is not required, but I’m using it in install instructions
+* [Node.js](http://nodejs.org/) with [CoffeeScript](http://coffeescript.org/) and [Bower](http://bower.io/)
 
+### Step-by-step installation
 
-Then, simply clone the repository:
+1. Clone the repository and step in its directory: `$ git clone git@github.com:cuducos/findaconf.git && cd findaconf`
+1. If you want, get your [virtualenv](https://pypi.python.org/pypi/virtualenv) running
+1. Install the dependencies: `$ pip install -r requirements.txt && bower install` 
+1. Create and feed the database: `$ python manage.py db upgrade`
+1. Run the server with something like: `$ python manage.py runserver -r -d -h 0.0.0.0`
 
-```
-$ git clone git@github.com:cuducos/findaconf.git
-```
+### Further notes
 
-Install all the dependencies (if you want, get your [virtualenv](https://pypi.python.org/pypi/virtualenv) running):
+If you need further instructions to configure your develeopment environment, take a look at our [Vagrant bootstrap script](/Vagrant.sh). It has all the commands to instal Python, Node.js, CoffeeScript, Bower and PostgreSQL, dependencies and to create databases and users. It is designed to work with [Ubuntu 14.04](http://releases.ubuntu.com/trusty/), but works with most [Debian](http://debian.org) distributions.
 
-```
-$ cd findaconf
-$ pip install -r requirements.txt
-```
+Note that the included [.bowerrc](/.bowerrc) sets up a customized directory to store Bower files.
 
-Also install [Node.js](http://nodejs.org/), [CoffeeScript](http://coffeescript.org/) and [Bower](http://bower.io/):
-
-
-```
-$ curl -sL https://deb.nodesource.com/setup | sudo bash - 
-$ apt-get install nodejs
-$ npm install -g coffee-script
-$ npm install -g bower
-```
-
-Remember to meet the dependencies in [bower.json](/bower.json) (if you want, specify a different installation path using [.bowerrc](/.bowerrc)):
-
-```
-$ bower install 
-```
-
-Create and feed the database:
-
- ```
- $ python manage.py db upgrade
- ```
-
-Then, run the server:
-
-```
-$ python manage.py runserver -r -d
-```
+By this point, if you are a [Vagrant](https://www.vagrantup.com/) user, you guessed it right: you can hit the road after cloning the repository: `$ vagrant up && vagrant ssh`.
 
 ## Tests
 
