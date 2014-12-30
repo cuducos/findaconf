@@ -1,14 +1,15 @@
-# Find a Conference (under development)
+# Find a Conference (WIP)
 
 ## About
 
 _Find a Conference_ is under development. This is supposed to be a free, open source and ad free platform where:
 
-* Registered users can post info about academic conferences and call for papers
-* Anyone can register with external accounts (Google, Facebook, Twitter, Yahoo, what else?) so [we don't have to deal with passwords](http://youtu.be/8ZtInClXe1Q)
-* There is no curatorial layer, but we should add report buttons for users to flag innapropriate and/or duplicated content
-* Only the user who posted a conference can edit it (but the name of the one who posted is not public)
-* The platform should not host too much stuff regarding the conferences: it is just a platform for users to *find* them and then follow to universities webpages, association websites, Eventbrite registrations, planning group emails etc.
+* Registered **users can post info about academic conferences** and call for papers
+* Anyone can **register with external accounts** (Google, Facebook, Twitter, Yahoo, what else?) so [we don't have to deal with passwords](http://youtu.be/8ZtInClXe1Q)
+* There is **no curatorial layer**, but we should add **report links for users to flag innapropriate and/or duplicated content**
+* Only the user **who posted a conference can edit it** 
+* The platform should not host too much stuff regarding the conferences: it is **simply a platform for users to *find* conferences** and then follow to universities webpages, association websites, Eventbrite registrations, planning group emails etc.
+* It should be designed to be easily internationalized (**multi-language**)
 
 ## Installation
 
@@ -42,7 +43,7 @@ This application use a series of *environment variables*. This can easily be ach
 1. Create and feed the database: `$ python manage.py db upgrade`
 1. Run the server with something like: `$ python manage.py runserver -r -d -h 0.0.0.0`
 
-### Further notes
+### Further installation notes
 
 If you need further instructions to configure your develeopment environment, take a look at our [Vagrant bootstrap script](/Vagrant.sh). It has all the commands to instal Python, Node.js, CoffeeScript, Bower and PostgreSQL, dependencies and to create databases and users. It is designed to work with [Ubuntu 14.04](http://releases.ubuntu.com/trusty/), but works with most [Debian](http://debian.org) distributions.
 
