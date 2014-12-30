@@ -54,25 +54,6 @@ Then, run the server:
 ```
 $ python manage.py runserver -r -d
 ```
-### Using Vagrant
-
-Before installing, make sure you have recent versions of
-[Git](http://www.git-scm.com/), [Vagrant](https://www.vagrantup.com/)
-and [VirtualBox](https://www.virtualbox.org/) installed on your
-development machine.
-
-Then, simply clone the repository:
-
-```
-$ git clone git@github.com:cuducos/findaconf.git.
-```
-
-And create a Vagrant machine from the root of the project:
-
-```
-$ cd findaconf
-$ vagrant up && vagrant ssh
-```
 
 ## Tests
 
