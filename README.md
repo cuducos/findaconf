@@ -81,7 +81,7 @@ We're using [Nose](https://nose.readthedocs.org) for testing. You might prefer t
 But it has serious difficulties in finding tests in executable files. That said, you might wanna change the permissions of the tests files:
 
 ```
-$ chmod -x $(find whiskyton/tests/ -name '*.py')
+$ chmod -x $(find findaconf/tests/ -name '*.py')
 ```
 ## License
 
