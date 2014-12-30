@@ -76,13 +76,10 @@ $ vagrant up && vagrant ssh
 
 ## Tests
 
-We're using [Nose](https://nose.readthedocs.org) for testing. You might prefer to use `$ nosetest --rednose` for legibility.
+We're using [Nose](https://nose.readthedocs.org) for testing. You might prefer to use `$ nosetest --rednose` for legibility. 
 
-But it has serious difficulties in finding tests in executable files. That said, you might wanna change the permissions of the tests files:
+Nose has serious difficulties in finding tests in executable files, thus if you wanna change the permissions of the tests files just run: `$ chmod -x $(find findaconf/tests/ -name '*.py')`.
 
-```
-$ chmod -x $(find findaconf/tests/ -name '*.py')
-```
 ## License
 
 Copyright (c) 2014 Eduardo Cuducos
