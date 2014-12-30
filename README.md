@@ -57,6 +57,16 @@ We're using [Nose](https://nose.readthedocs.org) for testing. You might prefer t
 
 Nose has serious difficulties in finding tests in executable files, thus if you wanna change the permissions of the tests files just run: `$ chmod -x $(find findaconf/tests/ -name '*.py')`.
 
+## Contributing
+
+You can discuss the project, further features, implementation and report issues [here on GitHub](https://github.com/cuducos/findaconf/issues). And pull requests are very welcomed indeed:
+
+* Fork this repository
+* Create a new branch: `git checkout -b my-new-feature`
+* Commit your changes: `git commit -am 'Add some feature'`
+* Push to the branch: `git push origin my-new-feature`
+* Go to your fork page at GitHub and create new pull request
+
 ## License
 
 Copyright (c) 2014 Eduardo Cuducos
