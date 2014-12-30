@@ -4,12 +4,12 @@
 
 _Find a Conference_ is under development. This is supposed to be a free, open source and ad free platform where:
 
-* Registered **users can post info about academic conferences** and call for papers
-* Anyone can **register with external accounts** (Google, Facebook, Twitter, Yahoo, what else?) so [we don't have to deal with passwords](http://youtu.be/8ZtInClXe1Q)
-* There is **no curatorial layer**, but we should add **report links for users to flag innapropriate and/or duplicated content**
-* Only the user **who posted a conference can edit it** 
-* The platform should not host too much stuff regarding the conferences: it is **simply a platform for users to *find* conferences** and then follow to universities webpages, association websites, Eventbrite registrations, planning group emails etc.
-* It should be designed to be easily internationalized (**multi-language**)
+* Registered *users can post info about academic conferences* and call for papers
+* Anyone can *register with external accounts* (Google, Facebook, Twitter, Yahoo, what else?) so [we don't have to deal with passwords](http://youtu.be/8ZtInClXe1Q)
+* There is *no curatorial layer*, but we should add *report links for users to flag innapropriate and/or duplicated content*
+* Only the user *who posted a conference can edit it* 
+* The platform should not host too much stuff regarding the conferences: it is *simply a platform for users to find conferences* and then follow to universities webpages, association websites, Eventbrite registrations, planning group emails etc.
+* It should be designed to be easily internationalized (*multi-language*)
 
 ## Installation
 
