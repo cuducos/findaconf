@@ -19,12 +19,6 @@ site_blueprint = Blueprint(
 
 @site_blueprint.route('/')
 def index():
-
-    # years
-    years = Conference.query.all()
-    for year in years:
-        print year.starts, year.ends
-
     return html_minify(render_template('home.slim'))
 
 
@@ -37,6 +31,12 @@ def results():
     query = dict(zip(url_vars, req_vars))
 
     return html_minify(render_template('results.slim', **query))
+
+
+@site_blueprint.route('/login', methods=['GET'])
+def login_options():
+    return html_minify(render_template('login.slim',
+                                       providers=app.config['PROVIDERS']))
 
 
 @site_blueprint.context_processor
