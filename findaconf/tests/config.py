@@ -5,9 +5,12 @@ from findaconf.tests.fake_data import fake_conference, seed
 
 
 def set_app(app, db=False):
-    unset_app(db)
+    
+    # set test vars
     app.config['TESTING'] = True
     app.config['WTF_CSRF_ENABLED'] = False
+    
+    # set test db
     if db:
         app.config['SQLALCHEMY_DATABASE_URI'] = config(
             'DATABASE_URL_TEST',
@@ -15,12 +18,24 @@ def set_app(app, db=False):
                                                                'tests',
                                                                'tests.db')
         )
+    
+    # create test app
     test_app = app.test_client()
+    
+    # create and feed db tables
     if db:
+        
+        # start from a clean db
+        db.session.remove()
+        db.drop_all()
+        
+        # create tables and feed them
         db.create_all()
         seed(app, db)
         [db.session.add(fake_conference(db)) for i in range(1, 43)]
         db.session.commit()
+    
+    # return test app
     return test_app
 
 
