@@ -22,6 +22,9 @@ SECRET_KEY = config('SECRET_KEY', default=False)
 GOOGLE_PLACES_API = config('GOOGLE_PLACES_API', default=None)
 GOOGLE_PLACES_API_PROXY = config('GOOGLE_PLACES_API_PROXY', default=None)
 
+# oauth(2) providers
+PROVIDERS = ['Google', 'Twitter', 'Facebook', 'Yahoo']
+
 # content settings
 TITLE = 'Find a Conference'
 LANGS = [
