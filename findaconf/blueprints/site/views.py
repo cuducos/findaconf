@@ -27,7 +27,6 @@ site_blueprint = Blueprint(
 
 @site_blueprint.route('/')
 def index():
-    flash({'type': 'success', 'text': 'Buongiorno, Principessa!'})
     return html_minify(render_template('home.slim'))
 
 
