@@ -1,9 +1,9 @@
 - extends "base.slim"
 - block content
   div.row
-    h2.small-4.small-offset-4.columns Log in
-    .login
-      - for provider in providers
-        div class="small-1 column{% if loop.first %} small-offset-4{% endif %}"
-          a href="/login/{{ provider }}" title="Login with {{ provider }}"
-            img src="{{ url_for('site.static', filename='imgs/oauth_' + provider.lower() + '.png') }}" alt="Login with {{ provider }}"
+    h1.login.small-8.small-offset-2.columns Log in with
+    - for provider in providers
+      div class="login_provider small-2 columns {% if loop.first %} small-offset-2{% endif %}{% if loop.last %} end{% endif %}"
+        a href="/login/{{ provider }}" title="Login with {{ provider }}"
+          img src="{{ url_for('site.static', filename='imgs/oauth_' + provider.lower() + '.png') }}" alt="Login with {{ provider }}"
+          span class="{{ provider|lower }}" {{ provider }}

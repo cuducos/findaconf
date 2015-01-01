@@ -139,15 +139,51 @@ form button i {
 }
 
 /************************************************/
-/* Results                                      */
+/* Page titles                                  */
 /************************************************/
 
-h1.result {
+h1.result, h1.login {
 
   color: $purple-dark;
   font-size: 1.3rem;
 
 }
+
+h1.login { text-align: center; }
+
+/************************************************/
+/* Login                                        */
+/************************************************/
+
+.login_provider {
+  
+  text-align: center;
+
+  a {
+    
+    text-decoration: none;
+
+    img { width: 61.8%; }
+  
+    span {
+      
+      display: block;
+      margin-top: 1em;
+      
+      &.facebook {color: $facebook; }  
+      &.google {color: $google; }  
+      &.twitter {color: $twitter; }  
+      &.yahoo {color: $yahoo; }  
+    
+    }
+  
+  }
+
+}
+
+/************************************************/
+/* Results                                      */
+/************************************************/
 
 form.result button {
 
