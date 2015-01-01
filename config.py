@@ -60,6 +60,8 @@ OAUTH_CREDENTIALS = {
 
 # content settings
 TITLE = 'Find a Conference'
+HEADLINE = 'Find academic conferences and call for papers all over the world'
+
 LANGS = [
     {'code': 'zh', 'title': '中文'},
     {'code': 'el', 'title': 'Ελληνικά'},

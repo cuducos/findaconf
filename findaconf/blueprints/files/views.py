@@ -34,7 +34,7 @@ def poster():
 
 @files_blueprint.route('/favicon.ico')
 def favicon():
-    imgs_path = app.config['SITE_STATIC'].child('imgs')
+    imgs_path = app.config['SITE_STATIC'].child('favicons')
     return send_from_directory(imgs_path, 'favicon.ico')
 
 
