@@ -5,8 +5,11 @@ import sys
 from authomatic import Authomatic
 from authomatic.adapters import WerkzeugAdapter
 from findaconf import app, db, lm
-from findaconf.models import Conference, Continent, Country, User, Year
-from flask import Blueprint, flash, g, redirect, render_template, request, make_response, url_for
+from findaconf.models import Continent, Country, User, Year
+from flask import (
+    Blueprint, flash, g, redirect, render_template, request, make_response,
+    url_for
+)
 from flask.ext.login import current_user, login_user, logout_user
 from htmlmin.minify import html_minify
 
@@ -24,6 +27,7 @@ site_blueprint = Blueprint(
 
 @site_blueprint.route('/')
 def index():
+    flash({'type': 'success', 'text': 'Buongiorno, Principessa!'})
     return html_minify(render_template('home.slim'))
 
 
@@ -40,27 +44,27 @@ def results():
 
 @site_blueprint.route('/login', methods=['GET'])
 def login_options():
-    return html_minify(render_template('login.slim',
-                                       providers=app.config['OAUTH_CREDENDIALS'].keys()))
+    providers = app.config['OAUTH_CREDENDIALS'].keys()
+    return html_minify(render_template('login.slim', providers=providers))
 
 
 @site_blueprint.route('/login/<provider_name>', methods=['GET', 'POST'])
 def login(provider_name):
 
     # create authomatic and response objects
-    authomatic = Authomatic(app.config['OAUTH_CREDENDIALS'], 
-                            app.config['SECRET_KEY'], 
+    authomatic = Authomatic(app.config['OAUTH_CREDENDIALS'],
+                            app.config['SECRET_KEY'],
                             report_errors=True)
     response = make_response()
-    
+
     # try login
     result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
     if result:
-        
+
         # if success
         if result.user:
             result.user.update()
-            
+
             # manage user data in db
             user = User.query.filter_by(email=result.user.email).first()
             if not user:
@@ -68,12 +72,13 @@ def login(provider_name):
                 db.session.add(new_user)
                 db.session.commit()
                 user = User.query.filter_by(email=result.user.email).first()
-            
+
             # save user info
             login_user(user)
-            flash({'type': 'success', 'text': 'Welcome, {}'.format(result.user.name)})
+            flash({'type': 'success',
+                   'text': 'Welcome, {}'.format(result.user.name)})
             return redirect(url_for('site.index'))
-    
+
     return response
 
 
