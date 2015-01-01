@@ -1,3 +1,4 @@
+authomatic==0.0.10
 CairoSVG==1.0.9
 cffi==0.8.6
 colour==0.0.6
@@ -8,6 +9,7 @@ Flask==0.10.1
 Flask-AlchemyDumps==0.0.3
 Flask-Assets==0.10
 Flask-Compress==1.0.2
+Flask-Login==0.2.11
 Flask-Migrate==1.2.0
 Flask-Script==2.0.5
 Flask-SQLAlchemy==2.0

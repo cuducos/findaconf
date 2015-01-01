@@ -1,5 +1,7 @@
 # coding: utf-8
 
+import authomatic
+from authomatic.providers import oauth1, oauth2
 from unipath import Path
 from decouple import config
 
@@ -18,12 +20,43 @@ ASSETS_DEBUG = config('ASSETS_DEBUG', default=False, cast=bool)
 # security keys
 SECRET_KEY = config('SECRET_KEY', default=False)
 
-# api keys
+# service api keys
 GOOGLE_PLACES_API = config('GOOGLE_PLACES_API', default=None)
 GOOGLE_PLACES_API_PROXY = config('GOOGLE_PLACES_API_PROXY', default=None)
 
-# oauth(2) providers
-PROVIDERS = ['Google', 'Twitter', 'Facebook', 'Yahoo']
+# oauth/oauth2 providers
+OAUTH_CREDENDIALS = {
+    
+    'Google': {
+        'class_': oauth2.Google,
+        'consumer_key': config('GOOGLE_DEVELOPER_CLIENT_ID', default=None),
+        'consumer_secret': config('GOOGLE_DEVELOPER_CLIENT_SECRET', default=None),
+        'id': authomatic.provider_id(),
+        'scope': oauth2.Google.user_info_scope,
+    },    
+
+    'Twitter': {
+        'class_': oauth1.Twitter,
+        'consumer_key': config('TWITTER_DEVELOPER_CLIENT_ID', default=None),
+        'consumer_secret': config('TWITTER_DEVELOPER_CLIENT_SECRET', default=None),
+        'id': authomatic.provider_id(),
+    },
+    
+    'Facebook': {
+        'class_': oauth2.Facebook,
+        'consumer_key': config('FACEBOOK_DEVELOPER_CLIENT_ID', default=None),
+        'consumer_secret': config('FACEBOOK_DEVELOPER_CLIENT_SECRET', default=None),
+        'id': authomatic.provider_id(),
+        'scope': oauth2.Facebook.user_info_scope,
+    },
+
+    'Yahoo': {
+        'class_': oauth1.Yahoo,
+        'consumer_key': '##########--',
+        'consumer_secret': '##########',
+        'id': authomatic.provider_id(),
+    },
+}
 
 # content settings
 TITLE = 'Find a Conference'

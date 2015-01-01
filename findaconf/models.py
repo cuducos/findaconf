@@ -1,7 +1,9 @@
 # coding: utf-8
 
 from findaconf import db
+from flask.ext.login import UserMixin
 from hashlib import md5
+
 
 conferences_keywords = db.Table(
     'conferences_keywords',
@@ -22,7 +24,7 @@ class Group(db.Model):
         return '<Group #{}: {}>'.format(self.id, self.title)
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -38,18 +40,6 @@ class User(db.Model):
         base_url = 'http://www.gravatar.com/avatar/'
         user_hash = md5(self.email.encode('utf_8')).hexdigest()
         return '{}{}?s={}'.format(base_url, user_hash, size)
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return unicode(self.id)
 
 
 class Conference(db.Model):
