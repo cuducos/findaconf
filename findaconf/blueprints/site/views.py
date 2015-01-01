@@ -7,7 +7,9 @@ from authomatic.adapters import WerkzeugAdapter
 from findaconf import app, db, lm
 from findaconf.blueprints.site.helpers.minify import render_minified
 from findaconf.models import Continent, Country, User, Year
-from flask import Blueprint, flash, g, redirect, request, make_response, url_for
+from flask import (
+    abort, Blueprint, flash, g, redirect, request, make_response, url_for
+)
 from flask.ext.login import current_user, login_user, logout_user
 
 reload(sys)
@@ -39,15 +41,18 @@ def results():
 
 @site_blueprint.route('/login', methods=['GET'])
 def login_options():
-    providers = app.config['OAUTH_CREDENDIALS'].keys()
-    return render_minified('login.slim', providers=providers)
+    return render_minified('login.slim')
 
 
 @site_blueprint.route('/login/<provider_name>', methods=['GET', 'POST'])
 def login(provider_name):
 
+    # check if provider_name is valid
+    if provider_name not in app.config['OAUTH_CREDENTIALS'].keys():
+        abort(404)
+
     # create authomatic and response objects
-    authomatic = Authomatic(app.config['OAUTH_CREDENDIALS'],
+    authomatic = Authomatic(app.config['OAUTH_CREDENTIALS'],
                             app.config['SECRET_KEY'],
                             report_errors=True)
     response = make_response()

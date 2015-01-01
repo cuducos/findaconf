@@ -25,15 +25,15 @@ GOOGLE_PLACES_API = config('GOOGLE_PLACES_API', default=None)
 GOOGLE_PLACES_API_PROXY = config('GOOGLE_PLACES_API_PROXY', default=None)
 
 # oauth/oauth2 providers
-OAUTH_CREDENDIALS = {
-    
+OAUTH_CREDENTIALS = {
+
     'Google': {
         'class_': oauth2.Google,
         'consumer_key': config('GOOGLE_DEVELOPER_CLIENT_ID', default=None),
         'consumer_secret': config('GOOGLE_DEVELOPER_CLIENT_SECRET', default=None),
         'id': authomatic.provider_id(),
         'scope': oauth2.Google.user_info_scope,
-    },    
+    },
 
     'Twitter': {
         'class_': oauth1.Twitter,
@@ -41,7 +41,7 @@ OAUTH_CREDENDIALS = {
         'consumer_secret': config('TWITTER_DEVELOPER_CLIENT_SECRET', default=None),
         'id': authomatic.provider_id(),
     },
-    
+
     'Facebook': {
         'class_': oauth2.Facebook,
         'consumer_key': config('FACEBOOK_DEVELOPER_CLIENT_ID', default=None),
