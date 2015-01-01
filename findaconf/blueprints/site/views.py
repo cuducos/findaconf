@@ -5,14 +5,10 @@ import sys
 from authomatic import Authomatic
 from authomatic.adapters import WerkzeugAdapter
 from findaconf import app, db, lm
+from findaconf.blueprints.site.helpers.minify import render_minified
 from findaconf.models import Continent, Country, User, Year
-from flask import (
-    Blueprint, flash, g, redirect, render_template, request, make_response,
-    url_for
-)
+from flask import Blueprint, flash, g, redirect, request, make_response, url_for
 from flask.ext.login import current_user, login_user, logout_user
-from htmlmin.minify import html_minify
-
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -27,7 +23,7 @@ site_blueprint = Blueprint(
 
 @site_blueprint.route('/')
 def index():
-    return html_minify(render_template('home.slim'))
+    return render_minified('home.slim')
 
 
 @site_blueprint.route('/find')
@@ -38,13 +34,13 @@ def results():
     req_vars = [request.args.get(v) for v in url_vars]
     query = dict(zip(url_vars, req_vars))
 
-    return html_minify(render_template('results.slim', **query))
+    return render_minified('results.slim', **query)
 
 
 @site_blueprint.route('/login', methods=['GET'])
 def login_options():
     providers = app.config['OAUTH_CREDENDIALS'].keys()
-    return html_minify(render_template('login.slim', providers=providers))
+    return render_minified('login.slim', providers=providers)
 
 
 @site_blueprint.route('/login/<provider_name>', methods=['GET', 'POST'])
