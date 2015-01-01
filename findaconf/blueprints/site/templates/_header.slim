@@ -7,10 +7,16 @@ nav
         a href="#"
           %i.fi-plus
           |Add your conference
-      li
-        a href="{{ url_for('site.login_options') }}"
-          %i.fi-torso-female
-          |Log in
+      - if g.user.is_authenticated():
+        li
+          a href="{{ url_for('site.logout') }}"
+            img src="{{ g.user.avatar(16) }}" alt="{{ g.user.name }}"
+            |Log out
+      - else
+        li
+          a href="{{ url_for('site.login_options') }}"
+            %i.fi-torso-female
+            |Log in
       li.lang
         a href="#" title="English" EN
         ul

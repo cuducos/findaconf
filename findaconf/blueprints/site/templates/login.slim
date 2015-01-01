@@ -5,5 +5,5 @@
     .login
       - for provider in providers
         div class="small-1 column{% if loop.first %} small-offset-4{% endif %}"
-          a href="/login#{{ provider }}" title="Login with {{ provider }}"
+          a href="/login/{{ provider }}" title="Login with {{ provider }}"
             img src="{{ url_for('site.static', filename='imgs/oauth_' + provider.lower() + '.png') }}" alt="Login with {{ provider }}"
