@@ -13,8 +13,26 @@ $(document).ready ->
     highlightMatches: true
   }
 
+  $('#flash a.close').click(sweet_hide)
+
   fix_lang_menu()
   fix_main_padding()
+
+sweet_hide = ->
+  alert_box = $(this).parent()
+  properties = {
+    height: 'toggle',
+    marginBottom: 'toggle',
+    marginTop: 'toogle',
+    opacity: 'toggle',
+    paddingBottom: 'toggle',
+    paddingTop: 'toogle'
+  }
+  alert_box.animate properties, 'fast', check_flash
+
+check_flash = ->
+  flash_area = $('#flash')
+  flash_area.slideUp() if $('li', flash_area).length?
 
 fix_lang_menu = ->
   lang_menu = $('li.lang').first()

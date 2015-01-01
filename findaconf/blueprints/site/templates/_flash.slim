@@ -1,5 +1,7 @@
 - with messages = get_flashed_messages()
   - if messages
-    ul#flash
+    ul#flash.row
       - for message in messages
-        li class="{{ message.type }}" {{ message.text }}
+        li class="alert-box {{ message.type }}"
+          {{ message.text }}
+          a.close &times;
