@@ -3,6 +3,7 @@
 from flask import Flask
 from flask.ext.assets import Environment
 from flask.ext.compress import Compress
+from flask.ext.login import LoginManager
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -28,6 +29,12 @@ from findaconf import models
 manager = Manager(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
+
+# init the login manager
+lm = LoginManager()
+lm.init_app(app)
+lm.login_view = '/login'
+lm.login_message = {'type': 'success', 'text': lm.login_message}
 
 # enable gzip compression
 Compress(app)
