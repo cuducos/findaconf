@@ -50,6 +50,18 @@ nav {
     }
 
     li:last-child { border-right: 1px solid $white-layer-2; }
+    
+    .login {
+
+      img {
+        
+        @include border-radius(50%);
+        margin-right: .4em;
+        width: 2em;
+  
+    }
+    
+  }
 
     .lang {
 
@@ -149,34 +161,32 @@ h1.result, h1.login {
 
 }
 
-h1.login { text-align: center; }
-
 /************************************************/
 /* Login                                        */
 /************************************************/
 
 .login_provider {
-  
+
   text-align: center;
 
   a {
-    
+
     text-decoration: none;
 
     img { width: 61.8%; }
-  
+
     span {
-      
+    
       display: block;
       margin-top: 1em;
-      
-      &.facebook {color: $facebook; }  
-      &.google {color: $google; }  
-      &.twitter {color: $twitter; }  
-      &.yahoo {color: $yahoo; }  
     
+      &.facebook { color: $facebook; }
+      &.google { color: $google; }
+      &.twitter { color: $twitter; }
+      &.yahoo { color: $yahoo; }
+
     }
-  
+ 
   }
 
 }

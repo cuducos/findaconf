@@ -8,12 +8,12 @@ nav
           %i.fi-plus
           |Add your conference
       - if g.user.is_authenticated():
-        li
+        li.login
           a href="{{ url_for('site.logout') }}"
-            img src="{{ g.user.avatar(16) }}" alt="{{ g.user.name }}"
+            img src="{{ g.user.avatar(128) }}" alt="{{ g.user.name }}"
             |Log out
       - else
-        li
+        li.login
           a href="{{ url_for('site.login_options') }}"
             %i.fi-torso-female
             |Log in
