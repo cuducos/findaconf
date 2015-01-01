@@ -6,11 +6,13 @@ from authomatic import Authomatic
 from authomatic.adapters import WerkzeugAdapter
 from findaconf import app, db, lm
 from findaconf.blueprints.site.helpers.minify import render_minified
+from findaconf.blueprints.site.helpers.titles import get_search_title
 from findaconf.models import Continent, Country, User, Year
 from flask import (
     abort, Blueprint, flash, g, redirect, request, make_response, url_for
 )
 from flask.ext.login import current_user, login_user, logout_user
+from random import randrange
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -36,12 +38,15 @@ def results():
     req_vars = [request.args.get(v) for v in url_vars]
     query = dict(zip(url_vars, req_vars))
 
-    return render_minified('results.slim', **query)
+    # page title
+    page_title = get_search_title(randrange(0, 8), query['query'])
+
+    return render_minified('results.slim', page_title=page_title, **query)
 
 
 @site_blueprint.route('/login', methods=['GET'])
 def login_options():
-    return render_minified('login.slim')
+    return render_minified('login.slim', page_title='Log in')
 
 
 @site_blueprint.route('/login/<provider_name>', methods=['GET', 'POST'])
