@@ -44,6 +44,7 @@ def robots():
 
 
 @files_blueprint.route('/assets/foundation-icons.<extension>')
+@files_blueprint.route('/assets/webassets-external/foundation-icons.<extension>')
 def foundation_icon(extension):
     bower_path = app.config['BASEDIR'].child('findaconf', 'bower')
     directory = 'foundation-icon-fonts'
