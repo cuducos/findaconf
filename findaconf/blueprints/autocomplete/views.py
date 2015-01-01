@@ -46,10 +46,10 @@ def ajax_google_places():
     api_url_vars = {
         'input': query,
         'language': 'en',
-        'key': app.config['GOOGLE_PLACES_API']
+        'key': app.config['GOOGLE_DEVELOPER_PUBLIC_API']
     }
     api_url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json'
-    if app.config['GOOGLE_PLACES_API_PROXY']:
+    if app.config['GOOGLE_PLACES_PROXY']:
         api_url = app.config['GOOGLE_PLACES_API_PROXY']
         api_url_vars['token'] = sha512(app.config['SECRET_KEY']).hexdigest()
     api_request = requests.get(api_url, params=api_url_vars)
