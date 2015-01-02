@@ -9,14 +9,12 @@ from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
 from slimish_jinja import SlimishExtension
 
-
-# add slimish_jinja extension
-class SlimishApp(Flask):
-    Flask.jinja_options['extensions'].append(SlimishExtension)
-
 # init the app
-app = SlimishApp('findaconf', static_folder='assets')
+app = Flask('findaconf', static_folder='assets')
 app.config.from_object('config')
+
+# set jinja and json outputs
+app.jinja_options['extensions'].append(SlimishExtension)
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
@@ -61,7 +59,7 @@ if not app.config['DEBUG']:
     handler.setLevel(logging.INFO)
     app.logger.setLevel(logging.INFO)
     app.logger.addHandler(handler)
-    app.logger.info('App {} started successfully.'.format(app.config['TITLE']))
+    app.logger.info('{} started successfully.'.format(app.config['TITLE']))
 
 # load & register blueprints
 from blueprints.autocomplete.views import autocomplete_blueprint
