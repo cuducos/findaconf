@@ -2,12 +2,14 @@
 - block content
   div.row
     h1.login.small-8.small-offset-2.columns Log in
-    - for provider in config['PROVIDERS_SLUGS']
+    - for provider in providers.get_slugs()
       div class="login_button {{ provider }} small-4 columns {{ loop.cycle('small-offset-2', 'end') }}"
-        a href="/login/{{ provider }}" title="Login with {{ config['PROVIDERS'][provider] }}"
+        a href="/login/{{ provider }}" title="Login with {{ providers.get_name(provider) }}"
           %i class="fi-social-{{ provider }}"
-          span Log in with {{ config['PROVIDERS'][provider] }}
+          span Log in with {{ providers.get_name(provider) }}
     p.small.small-8.small-offset-2.columns.end
       |Find a Conference will never post anything to your profile. Find a Conference will access only your name and email to create your account here with us.
     p.small.small-8.small-offset-2.columns.end
       |Your email is used as your unique ID here at Find a Conference. If you use the same email address accross multiple platforms, you can log in using any of them.
+    p.small.small-8.small-offset-2.columns.end
+      |We can not log you in using Twitter because Twitter API deliberatively do not provide user's email address. Depending on user settings GitHub accounst might not provide it either, raising an error in the login process. If that is the case, please, make your email public in your GitHub profile or use other service.

@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from findaconf import app, db
+from findaconf.helpers.providers import OAuthProvider
 from findaconf.tests.config import set_app, unset_app
 from unittest import TestCase
 
@@ -36,8 +37,8 @@ class TestSiteRoutes(TestCase):
         assert resp.mimetype == 'text/html'
 
         # test if are links to oauth/oauth2 providers
-        providers = app.config['PROVIDERS_SLUGS']
-        for provider in providers:
+        providers = OAuthProvider()
+        for provider in providers.get_slugs():
             assert 'href="/login/{}'.format(provider) in resp.data
 
         # test if is there a link to login in the home page
@@ -47,8 +48,8 @@ class TestSiteRoutes(TestCase):
     def test_login_providers(self):
 
         # test if links to the ouauth/oauth2 providers (20X or 30X)
-        providers = app.config['PROVIDERS_SLUGS']
-        for provider in providers:
+        providers = OAuthProvider()
+        for provider in providers.get_slugs():
             resp = self.app.get('/login/{}'.format(provider))
             assert resp.status_code in range(200, 400)
 

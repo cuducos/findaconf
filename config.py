@@ -100,10 +100,6 @@ OAUTH_CREDENTIALS = {
 
 }
 
-PROVIDERS_NAMES = sorted([p for p in OAUTH_CREDENTIALS.keys()])
-PROVIDERS_SLUGS = [p.lower().replace(' ', '-') for p in PROVIDERS_NAMES]
-PROVIDERS = dict(zip(PROVIDERS_SLUGS, PROVIDERS_NAMES))
-
 # content settings
 TITLE = 'Find a Conference'
 HEADLINE = 'Find academic conferences and call for papers all over the world'
