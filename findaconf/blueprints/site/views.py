@@ -75,19 +75,24 @@ def login(provider):
         if result.user:
             result.user.update()
 
-            # manage user data in db
-            user = User.query.filter_by(email=result.user.email).first()
-            if not user:
-                new_user = User(email=result.user.email, name=result.user.name)
-                db.session.add(new_user)
-                db.session.commit()
+            if not result.user.email:
+                flash({'type': 'error', 
+                       'text': 'Invalid login. Please try another provider.'})
+            else:
+                # manage user data in db
                 user = User.query.filter_by(email=result.user.email).first()
+                if not user:
+                    new_user = User(email=result.user.email, name=result.user.name)
+                    db.session.add(new_user)
+                    db.session.commit()
+                    user = User.query.filter_by(email=result.user.email).first()
 
-            # save user info
-            login_user(user)
-            flash({'type': 'success',
-                   'text': 'Welcome, {}'.format(result.user.name)})
-            return redirect(url_for('site.index'))
+                # save user info
+                login_user(user)
+                flash({'type': 'success',
+                       'text': 'Welcome, {}'.format(result.user.name)})
+       
+        return redirect(url_for('site.index'))
 
     return response
 
