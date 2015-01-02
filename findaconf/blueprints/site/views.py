@@ -71,7 +71,7 @@ def login(provider):
         if result.user:
             result.user.update()
 
-            if not result.user.email or result.user.email == "":
+            if not result.user.email:
                 flash({'type': 'error', 
                        'text': 'Invalid login. Please try another provider.'})
             else:

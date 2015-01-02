@@ -53,7 +53,7 @@ OAUTH_CREDENTIALS = {
         'class_': oauth2.GitHub,
         'consumer_key': config('GITHUB_DEVELOPER_CLIENT_ID', default=None),
         'consumer_secret': config('GITHUB_DEVELOPER_CLIENT_SECRET', default=None),
-        'access_headers': {'User-Agent': 'Awesome-Octocat-App'},
+        'access_headers': {'User-Agent': 'Find-a-Conference'},
         'scope': oauth2.GitHub.user_info_scope,
     },
 
