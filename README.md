@@ -67,8 +67,16 @@ You can discuss the project, further features, implementation and report issues 
 * Push to the branch: `git push origin my-new-feature`
 * Go to your fork page at GitHub and create new pull request
 
+## Contributors
+
+The idea emerged within a group of PhD students in Sociology from the [University of Essex](http://essex.ac.uk): [Ale](http://www.essex.ac.uk/sociology/staff/profile.aspx?ID=3787), [Can](http://www.essex.ac.uk/sociology/staff/profile.aspx?ID=3471) and [Cuducos](http://cuducos.me).
+
+[Mabel](http://about.me/mabel_lazzarin) and [Cuducos](http://cuducos.me) designed the UI. 
+
+The source code is being written by [Cuducos](http://cuducos.me) and [Gabriel](http://about.me/gabrielvicente).
+
 ## License
 
-Copyright (c) 2014 Eduardo Cuducos
+Copyright (c) 2014 Eduardo Cuducos and Gabriel Vicente
 
 Licensed under the [MIT LICENSE](LICENSE).
