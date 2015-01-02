@@ -49,11 +49,11 @@ def login_options():
     return render_minified('login.slim', page_title='Log in')
 
 
-@site_blueprint.route('/login/<provider_name>', methods=['GET', 'POST'])
-def login(provider_name):
+@site_blueprint.route('/login/<provider>', methods=['GET', 'POST'])
+def login(provider):
 
-    # check if provider_name is valid
-    if provider_name not in app.config['OAUTH_CREDENTIALS'].keys():
+    # check if provider is valid
+    if provider not in app.config['PROVIDERS_SLUGS']:
         abort(404)
 
     # create authomatic and response objects
@@ -63,7 +63,8 @@ def login(provider_name):
     response = make_response()
 
     # try login
-    result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
+    result = authomatic.login(WerkzeugAdapter(request, response),
+                              app.config['PROVIDERS'][provider])
     if result:
 
         # if success

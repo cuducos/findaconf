@@ -2,11 +2,11 @@
 - block content
   div.row
     h1.login.small-8.small-offset-2.columns Log in
-    - for provider in config['OAUTH_CREDENTIALS'].keys()
-      div class="login_button {{ provider|lower|replace(' ', '-') }} small-4 columns {{ loop.cycle('small-offset-2', 'end') }}"
-        a href="/login/{{ provider }}" title="Login with {{ provider }}"
-          %i class="fi-social-{{ provider|lower|replace(' ', '-') }}"
-          span Log in with {{ provider }}
+    - for provider in config['PROVIDERS_SLUGS']
+      div class="login_button {{ provider }} small-4 columns {{ loop.cycle('small-offset-2', 'end') }}"
+        a href="/login/{{ provider }}" title="Login with {{ config['PROVIDERS'][provider] }}"
+          %i class="fi-social-{{ provider }}"
+          span Log in with {{ config['PROVIDERS'][provider] }}
     p.small.small-8.small-offset-2.columns.end
       |Find a Conference will never post anything to your profile. Find a Conference will access only your name and email to create your account here with us.
     p.small.small-8.small-offset-2.columns.end

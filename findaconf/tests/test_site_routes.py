@@ -36,7 +36,7 @@ class TestSiteRoutes(TestCase):
         assert resp.mimetype == 'text/html'
 
         # test if are links to oauth/oauth2 providers
-        providers = app.config['OAUTH_CREDENTIALS'].keys()
+        providers = app.config['PROVIDERS_SLUGS']
         for provider in providers:
             assert 'href="/login/{}'.format(provider) in resp.data
 
@@ -47,7 +47,7 @@ class TestSiteRoutes(TestCase):
     def test_login_providers(self):
 
         # test if links to the ouauth/oauth2 providers (20X or 30X)
-        providers = app.config['OAUTH_CREDENTIALS'].keys()
+        providers = app.config['PROVIDERS_SLUGS']
         for provider in providers:
             resp = self.app.get('/login/{}'.format(provider))
             assert resp.status_code in range(200, 400)
