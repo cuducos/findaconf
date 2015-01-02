@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from authomatic import provider_id
-from authomatic.providers import oauth2
+from authomatic.providers import oauth1, oauth2
 from unipath import Path
 from decouple import config
 
@@ -25,14 +25,23 @@ GOOGLE_DEVELOPER_PUBLIC_API = config('GOOGLE_DEVELOPER_PUBLIC_API', default=None
 GOOGLE_PLACES_PROXY = config('GOOGLE_PLACES_PROXY', default=None)
 
 # oauth/oauth2 providers
+
+# TODO oauth/oauth2 still not implemented for the following providers:
+# * Amazon
+# * GitHub
+# * LinkedIn
+# * Windows
+# * Tumblr
+# (what is needed: create dev account, create app, input API tokens and test)
+
 OAUTH_CREDENTIALS = {
 
-    'Google': {
-        'class_': oauth2.Google,
-        'consumer_key': config('GOOGLE_DEVELOPER_CLIENT_ID', default=None),
-        'consumer_secret': config('GOOGLE_DEVELOPER_CLIENT_SECRET', default=None),
+    'Amazon': {
+        'class_': oauth2.Amazon,
+        'consumer_key': config('AMAZON_DEVELOPER_CLIENT_ID', default=None),
+        'consumer_secret': config('AMAZON_DEVELOPER_CLIENT_SECRET', default=None),
         'id': provider_id(),
-        'scope': oauth2.Google.user_info_scope
+        'scope': oauth2.Amazon.user_info_scope
     },
 
     'Facebook': {
@@ -43,12 +52,52 @@ OAUTH_CREDENTIALS = {
         'scope': oauth2.Facebook.user_info_scope
     },
 
-    'Yahoo': {
-        'class_': oauth1.Yahoo,
-        'consumer_key': '##########--',
-        'consumer_secret': '##########',
+    'GitHub': {
+        'class_': oauth2.GitHub,
+        'consumer_key': config('GITHUB_DEVELOPER_CLIENT_ID', default=None),
+        'consumer_secret': config('GITHUB_DEVELOPER_CLIENT_SECRET', default=None),
+        'id': provider_id(),
+        'scope': oauth2.GitHub.user_info_scope,
+    },
+
+    'Google Plus': {
+        'class_': oauth2.Google,
+        'consumer_key': config('GOOGLE_DEVELOPER_CLIENT_ID', default=None),
+        'consumer_secret': config('GOOGLE_DEVELOPER_CLIENT_SECRET', default=None),
+        'id': provider_id(),
+        'scope': oauth2.Google.user_info_scope
+    },
+
+    'LinkedIn': {
+        'class_': oauth2.LinkedIn,
+        'consumer_key': config('LINKEDIN_DEVELOPER_CLIENT_ID', default=None),
+        'consumer_secret': config('LINKEDIN_DEVELOPER_CLIENT_SECRET', default=None),
+        'id': provider_id(),
+        'scope': oauth2.LinkedIn.user_info_scope
+    },
+
+    'Tumblr': {
+        'class_': oauth1.Tumblr,
+        'consumer_key': config('TUMBLR_DEVELOPER_CLIENT_ID', default=None),
+        'consumer_secret': config('TUMBLR_DEVELOPER_CLIENT_SECRET', default=None),
         'id': provider_id()
     },
+
+    'Windows': {
+        'class_': oauth2.WindowsLive,
+        'consumer_key': config('WINDOWS_DEVELOPER_CLIENT_ID', default=None),
+        'consumer_secret': config('WINDOWS_DEVELOPER_CLIENT_SECRET', default=None),
+        'id': provider_id(),
+        'scope': oauth2.WindowsLive.user_info_scope
+    },
+
+    'Yahoo': {
+        'class_': oauth1.Yahoo,
+        'consumer_key': config('YAHOO_DEVELOPER_CLIENT_ID', default=None),
+        'consumer_secret': config('YAHOO_DEVELOPER_CLIENT_SECRET', default=None),
+        'id': provider_id()
+    },
+
 }
 
 # content settings

@@ -1,9 +1,13 @@
 - extends "base.slim"
 - block content
   div.row
-    h1.login.small-8.small-offset-2.columns Log in with
+    h1.login.small-8.small-offset-2.columns Log in
     - for provider in config['OAUTH_CREDENTIALS'].keys()
-      div class="login_provider small-2 columns {% if loop.first %} small-offset-2{% endif %}{% if loop.last %} end{% endif %}"
+      div class="login_button {{ provider|lower|replace(' ', '-') }} small-4 columns {{ loop.cycle('small-offset-2', 'end') }}"
         a href="/login/{{ provider }}" title="Login with {{ provider }}"
-          img src="{{ url_for('site.static', filename='imgs/oauth_' + provider.lower() + '.png') }}" alt="Login with {{ provider }}"
-          span class="{{ provider|lower }}" {{ provider }}
+          %i class="fi-social-{{ provider|lower|replace(' ', '-') }}"
+          span Log in with {{ provider }}
+    p.small.small-8.small-offset-2.columns.end
+      |Find a Conference will never post anything to your profile. Find a Conference will access only your name and email to create your account here with us.
+    p.small.small-8.small-offset-2.columns.end
+      |Your email is used as your unique ID here at Find a Conference. If you use the same email address accross multiple platforms, you can log in using any of them.

@@ -192,29 +192,41 @@ h1.result, h1.login {
 /* Login                                        */
 /************************************************/
 
-.login_provider {
-
-  text-align: center;
-
+.login_button {
+  
   a {
-
+    
+    color: $white;
+    display: block;
+    height: 3.3em;
+    line-height: 3.3em;
+    margin-bottom: 1em;
+    padding-bottom: 3.6em;
     text-decoration: none;
+    @include border-radius(3px);
+    @include transition(opacity 120ms);
 
-    img { width: 61.8%; }
+    i, span { vertical-align: middle; }
+    
+    i {
 
-    span {
-    
-      display: block;
-      margin-top: 1em;
-    
-      &.facebook { color: $facebook; }
-      &.google { color: $google; }
-      &.twitter { color: $twitter; }
-      &.yahoo { color: $yahoo; }
+      font-size: 2.5em;
+      margin: 0 .2em 0 .4em;
 
     }
- 
+
+    &:hover { opacity: .8; }
+
   }
+
+  &.amazon a { background-color: $amazon; }
+  &.facebook a { background-color: $facebook; }
+  &.github a { background-color: $github; }
+  &.google-plus a { background-color: $google-plus; }
+  &.linkedin a { background-color: $linkedin; }
+  &.tumblr a { background-color: $tumblr; }
+  &.windows a { background-color: $windows; }
+  &.yahoo a { background-color: $yahoo; }
 
 }
 

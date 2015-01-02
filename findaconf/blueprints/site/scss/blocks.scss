@@ -36,6 +36,11 @@ a:hover {
 
 }
 
+small, .small {
+  font-size: .8em;
+  line-height: 1.618;
+}
+
 /* replace foundation default font-family */
 
 .accordion .accordion-navigation > a,
@@ -167,7 +172,7 @@ main {
 /************************************************/
 
 h1.login {
-  margin: 3em 0;
+  margin: 3em 0 1em 0;
 }
 
 /************************************************/
