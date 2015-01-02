@@ -5,8 +5,8 @@ import sys
 from authomatic import Authomatic
 from authomatic.adapters import WerkzeugAdapter
 from findaconf import app, db, lm
-from findaconf.blueprints.site.helpers.minify import render_minified
-from findaconf.blueprints.site.helpers.titles import get_search_title
+from findaconf.helpers.minify import render_minified
+from findaconf.helpers.titles import get_search_title
 from findaconf.models import Continent, Country, User, Year
 from flask import (
     abort, Blueprint, flash, g, redirect, request, make_response, url_for
