@@ -1,7 +1,7 @@
 # coding: utf-8
 
-import authomatic
-from authomatic.providers import oauth1, oauth2
+from authomatic import provider_id
+from authomatic.providers import oauth2
 from unipath import Path
 from decouple import config
 
@@ -31,30 +31,23 @@ OAUTH_CREDENTIALS = {
         'class_': oauth2.Google,
         'consumer_key': config('GOOGLE_DEVELOPER_CLIENT_ID', default=None),
         'consumer_secret': config('GOOGLE_DEVELOPER_CLIENT_SECRET', default=None),
-        'id': authomatic.provider_id(),
-        'scope': oauth2.Google.user_info_scope,
-    },
-
-    'Twitter': {
-        'class_': oauth1.Twitter,
-        'consumer_key': config('TWITTER_DEVELOPER_CLIENT_ID', default=None),
-        'consumer_secret': config('TWITTER_DEVELOPER_CLIENT_SECRET', default=None),
-        'id': authomatic.provider_id(),
+        'id': provider_id(),
+        'scope': oauth2.Google.user_info_scope
     },
 
     'Facebook': {
         'class_': oauth2.Facebook,
         'consumer_key': config('FACEBOOK_DEVELOPER_CLIENT_ID', default=None),
         'consumer_secret': config('FACEBOOK_DEVELOPER_CLIENT_SECRET', default=None),
-        'id': authomatic.provider_id(),
-        'scope': oauth2.Facebook.user_info_scope,
+        'id': provider_id(),
+        'scope': oauth2.Facebook.user_info_scope
     },
 
     'Yahoo': {
         'class_': oauth1.Yahoo,
         'consumer_key': '##########--',
         'consumer_secret': '##########',
-        'id': authomatic.provider_id(),
+        'id': provider_id()
     },
 }
 

@@ -38,7 +38,8 @@ class User(db.Model, UserMixin):
 
     def avatar(self, size):
         base_url = 'http://www.gravatar.com/avatar/'
-        user_hash = md5(self.email.encode('utf_8')).hexdigest()
+        user_email = str(self.email)
+        user_hash = md5(user_email.encode('utf_8')).hexdigest()
         return '{}{}?s={}'.format(base_url, user_hash, size)
 
 
