@@ -46,11 +46,11 @@ class TestSiteRoutes(TestCase):
 
     def test_login_providers(self):
 
-        # test if links to the ouauth/oauth2 providers
+        # test if links to the ouauth/oauth2 providers (20X or 30X)
         providers = app.config['OAUTH_CREDENTIALS'].keys()
         for provider in providers:
             resp = self.app.get('/login/{}'.format(provider))
-            assert resp.status_code == 200
+            assert resp.status_code in range(200, 400)
 
         # test if unauthorized provider returns 404
         resp = self.app.get('/login/anything_else')
