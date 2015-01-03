@@ -1,9 +1,9 @@
 # coding: utf-8
 
+import re
 from findaconf import db
 from flask.ext.login import UserMixin
 from hashlib import md5
-
 
 conferences_keywords = db.Table(
     'conferences_keywords',
@@ -42,6 +42,11 @@ class User(db.Model, UserMixin):
         user_hash = md5(user_email.encode('utf_8')).hexdigest()
         return '{}{}?s={}'.format(base_url, user_hash, size)
 
+    def valid_email(self):
+        email_regex = re.compile(r'[\w+\-.]+@[A-Za-z\d\-.]+\.[A-Za-z]+')
+        if email_regex.match(self.email):
+            return True
+        return False
 
 class Conference(db.Model):
 
