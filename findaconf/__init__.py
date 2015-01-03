@@ -32,7 +32,7 @@ manager.add_command('db', MigrateCommand)
 lm = LoginManager()
 lm.init_app(app)
 lm.login_view = '/login'
-lm.login_message = {'type': 'success', 'text': lm.login_message}
+lm.login_message = {'type': 'info', 'text': lm.login_message}
 
 # enable gzip compression
 Compress(app)
