@@ -102,6 +102,6 @@ The source code is being written by [Cuducos](http://cuducos.me) and [Gabriel](h
 
 ## License
 
-Copyright (c) 2014 Eduardo Cuducos and Gabriel Vicente
+Copyright (c) 2015 Eduardo Cuducos and Gabriel Vicente
 
 Licensed under the [MIT LICENSE](LICENSE).

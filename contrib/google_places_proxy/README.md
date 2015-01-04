@@ -46,6 +46,6 @@ variable to the URL of `google_places_proxy.fcgi`.
 
 ## License
 
-Copyright (c) 2014 Eduardo Cuducos
+Copyright (c) 2015 Eduardo Cuducos
 
 Licensed under the [MIT LICENSE](LICENSE).
