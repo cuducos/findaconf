@@ -25,21 +25,46 @@ If you wanr to get a development version of *Find a Conference* running, this se
 
 ### Environment variables
 
-This application use a series of *environment variables*. This can easily be achieved by puting a file called `.env` in the root directory of the project. This file should define this variables (most of them are optional):
+This application uses some required *environment variables*. You can start costumizing them using by renaming and editing the sample file included in this repository. 
+
+#### Databases (required)
+
+* `DATABASE_URL: url and credentials to development database (e.g. `postgres://vagrant:vagrant@localhost/findaconf`)  
+* `DATABASE_URL_TEST: url and credentials to test database (e.g. `postgres://vagrant:vagrant@localhost/findaconf_test`)  
+
+#### Security (required)
+
+* `SECRET_KEY`: [Flask's default secret key](http://flask.pocoo.org/docs/0.10/api/#flask.Flask.secret_key)
+
+#### Public APIs (recommended)
+
+* `GOOGLE_DEVELOPER_PUBLIC_API`: credentials to [Google Places API](https://developers.google.com/places/documentation/)
+* `GOOGLE_PLACES_PROXY` *(optional)*: if you want to [access Google Places API through a proxy](contrib/google_places_proxy), set the proxy URL here
+
+#### OAuth/OAuth2 APIs (recommended)
+
+At least one of these providers should be set in order to enable users to log in. Setting a provider involves registering an app with a OAuth/OAuth2 provider, and passing the `client id` and `client secret` tokens to *Find a Conference* throght pairs from this set of variables:
+
+* `AMAZON_DEVELOPER_CLIENT_ID` and `AMAZON_DEVELOPER_CLIENT_SECRET`
+* `FACEBOOK_DEVELOPER_CLIENT_ID` and `FACEBOOK_DEVELOPER_CLIENT_SECRET`
+* `GITHUB_DEVELOPER_CLIENT_ID` and `GITHUB_DEVELOPER_CLIENT_SECRET`
+* `GOOGLE_DEVELOPER_CLIENT_ID` and `GOOGLE_DEVELOPER_CLIENT_SECRET`
+* `LINKEDIN_DEVELOPER_CLIENT_ID` and `LINKEDIN_DEVELOPER_CLIENT_SECRET`
+* `TUMBLR_DEVELOPER_CLIENT_ID` and `TUMBLR_DEVELOPER_CLIENT_SECRET`
+* `WINDOWS_DEVELOPER_CLIENT_ID` and `WINDOWS_DEVELOPER_CLIENT_SECRET`
+* `YAHOO_DEVELOPER_CLIENT_ID` and `YAHOO_DEVELOPER_CLIENT_SECRET`
+
+#### Debug (optional)
 
 * `DEBUG`: sets if the application is started in debug mode (e.g. `True`)
 * `ASSETS_DEBUG`: sets if [webassets](http://webassets.readthedocs.org/en/latest/environment.html?highlight=debug#webassets.env.Environment.debug) runs in debug mode (e.g. `True`)
-* `SECRET_KEY`: [Flask's default secret key](http://flask.pocoo.org/docs/0.10/api/#flask.Flask.secret_key)
-* `DATABASE_URL: url and credentials to development database (e.g. `postgres://vagrant:vagrant@localhost/findaconf`)  
-* `DATABASE_URL_TEST: url and credentials to test database (e.g. `postgres://vagrant:vagrant@localhost/findaconf_test`)  
-* `GOOGLE_PLACES_API`: credentials to [Google Places API](https://developers.google.com/places/documentation/)
-* `GOOGLE_PLACES_API_PROXY`: if you want to access Google Places API through a proxy, set the proxy URL here (it might be useful as Heroku free applications has no fixed IP and a fixed IP – even if local ones such as `0.0.0.0` or `127.0.0.1` or `localhost` – are required by Google)
 
 ### Step-by-step installation
 
 1. Clone the repository and step in its directory: `$ git clone git@github.com:cuducos/findaconf.git && cd findaconf`
 1. If you want, get your [virtualenv](https://pypi.python.org/pypi/virtualenv) running
 1. Install the dependencies: `$ pip install -r requirements.txt && bower install` 
+1. Set up your [environment variables](#environment-variables): `$ mv .env.sample .env` and then edit `.env` accordingly
 1. Create and feed the database: `$ python manage.py db upgrade`
 1. Run the server with something like: `$ python manage.py runserver -r -d -h 0.0.0.0`
 
