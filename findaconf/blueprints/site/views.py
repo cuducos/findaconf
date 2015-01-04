@@ -4,6 +4,7 @@ import sys
 
 from authomatic import Authomatic
 from authomatic.adapters import WerkzeugAdapter
+from BeautifulSoup import BeautifulSoup
 from findaconf import app, db, lm
 from findaconf.helpers.minify import render_minified
 from findaconf.helpers.titles import get_search_title
@@ -71,18 +72,24 @@ def login(provider):
                               providers.get_name(provider))
     if result:
 
+        # flash error message if any
+        if result.error and app.debug:
+            msg = BeautifulSoup(result.error.message).findAll(text=True)
+            flash({'type': 'alert', 'text': ' '.join(msg)})
+
         # if success
         if result.user:
             result.user.update()
 
             if not result.user.email:
-                flash({'type': 'error', 
+                flash({'type': 'warning',
                        'text': 'Invalid login. Please try another provider.'})
             else:
                 # manage user data in db
                 user = User.query.filter_by(email=result.user.email).first()
                 if not user:
-                    new_user = User(email=result.user.email, name=result.user.name)
+                    new_user = User(email=result.user.email,
+                                    name=result.user.name)
                     db.session.add(new_user)
                     db.session.commit()
                     user = User.query.filter_by(email=result.user.email).first()
@@ -91,7 +98,7 @@ def login(provider):
                 login_user(user)
                 flash({'type': 'success',
                        'text': 'Welcome, {}'.format(result.user.name)})
-       
+
         return redirect(url_for('site.index'))
 
     return response

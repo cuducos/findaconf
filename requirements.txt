@@ -1,5 +1,6 @@
 # basic packages
 
+BeautifulSoup==3.2.1
 Flask==0.10.1
 python-decouple==2.3
 requests==2.4.3
