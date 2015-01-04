@@ -54,6 +54,9 @@ def login_options():
 
 @site_blueprint.route('/login/<provider>', methods=['GET', 'POST'])
 def login(provider):
+    
+    # after login url
+    next_page = 'site.index'
 
     # check if provider is valid
     providers = OAuthProvider()
@@ -67,32 +70,52 @@ def login(provider):
     response = make_response()
 
     # try login
-    result = authomatic.login(WerkzeugAdapter(request, response),
-                              providers.get_name(provider))
+    provider_name = providers.get_name(provider)
+    result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
     if result:
 
         # if success
         if result.user:
             result.user.update()
 
+            # check if api sent email address
             if not result.user.email:
-                flash({'type': 'error', 
-                       'text': 'Invalid login. Please try another provider.'})
+                msg = '{} is refusing to send us your email address. '.format(provider_name)
+                msg += 'Please, try another log in provider.'
+                flash({'type': 'error', 'text': msg })
+                next_page = 'site.login_options'
+                
+            # manage user data in db
             else:
-                # manage user data in db
+                
+                # convert all emails to lowercase (avoids duplicity in db) 
+                result.user.email = result.user.email.lower()
+                
+                # if new user
                 user = User.query.filter_by(email=result.user.email).first()
                 if not user:
                     new_user = User(email=result.user.email, name=result.user.name)
-                    db.session.add(new_user)
-                    db.session.commit()
-                    user = User.query.filter_by(email=result.user.email).first()
+                    
+                    # check if email address is valid
+                    if not new_user.valid_email():
+                        msg = 'The address “{}” provided by {} is not a valid email. '.format(new_user.email,
+                                                                                              provider_name)
+                        msg += 'Please, try another log in provider.'
+                        flash({'type': 'error',  'text': msg})
+                        next_page = 'site.login_options'
+                    
+                    # save user to db
+                    else:
+                        db.session.add(new_user)
+                        db.session.commit()
+                        user = User.query.filter_by(email=result.user.email).first()
 
                 # save user info
                 login_user(user)
                 flash({'type': 'success',
                        'text': 'Welcome, {}'.format(result.user.name)})
        
-        return redirect(url_for('site.index'))
+        return redirect(url_for(next_page))
 
     return response
 

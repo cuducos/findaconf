@@ -27,7 +27,6 @@ GOOGLE_PLACES_PROXY = config('GOOGLE_PLACES_PROXY', default=None)
 
 # TODO oauth/oauth2 still not implemented for the following providers:
 # * Amazon
-# * GitHub
 # * LinkedIn
 # * Windows
 # * Tumblr
