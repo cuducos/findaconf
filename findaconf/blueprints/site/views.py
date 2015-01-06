@@ -11,7 +11,8 @@ from findaconf.helpers.titles import get_search_title
 from findaconf.helpers.providers import OAuthProvider
 from findaconf.models import Continent, Country, User, Year
 from flask import (
-    abort, Blueprint, flash, g, redirect, request, make_response, url_for
+    abort, Blueprint, flash, g, redirect, render_template, request,
+    make_response, url_for
 )
 from flask.ext.login import current_user, login_user, logout_user
 from random import randrange
@@ -28,11 +29,13 @@ site_blueprint = Blueprint(
 
 
 @site_blueprint.route('/')
+@render_minified
 def index():
-    return render_minified('home.slim')
+    return render_template('home.slim')
 
 
 @site_blueprint.route('/find')
+@render_minified
 def results():
 
     # parse vars
@@ -43,12 +46,13 @@ def results():
     # page title
     page_title = get_search_title(randrange(0, 8), query['query'])
 
-    return render_minified('results.slim', page_title=page_title, **query)
+    return render_template('results.slim', page_title=page_title, **query)
 
 
 @site_blueprint.route('/login', methods=['GET'])
+@render_minified
 def login_options():
-    return render_minified('login.slim',
+    return render_template('login.slim',
                            page_title='Log in',
                            providers=OAuthProvider())
 
