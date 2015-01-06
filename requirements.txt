@@ -24,7 +24,7 @@ SQLAlchemy==0.9.8
 cssmin==0.2.0
 django-htmlmin==0.7.0
 Flask-Assets==0.10
-pyScss==1.3.2
+pyScss==1.3.4
 PyYAML==3.11
 slimish-jinja==1.0.2
 
