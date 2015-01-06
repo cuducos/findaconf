@@ -181,7 +181,7 @@ form button i {
 /* Page titles                                  */
 /************************************************/
 
-h1.result, h1.login {
+h1.result, .login h1 {
 
   color: $purple-dark;
   font-size: 1.3rem;
@@ -194,9 +194,13 @@ h1.result, h1.login {
 
 .login_button {
   
+  &.odd { padding-left: 0; }
+  &.even { padding-right: 0; }
+  
   a {
     
-    color: $white;
+    border: 1px solid $black;
+    color: $black;
     display: block;
     height: 3.3em;
     line-height: 3.3em;
@@ -204,7 +208,6 @@ h1.result, h1.login {
     padding-bottom: 3.6em;
     text-decoration: none;
     @include border-radius(3px);
-    @include transition(opacity 120ms);
 
     i, span { vertical-align: middle; }
     
@@ -215,18 +218,31 @@ h1.result, h1.login {
 
     }
 
-    &:hover { opacity: .8; }
-
   }
 
-  &.amazon a { background-color: $amazon; }
-  &.facebook a { background-color: $facebook; }
-  &.github a { background-color: $github; }
-  &.google-plus a { background-color: $google-plus; }
-  &.linkedin a { background-color: $linkedin; }
-  &.tumblr a { background-color: $tumblr; }
-  &.windows a { background-color: $windows; }
-  &.yahoo a { background-color: $yahoo; }
+  @each $provider in $provider-names {
+
+    $num: index($provider-names, $provider);
+    
+    &.#{$provider} {
+
+      a {
+
+        color: nth($provider-colors, $num);
+        border-color: nth($provider-colors, $num);
+      
+        &:hover {
+        
+          color: $white;
+          background-color: nth($provider-colors, $num);
+        
+        }
+      
+      }
+
+    }
+
+  }  
 
 }
 
