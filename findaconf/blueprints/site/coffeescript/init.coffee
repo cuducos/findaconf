@@ -16,7 +16,6 @@ $(document).ready ->
   $('#flash a.close').click(sweet_hide)
 
   fix_lang_menu()
-  fix_main_padding()
 
 sweet_hide = ->
   alert_box = $(this).parent()
@@ -41,7 +40,3 @@ fix_lang_menu = ->
   lang_submenu_w = lang_submenu.width()
   left_margin = lang_menu_w - (lang_submenu_w + 1)
   lang_submenu.css 'margin-left', left_margin + 'px'
-
-fix_main_padding = ->
-  footer_h = $('footer').height()
-  $('main').css 'padding-bottom', (footer_h + 128) + 'px'
