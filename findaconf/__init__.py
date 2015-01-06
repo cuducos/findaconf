@@ -38,13 +38,11 @@ lm.login_message = {'type': 'info', 'text': lm.login_message}
 Compress(app)
 
 # assets
-findaconf_path = app.config['BASEDIR'].child('findaconf')
+site_path = app.config['BASEDIR'].child('findaconf', 'blueprints', 'site')
+bower_path = app.config['BASEDIR'].child('findaconf', 'bower')
 assets = Environment(app)
-assets.load_path = [
-    findaconf_path.child('blueprints', 'site', 'coffeescript'),
-    findaconf_path.child('blueprints', 'site', 'scss'),
-    findaconf_path.child('bower')
-]
+assets.config['PYSCSS_LOAD_PATHS'] = [bower_path.child('foundation', 'scss')]
+assets.load_path = [site_path, bower_path]
 assets.from_yaml(app.config['BASEDIR'].child('findaconf', 'assets.yaml'))
 
 # manage errors
