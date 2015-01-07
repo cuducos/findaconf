@@ -1,0 +1,36 @@
+#header {
+  div > ul {
+    li:hover {
+      background-color: $header_background_hover_color;
+      a {
+        color: $header_link_hover_color;
+        i {
+          color: $header_highlight_color;
+        }
+      }
+      a:hover {
+        text-decoration: none;
+      }
+    }
+    .lang:hover {
+      ul {
+        display: block;
+        li a {
+            color: $header_link_color;
+            span {
+              color: $header_link_color;
+            }
+        }
+        li:hover {
+          background-color: $header_background_hover_color;
+          a {
+            color: $header_link_hover_color;
+            span {
+              color: $header_highlight_color;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+#flash {
+  .alert-box {
+    @include border-radius;    
+    a.close {
+      background: transparent none;
+      &:hover {
+        color: $medium_gray;
+        text-decoration: none;
+      }
+    }
+  }
+}

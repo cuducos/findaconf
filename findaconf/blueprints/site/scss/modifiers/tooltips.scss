@@ -1,0 +1,12 @@
+.tooltipster-findaconf {
+  background: $button_background_color;
+  margin-top: -2.5rem;
+  @include border-radius;
+}
+
+.tooltipster-findaconf .tooltipster-content {
+  color: $button_text_color;
+  font-size: .7rem;
+  line-height: 1rem;
+  padding: .4rem;
+}

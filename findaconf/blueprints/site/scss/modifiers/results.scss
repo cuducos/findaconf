@@ -1,0 +1,14 @@
+div.result {
+  a:hover {
+    text-decoration: none;
+  }
+  ul.keywords a:hover, p.location a:hover {
+    color: $link_color;
+  }
+  div:last-child {
+    a:hover {
+      background-color: $button_background_color;
+      color: $button_text_color;
+    }
+  }
+}

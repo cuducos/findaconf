@@ -1,0 +1,14 @@
+div.result, form.result {
+  background-color: $box_background_color;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 1em 0 0 0;
+  @include border-radius;
+}
+
+div.result > div:first-child {
+  background: no-repeat center center;
+  padding: 0;
+  @include bg-cover;
+  @include border-radius;
+}

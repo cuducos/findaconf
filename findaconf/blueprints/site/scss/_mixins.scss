@@ -1,3 +1,5 @@
+$default_radius: .2em;
+
 @mixin bg-cover() {
   background-size: cover;
   -webkit-background-size: cover;
@@ -5,13 +7,13 @@
   -o-background-size: cover;
 }
 
-@mixin border-radius($pts) {
+@mixin border-radius($pts: $default_radius) {
   -moz-border-radius: $pts;
   -webkit-border-radius: $pts;
   border-radius: $pts;
 }
 
-@mixin border-radius-bottom($pts) {
+@mixin border-radius-bottom($pts: $default_radius) {
   -moz-border-radius-bottomleft: $pts;
   -moz-border-radius-bottomright: $pts;
   -webkit-border-bottom-left-radius: $pts;
@@ -20,7 +22,7 @@
   border-bottom-right-radius: $pts;
 }
 
-@mixin border-radius-top($pts) {
+@mixin border-radius-top($pts: $default_radius) {
   -moz-border-radius-topleft: $pts;
   -moz-border-radius-topright: $pts;
   -webkit-border-top-left-radius: $pts;
@@ -29,7 +31,7 @@
   border-top-right-radius: $pts;
 }
 
-@mixin box-shadow($color) {
+@mixin box-shadow($color: $shadow_color) {
   -moz-box-shadow: 0 0 5px $color;
   -webkit-box-shadow: 0 0 5px $color;
   box-shadow: 0 0 5px $color;

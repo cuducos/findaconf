@@ -1,0 +1,37 @@
+.login_button {
+  a {
+    border: 1px solid $text_color;
+    color: $text_color;
+    display: block;
+    height: 3.3em;
+    line-height: 3.3em;
+    margin-bottom: 1em;
+    padding-bottom: 3.6em;
+    text-decoration: none;
+    @include border-radius;
+    i, span {
+      vertical-align: middle;
+    }
+    i {
+      font-size: 2.5em;
+      margin: 0 .2em 0 .4em;
+    }
+  }
+  @each $provider in $provider-names {
+    $num: index($provider-names, $provider);
+    &.#{$provider} {
+      a {
+        color: nth($provider-colors, $num);
+        border-color: nth($provider-colors, $num);
+        &:hover {
+          color: $background_color;
+          background-color: nth($provider-colors, $num);
+        }
+      }
+    }
+  }  
+}
+
+.login h6 {
+  color: $text_color;
+}

@@ -1,0 +1,16 @@
+.autocompleter {
+  background: $background_color;
+  border: 1px solid $form_border_color;
+  left: 15px;
+  right: 15px;
+  width: auto;
+  z-index: 2;
+  @include border-radius;
+  @include box-shadow;
+}
+
+.autocompleter-item {
+  font-size: .875rem;
+  line-height: 1.8em;
+  padding: 0 .5rem;
+}

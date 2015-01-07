@@ -42,7 +42,7 @@ html lang="en" xmlns="http://www.w3.org/1999/html"
     meta name="msapplication-TileImage" content="/mstile-144x144.png"
 
     / assets
-    link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Oxygen:400,300,700"
+    link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Oxygen:300,400,700"
     - assets "libs.css"
       link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"
     - assets "style"
@@ -53,7 +53,7 @@ html lang="en" xmlns="http://www.w3.org/1999/html"
   body
     #wrapper
       - include '_header.slim'
-      main
+      #main
         - include '_flash.slim'
         @block content
       - include '_footer.slim'

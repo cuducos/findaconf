@@ -2,43 +2,92 @@
 /* Color definition                                       */
 /**********************************************************/
 
-$green-dark    : #5ac1a9;
-$green-medium  : #c6e3c0;
-$green-light   : #c0ffee;
+// These color variables should be ONLY used within this file. For other SCSS
+// files use semantic variables instead.
 
-$purple-dark   : #4a1d4b;
-$purple-medium : #e387b7;
+$dark_purple     : #4a1d4b;
+$medium_purple   : #e387b7;
 
-$gray-dark     : #535353;
-$gray-medium   : #c3c3c3;
-$gray-light    : #efefef;
+$dark_green      : #5ac1a9;
+$medium_green    : #c6e3c0;
+$light_green     : #c0ffee;
 
-$white         : #fff;
-$white-layer-1 : rgba(255, 255, 255, 0.1);
-$white-layer-2 : rgba(255, 255, 255, 0.2);
-$white-layer-3 : rgba(255, 255, 255, 0.3);
-$white-layer-4 : rgba(255, 255, 255, 0.4);
-$white-layer-8 : rgba(255, 255, 255, 0.8);
+$dark_gray       : #535353;
+$medium_gray     : #c3c3c3;
+$light_gray      : #efefef;
 
-$black         : #000;
-$black-layer-1 : rgba(0, 0, 0, 0.1);
-$black-layer-2 : rgba(0, 0, 0, 0.2);
-$black-layer-3 : rgba(0, 0, 0, 0.3);
-$black-layer-4 : rgba(0, 0, 0, 0.4);
-$black-layer-8 : rgba(0, 0, 0, 0.8);
+$white           : #fff;
+$white_transp_10 : rgba(255, 255, 255, .1);
+$white_transp_20 : rgba(255, 255, 255, .2);
+$white_transp_40 : rgba(255, 255, 255, .4);
+$white_transp_80 : rgba(255, 255, 255, .8);
+
+$black           : #000;
+
+/**********************************************************/
+/* Semantic colors                                        */
+/**********************************************************/
+
+// standard
+$text_color                 : $dark_gray;
+$link_color                 : $dark_purple;
+$link_hover_color           : $dark_purple;
+$background_color           : $white;
+$title_color                : $dark_purple;
+$shadow_color               : $black;
+$highlight_background_color : $light_green;
+
+// header
+$header_text_color             : $white_transp_40;
+$header_background_color       : $dark_purple;
+$header_link_color             : $white_transp_40;
+$header_link_hover_color       : $white;
+$header_background_hover_color : $white_transp_10;
+$header_highlight_color        : $dark_green;
+
+// forms
+$form_label_color       : $dark_gray;
+$form_text_color        : $dark_gray; 
+$form_placeholder_color : $medium_gray;
+$form_border_color      : $medium_gray;
+
+// buttons
+$button_text_color             : $white_transp_80;
+$button_background_color       : $dark_purple;
+$button_highlight_color        : $dark_green;
+$button_hover_background_color : $dark_purple;
+$button_hover_text_color       : $white;
+
+// boxes
+$box_text_color                    : $dark_gray;
+$box_link_color                    : $dark_green;
+$box_link_hover_color              : $dark_purple;
+$box_background_color              : $light_gray;
+$box_highlight_color               : $dark_green;
+$box_button_text_color             : $light_gray;
+$box_button_background_color       : $medium_gray;
+$box_button_background_hover_color : $dark_purple;
+
+// footer
+$footer_text_color       : $white;
+$footer_link_color       : $light_green; 
+$footer_link_hover_color : $white;
+$footer_background_color : $dark_green;
+$footer_title_color      : $white_transp_80;
+$footer_highlight_color  : $white_transp_80;
 
 /**********************************************************/
 /* OAuth/OAuth2 Providers                                 */
 /**********************************************************/
 
-$amazon        : #f90;
-$facebook      : #3a579b;
-$github        : #171515;
-$google-plus   : #dd4b38;
-$linkedin      : #0077b5;
-$tumblr        : #34465d;
-$windows       : #00bcf2;
-$yahoo         : #62236b;
+$amazon      : #f90;
+$facebook    : #3a579b;
+$github      : #171515;
+$google_plus : #dd4b38;
+$linkedin    : #0077b5;
+$tumblr      : #34465d;
+$windows     : #00bcf2;
+$yahoo       : #62236b;
 
-$provider-colors: ($amazon, $facebook, $github, $google-plus, $linkedin, $tumblr, $windows, $yahoo);
-$provider-names: ('amazon', 'facebook', 'github', 'google-plus', 'linkedin', 'tumblr', 'windows', 'yahoo'); 
+$provider_colors: ($amazon, $facebook, $github, $google-plus, $linkedin, $tumblr, $windows, $yahoo);
+$provider_names: ('amazon', 'facebook', 'github', 'google-plus', 'linkedin', 'tumblr', 'windows', 'yahoo'); 

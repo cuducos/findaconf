@@ -1,0 +1,73 @@
+body {
+  color: $text_color;
+  background-color: $background_color;
+  font: $standard_font;
+}
+
+a {
+  color: $link_color;
+  text-decoration: none;
+  &:hover {
+     color: $link_hover_color;
+     text-decoration: underline;
+  }
+}
+
+small, p.small {
+  font-size: .8em;
+  line-height: 1.618;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $title_color;
+}
+
+button, a.button {
+  @include border-radius();
+  @include transition(color opacity 120ms);
+  background-color: $button_background_color;
+  color: $button_text_color;
+  span, i {
+    color: $button_text_color;
+  }
+  &:hover {
+    opacity: .975;
+    background-color: $button_hover_background_color;
+    color: $button_hover_text_color;
+    span, i {
+      color: $button_highlight_color;
+    }
+  }
+}
+
+// form
+
+label {
+  color: $form_label_color;
+}
+
+input[type=text], input[type=password], textarea, select {
+  border-color: $form_border_color;
+  color: $form_text_color;
+  @include border-radius;
+}
+
+::-webkit-input-placeholder {
+  color: $form_placeholder_color;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: $form_placeholder_color;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  color: $form_placeholder_color;  
+}
+
+:-ms-input-placeholder {  
+ color: $form_placeholder_color;  
+}
+
+select, input, textarea {
+  @include border-radius();
+}

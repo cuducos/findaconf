@@ -1,0 +1,27 @@
+#header {
+  @include box-shadow;
+  background-color: $header_background_color;
+  height: 3em;
+  div > ul {
+    float: right;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    .lang {
+      ul {
+        margin: 0;
+        display: none;
+        border: $header_background_color;
+        border-top-width: 0;
+        z-index: 1;
+        @include border-radius-bottom();
+        li {
+          float: none;
+          margin: 0;
+          padding: 0;
+          border: 0;
+        }
+      }
+    }
+  }
+}

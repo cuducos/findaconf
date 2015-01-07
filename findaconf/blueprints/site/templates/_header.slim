@@ -1,7 +1,9 @@
-nav
-  div.row
-    h1.small-6.columns
-      a href="{{ url_for('site.index') }}" Find a conference
+#header
+  .row
+    .small-6.columns
+      h1
+        a href="{{ url_for('site.index') }}"
+          img src="{{ url_for('static', filename='findaconf_default.png') }}" alt="Find a conference"
     ul
       li
         a href="#"

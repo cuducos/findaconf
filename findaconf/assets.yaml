@@ -33,9 +33,11 @@ style:
   output: style.min.css
   filters: pyscss, cssmin
   contents:
-    - scss/blocks.scss
-    - scss/elements.scss
-    - scss/modifiers.scss
+    - scss/style.scss
   depends:
     - scss/_colors.scss
     - scss/_mixins.scss
+    - scss/_tags.scss
+    - blocks/*
+    - elements/*
+    - modifiers/*

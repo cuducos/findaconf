@@ -1,0 +1,56 @@
+form.result button {
+  line-height: 2.5em;
+  margin-top: 4em;
+  padding: 0;
+  width: 100%;
+}
+
+div.result {
+  color: $box_background_color;
+  padding: 0;
+  h2, p, ul, li {
+    margin: 0;
+  }
+  h2 {
+    font-size: 1.2rem;
+    line-height: 2.4rem;
+  }
+  p.location i, p.date i, p.deadline i {
+    color: $box_highlight_color;
+    display: inline-block;
+    font-size: 1.2em;
+    width: 1.2em;
+  }
+  p.location a {
+    font-size: 0.8em;
+  }
+  ul.keywords {
+    margin-top: 1em;
+    padding-bottom: .5em;
+    font-size: .8em;
+    a {
+      color: $box_highlight_color;
+      margin-right: 1em;
+      white-space: nowrap;
+      i {
+        display: inline;
+      }
+    }
+  }
+  div:last-child {
+    a {
+      background-color: $box_button_background_color;
+      color: $box_button_text_color;
+      font-size: 1.2em;
+      line-height: 2em;
+      margin: .5em .5em 0 0;
+      text-align: center;
+      width: 2em;
+      @include border-radius(1em);
+      @include transition(background-color 350ms);
+      span {
+        display: none;
+      }
+    }
+  }
+}

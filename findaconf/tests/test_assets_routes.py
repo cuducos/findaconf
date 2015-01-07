@@ -27,6 +27,7 @@ class TestAssetsRoutes(TestCase):
 
     def test_libs_css(self):
         resp = self.app.get('/assets/libs.min.css')
+        print app.config['ASSETS_DEBUG']
         assert resp.status_code == 200
         assert resp.mimetype == 'text/css'
 

@@ -1,0 +1,11 @@
+footer {
+  @include box-shadow;
+  background-color: $footer_background_color;
+  bottom: 0;
+  padding: 2em 0;
+  ul {
+    margin: 0 0 1em 0;
+    padding: 0;
+    list-style-type: none;
+  }
+}

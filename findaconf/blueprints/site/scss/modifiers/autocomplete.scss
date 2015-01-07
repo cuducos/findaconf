@@ -1,0 +1,10 @@
+.autocompleter-item:hover, .autocompleter-item-selected {
+  background-color: $highlight_background_color;
+  color: $link_color;
+}
+
+.autocompleter-item strong {
+  color: $link_color;
+  font-weight: $bold_weight;
+  text-decoration: underline;
+}

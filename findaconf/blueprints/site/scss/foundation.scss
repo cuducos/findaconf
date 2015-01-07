@@ -1,6 +1,11 @@
 @charset 'UTF-8';
 
 // setings
+@import 'fonts';
+$font-family-sans-serif: $standard_font_family;
+$font-family-serif: $standard_font_family;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
 
 // import only used components
 @import 'foundation/components/grid';

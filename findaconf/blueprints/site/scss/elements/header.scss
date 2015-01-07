@@ -1,0 +1,72 @@
+#header {
+  h1 {
+    a {
+      display: block;
+      background: transparent url('/static/imgs/findaconf_navbar.png') no-repeat top left;
+      height: 2em;
+      margin-top: .2em;
+      text-indent: -9999px;
+    }
+  }
+  div > ul {
+    li {
+      border-left: 1px solid $header_link_color;
+      float: left;
+      margin: 0;
+      padding: 0;
+      @include transition(background-color 400ms);
+      a {
+        color: $header_link_color;
+        display: block;
+        font-size: inherit;
+        font-weight: normal;
+        vertical-align: middle;
+        line-height: 3em;
+        padding: 0 1em;
+        @include transition(color 600ms);
+      }
+    }
+    li:last-child {
+      border-right: 1px solid $header_link_color;
+    }
+    .login {
+      img {
+        @include border-radius(50%);
+        margin-right: .4em;
+        width: 2em;
+      }
+    }
+    .lang {
+      a {
+        font-size: .6em;
+        line-height: 5em;
+      }
+      ul {
+        background-color: $header_background_color;
+        list-style: none;
+        position: absolute;
+        width: auto;
+        li {
+          background-color: $header_background_hover_color;
+          white-space: nowrap;
+          a {
+            color: $header_link_color;
+            font-size: .8em;
+            line-height: 2.4em;
+            span {
+              display: inline-block;
+              text-transform: uppercase;
+              width: 2em;
+            }
+          }
+        }
+        li:first-child a {
+          padding-top: .3em;
+        }
+        li:last-child a {
+          padding-bottom: .3em;
+        }
+      }
+    }
+  }
+}

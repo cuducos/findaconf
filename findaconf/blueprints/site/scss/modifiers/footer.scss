@@ -1,0 +1,7 @@
+footer li a:hover {
+  color: $footer_link_hover_color;
+  text-decoration: none;
+  i {
+    color: $footer_link_hover_color;
+  }
+}

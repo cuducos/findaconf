@@ -1,0 +1,27 @@
+footer {
+  color: $footer_text_color;
+  .small-2 {
+    p {
+      margin-bottom: .5rem;
+    }
+  }
+  h6, p, li {
+    font-size: .8rem;
+  }
+  h6 {
+    color: $footer_title_color;
+    font-weight: $bold_weight;
+    text-transform: uppercase;
+  }
+  li {
+    i {
+      font-size: 1.2rem;
+      line-height: .8rem;
+      color: $footer_highlight_color;
+      padding-right: .3rem;
+    }
+    a {
+      color: $footer_link_color;
+    }
+  }
+}
