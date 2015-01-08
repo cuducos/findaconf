@@ -18,9 +18,15 @@ class TestModelMethods(TestCase):
     # test methods from User
     def test_valid_email(self):
         fake = faker.Factory.create()
-        valid_emails = ['USER@foo.COM', 'THE_US-ER@foo.bar.org', 'first.last@foo.jp']
-        invalid_emails = ['user@example,com', 'user_at_foo.org', 'user.name@example.', 'foo@bar_baz.com', 'foo@bar+baz.com']
-        should_be_valid_emails = [fake.email() for i in range(0,42)]
+        valid_emails = ['USER@foo.COM',
+                        'THE_US-ER@foo.bar.org',
+                        'first.last@foo.jp']
+        invalid_emails = ['user@example,com',
+                          'user_at_foo.org',
+                          'user.name@example.',
+                          'foo@bar_baz.com',
+                          'foo@bar+baz.com']
+        should_be_valid_emails = [fake.email() for i in range(0, 42)]
         johndoe = User()
         for email in valid_emails:
             johndoe.email = email

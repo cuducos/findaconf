@@ -31,7 +31,8 @@ class OAuthProvider(object):
         self.credentials = dict()
         for provider in self.original_credentials.keys():
             if self.__valid_provider(provider):
-                self.credentials[provider] = self.original_credentials[provider]
+                credential = self.original_credentials[provider]
+                self.credentials[provider] = credential
 
         # set support vars
         self.names = sorted([p for p in self.credentials])

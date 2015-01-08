@@ -13,12 +13,9 @@ def fake_conference(db):
 
     # fake posters
     posters = [
-        'http://www2.warwick.ac.uk/newsandevents/events/challenging_orthodoxies/critical_governance_conference_poster.jpg',
         'http://www.memics.cz/2009/img/memics09poster.jpg',
         'http://www.memics.cz/2008/img/memics08-poster.jpg',
-        'http://www.wordsinspace.net/lib-arch-data/wordpress_libarchdata/wp-content/uploads/2011/03/Media-Histories_Conference-Poster1.jpg',
-        'http://www.memphis.edu/philosophy/images/spindel_2013_poster_thumb.jpg',
-        'http://www.physics.purdue.edu/conference/wip/files/images/poster%20-%20v.1.preview.jpg'
+        'http://memphis.edu/philosophy/images/spindel_2013_poster_thumb.jpg'
     ] + ([''] * 4)
 
     # core fake data
@@ -86,22 +83,24 @@ def seed(app, db):
         csv_file = csv_path.child('country_continent.csv')
         with open(csv_file) as file_handler:
             csv = list(reader(file_handler))
-            country_continent = [{'country': c[0], 'continent': c[1]} for c in csv]
+            country_continent = list()
+            for c in csv:
+                country_continent.append({'country': c[0], 'continent': c[1]})
 
         # loop and feed countries table
         for item in country_continent:
 
             # get continent id
-            continent_guess = item['continent'].lower()
-            continent = Continent.query.filter_by(alpha2=continent_guess).first()
+            guess = item['continent'].lower()
+            continent = Continent.query.filter_by(alpha2=guess).first()
 
             # include country
             if continent is not None:
                 country_name = countries.get(item['country'], False)
                 if country_name:
                     db.session.add(Country(alpha2=item['country'].lower(),
-                                        title=country_name,
-                                        continent_id=continent.id))
+                                           title=country_name,
+                                           continent_id=continent.id))
 
         # insert data
         db.session.commit()

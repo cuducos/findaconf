@@ -17,7 +17,7 @@ class TestFileRoutes(TestCase):
     # test routes from blueprint/file_routes.py
 
     def test_poster(self):
-        resp = self.app.get('/poster.png', data={'rand': randrange(1000, 9999)})
+        resp = self.app.get('/poster.png', data={'rand': randrange(100, 999)})
         assert resp.status_code == 200
         assert resp.mimetype == 'image/png'
 

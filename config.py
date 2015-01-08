@@ -20,7 +20,8 @@ ASSETS_DEBUG = config('ASSETS_DEBUG', default=False, cast=bool)
 SECRET_KEY = config('SECRET_KEY', default=False)
 
 # public api keys
-GOOGLE_DEVELOPER_PUBLIC_API = config('GOOGLE_DEVELOPER_PUBLIC_API', default=None)
+GOOGLE_PUBLIC_API = config('GOOGLE_PUBLIC_API',
+                                     default=None)
 GOOGLE_PLACES_PROXY = config('GOOGLE_PLACES_PROXY', default=None)
 
 # oauth/oauth2 providers
@@ -35,57 +36,57 @@ OAUTH_CREDENTIALS = {
 
     'Amazon': {
         'class_': oauth2.Amazon,
-        'consumer_key': config('AMAZON_DEVELOPER_CLIENT_ID', default=None),
-        'consumer_secret': config('AMAZON_DEVELOPER_CLIENT_SECRET', default=None),
+        'consumer_key': config('AMAZON_CLIENT_ID', default=None),
+        'consumer_secret': config('AMAZON_CLIENT_SECRET', default=None),
         'scope': oauth2.Amazon.user_info_scope
     },
 
     'Facebook': {
         'class_': oauth2.Facebook,
-        'consumer_key': config('FACEBOOK_DEVELOPER_CLIENT_ID', default=None),
-        'consumer_secret': config('FACEBOOK_DEVELOPER_CLIENT_SECRET', default=None),
+        'consumer_key': config('FACEBOOK_CLIENT_ID', default=None),
+        'consumer_secret': config('FACEBOOK_CLIENT_SECRET', default=None),
         'scope': oauth2.Facebook.user_info_scope
     },
 
     'GitHub': {
         'class_': oauth2.GitHub,
-        'consumer_key': config('GITHUB_DEVELOPER_CLIENT_ID', default=None),
-        'consumer_secret': config('GITHUB_DEVELOPER_CLIENT_SECRET', default=None),
+        'consumer_key': config('GITHUB_CLIENT_ID', default=None),
+        'consumer_secret': config('GITHUB_CLIENT_SECRET', default=None),
         'access_headers': {'User-Agent': 'Find-a-Conference'},
         'scope': oauth2.GitHub.user_info_scope,
     },
 
     'Google Plus': {
         'class_': oauth2.Google,
-        'consumer_key': config('GOOGLE_DEVELOPER_CLIENT_ID', default=None),
-        'consumer_secret': config('GOOGLE_DEVELOPER_CLIENT_SECRET', default=None),
+        'consumer_key': config('GOOGLE_CLIENT_ID', default=None),
+        'consumer_secret': config('GOOGLE_CLIENT_SECRET', default=None),
         'scope': oauth2.Google.user_info_scope
     },
 
     'LinkedIn': {
         'class_': oauth2.LinkedIn,
-        'consumer_key': config('LINKEDIN_DEVELOPER_CLIENT_ID', default=None),
-        'consumer_secret': config('LINKEDIN_DEVELOPER_CLIENT_SECRET', default=None),
+        'consumer_key': config('LINKEDIN_CLIENT_ID', default=None),
+        'consumer_secret': config('LINKEDIN_CLIENT_SECRET', default=None),
         'scope': oauth2.LinkedIn.user_info_scope
     },
 
     'Tumblr': {
         'class_': oauth1.Tumblr,
-        'consumer_key': config('TUMBLR_DEVELOPER_CLIENT_ID', default=None),
-        'consumer_secret': config('TUMBLR_DEVELOPER_CLIENT_SECRET', default=None),
+        'consumer_key': config('TUMBLR_CLIENT_ID', default=None),
+        'consumer_secret': config('TUMBLR_CLIENT_SECRET', default=None),
     },
 
     'Windows': {
         'class_': oauth2.WindowsLive,
-        'consumer_key': config('WINDOWS_DEVELOPER_CLIENT_ID', default=None),
-        'consumer_secret': config('WINDOWS_DEVELOPER_CLIENT_SECRET', default=None),
+        'consumer_key': config('WINDOWS_CLIENT_ID', default=None),
+        'consumer_secret': config('WINDOWS_CLIENT_SECRET', default=None),
         'scope': oauth2.WindowsLive.user_info_scope
     },
 
     'Yahoo': {
         'class_': oauth1.Yahoo,
-        'consumer_key': config('YAHOO_DEVELOPER_CLIENT_ID', default=None),
-        'consumer_secret': config('YAHOO_DEVELOPER_CLIENT_SECRET', default=None),
+        'consumer_key': config('YAHOO_CLIENT_ID', default=None),
+        'consumer_secret': config('YAHOO_CLIENT_SECRET', default=None),
     },
 
 }

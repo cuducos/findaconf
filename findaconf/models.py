@@ -48,6 +48,7 @@ class User(db.Model, UserMixin):
             return True
         return False
 
+
 class Conference(db.Model):
 
     __tablename__ = 'conference'

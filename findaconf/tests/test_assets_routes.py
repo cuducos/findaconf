@@ -35,4 +35,3 @@ class TestAssetsRoutes(TestCase):
         resp = self.app.get('/assets/style.min.css')
         assert resp.status_code == 200
         assert resp.mimetype == 'text/css'
-

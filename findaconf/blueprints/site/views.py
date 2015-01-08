@@ -76,7 +76,8 @@ def login(provider):
 
     # try login
     provider_name = providers.get_name(provider)
-    result = authomatic.login(WerkzeugAdapter(request, response), provider_name)
+    adapter = WerkzeugAdapter(request, response)
+    result = authomatic.login(adapter, provider_name)
     if result:
 
         # flash error message if any
@@ -90,9 +91,9 @@ def login(provider):
 
             # check if api sent email address
             if not result.user.email:
-                msg = '{} is refusing to send us your email address. '.format(provider_name)
+                msg = '{} is refusing to send us your email address. '
                 msg += 'Please, try another log in provider.'
-                flash({'type': 'error', 'text': msg})
+                flash({'type': 'error', 'text': msg.format(provider_name)})
                 next_page = 'site.login_options'
 
             # manage user data in db
@@ -108,23 +109,25 @@ def login(provider):
                                     name=result.user.name)
                     db.session.add(new_user)
                     db.session.commit()
-                    user = User.query.filter_by(email=result.user.email).first()
+                    user = User.query.filter_by(email=result.user.email)
 
                     # check if email address is valid
                     if not new_user.valid_email():
-                        msg = 'The address “{}” provided by {} is not a valid email. '.format(new_user.email, provider_name)
-                        msg += 'Please, try another log in provider.'
-                        flash({'type': 'error',  'text': msg})
+                        msg = 'The address “{}” provided by {} is not a valid '
+                        msg += 'email. Please, try another log in provider.'
+                        flash({'type': 'error',
+                               'text': msg.format(new_user.email,
+                                                  provider_name)})
                         next_page = 'site.login_options'
 
                     # save user to db
                     else:
                         db.session.add(new_user)
                         db.session.commit()
-                        user = User.query.filter_by(email=result.user.email).first()
+                        user = User.query.filter_by(email=result.user.email)
 
                 # save user info
-                login_user(user)
+                login_user(user.first())
                 flash({'type': 'success',
                        'text': 'Welcome, {}'.format(result.user.name)})
 

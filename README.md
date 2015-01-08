@@ -38,21 +38,21 @@ This application uses some required *environment variables*. You can start costu
 
 #### Public APIs (recommended)
 
-* `GOOGLE_DEVELOPER_PUBLIC_API`: credentials to [Google Places API](https://developers.google.com/places/documentation/)
+* `GOOGLE_PUBLIC_API`: credentials to [Google Places API](https://developers.google.com/places/documentation/)
 * `GOOGLE_PLACES_PROXY` *(optional)*: if you want to [access Google Places API through a proxy](contrib/google_places_proxy), set the proxy URL here
 
 #### OAuth/OAuth2 APIs (recommended)
 
 At least one of these providers should be set in order to enable users to log in. Setting a provider involves registering an app with a OAuth/OAuth2 provider, and passing the `client id` and `client secret` tokens to *Find a Conference* throght pairs from this set of variables:
 
-* `AMAZON_DEVELOPER_CLIENT_ID` and `AMAZON_DEVELOPER_CLIENT_SECRET`
-* `FACEBOOK_DEVELOPER_CLIENT_ID` and `FACEBOOK_DEVELOPER_CLIENT_SECRET`
-* `GITHUB_DEVELOPER_CLIENT_ID` and `GITHUB_DEVELOPER_CLIENT_SECRET`
-* `GOOGLE_DEVELOPER_CLIENT_ID` and `GOOGLE_DEVELOPER_CLIENT_SECRET`
-* `LINKEDIN_DEVELOPER_CLIENT_ID` and `LINKEDIN_DEVELOPER_CLIENT_SECRET`
-* `TUMBLR_DEVELOPER_CLIENT_ID` and `TUMBLR_DEVELOPER_CLIENT_SECRET`
-* `WINDOWS_DEVELOPER_CLIENT_ID` and `WINDOWS_DEVELOPER_CLIENT_SECRET`
-* `YAHOO_DEVELOPER_CLIENT_ID` and `YAHOO_DEVELOPER_CLIENT_SECRET`
+* `AMAZON_CLIENT_ID` and `AMAZON_CLIENT_SECRET`
+* `FACEBOOK_CLIENT_ID` and `FACEBOOK_CLIENT_SECRET`
+* `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`
+* `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`
+* `LINKEDIN_CLIENT_ID` and `LINKEDIN_CLIENT_SECRET`
+* `TUMBLR_CLIENT_ID` and `TUMBLR_CLIENT_SECRET`
+* `WINDOWS_CLIENT_ID` and `WINDOWS_CLIENT_SECRET`
+* `YAHOO_CLIENT_ID` and `YAHOO_CLIENT_SECRET`
 
 #### Debug (optional)
 

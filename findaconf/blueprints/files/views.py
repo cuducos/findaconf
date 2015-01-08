@@ -16,8 +16,8 @@ files_blueprint = Blueprint('file_routes', __name__, static_folder='')
 def poster():
 
     # randon backgorund color
-    rcolor = lambda: randrange(97, 160) / 255.0
-    bg = Color(rgb=(rcolor(), rcolor(), rcolor()))
+    rand_rgb = set([(randrange(97, 160) / 255.0) for i in range(0, 3)])
+    bg = Color(rgb=rand_rgb)
 
     # get foreground
     fg = Color(bg.hex)
@@ -44,7 +44,9 @@ def robots():
 
 
 @files_blueprint.route('/assets/foundation-icons.<extension>')
-@files_blueprint.route('/assets/webassets-external/foundation-icons.<extension>')
+@files_blueprint.route(
+    '/assets/webassets-external/foundation-icons.<extension>'
+)
 def foundation_icon(extension):
     bower_path = app.config['BASEDIR'].child('findaconf', 'bower')
     directory = 'foundation-icon-fonts'
