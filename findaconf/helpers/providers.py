@@ -5,12 +5,10 @@ from findaconf import app
 
 class OAuthProvider(object):
 
-    def __init__(self, oauth_credentials=None):
+    def __init__(self):
         """
-        Loads oauth/oauth2 credentials from app.config['OAUTH_CREDENTIALS'] or
-        from oauth_credentials.
-
-        Sets the following instance attributes:
+        Loads oauth/oauth2 credentials from app.config['OAUTH_CREDENTIALS'] and
+        sets the following instance attributes:
 
         * original_credetials: (dictionary) the same credentials as loaded
 
@@ -21,20 +19,15 @@ class OAuthProvider(object):
         * names: (list) humanized names for valid oauth/oauth2 providers (e.g.
         Google Plus instead of google-plus)
 
-        * slugs: (list) slugs for valid oauth/oauth2 providers (e.g. google-plus
-        instead of Google Plus)
+        * slugs: (list) slugs for valid oauth/oauth2 providers (e.g.
+        google-plus instead of Google Plus)
 
         * providers: (dictionary) valid oauth/oauth2 providers having the slug
         as key and the humanized name as value
         """
 
-        # load credentials
-        if oauth_credentials:
-            self.original_credentials = oauth_credentials
-        else:
-            self.original_credentials = app.config['OAUTH_CREDENTIALS']
-
-        # check if consumer key an secret are set
+        # load credentials & check if consumer key an secret are set
+        self.original_credentials = app.config['OAUTH_CREDENTIALS']
         self.credentials = dict()
         for provider in self.original_credentials.keys():
             if self.__valid_provider(provider):
@@ -67,10 +60,7 @@ class OAuthProvider(object):
         :param provide_slug: (string) slug for a valid oauth/oauth2 provider
         :return: (string|None) humanized name of a valid oauth/oauth2 provider
         """
-        name = self.providers.get(provider_slug, None)
-        if name:
-            return str(name)
-        return None
+        return str(self.providers.get(provider_slug, None))
 
     def get_slugs(self):
         return [str(slug) for slug in self.slugs]
