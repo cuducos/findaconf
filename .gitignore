@@ -1,10 +1,15 @@
 # Caches, compiled, compressed, logs and databases
-findaconf/assets
 *.db
 *.pyc
 *.log
 
-# Bower
+# coverage
+.coverage
+.coveragerc
+htmlcov/
+
+# bower and processed assets
+findaconf/assets
 findaconf/bower
 
 # dev tools, ide etc.
