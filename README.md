@@ -92,6 +92,19 @@ You can discuss the project, further features, implementation and report issues 
 * Push to the branch: `git push origin my-new-feature`
 * Go to your fork page at GitHub and create new pull request
 
+### To do list
+
+These are the next steps (there is a lot to be done, these are just some more short term tasks):
+
+* Enhance users login (add fields/features such as `last_seen`, `remember_me`, `created_at`, `created_with`, `last_accessed_with` – with refers to the oauth/oauth2 provider)
+* Redirect users after login
+* Roles for user permissions have not been created (we have the table `Group` created, but we are not using it)
+* Threading for email notifications
+* Create the page to add conferences
+* Commands (via Flask-Script) to update support table (`Keywords`, `MagicNumbers`)
+* Proof read (as most of us are not native English speakers)
+* What else?
+
 ## Contributors
 
 The idea emerged within a group of PhD students in Sociology from the [University of Essex](http://essex.ac.uk): [Ale](http://www.essex.ac.uk/sociology/staff/profile.aspx?ID=3787), [Can](http://www.essex.ac.uk/sociology/staff/profile.aspx?ID=3471) and [Cuducos](http://cuducos.me).
