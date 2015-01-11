@@ -5,6 +5,9 @@ footer {
       margin-bottom: .5rem;
     }
   }
+  a {
+    color: $footer_link_color;
+  }
   h6, p, li {
     font-size: .8rem;
   }
@@ -19,9 +22,6 @@ footer {
       line-height: .8rem;
       color: $footer_highlight_color;
       padding-right: .3rem;
-    }
-    a {
-      color: $footer_link_color;
     }
   }
 }

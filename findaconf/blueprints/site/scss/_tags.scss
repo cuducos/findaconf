@@ -2,6 +2,8 @@ body {
   color: $text_color;
   background-color: $background_color;
   font: $standard_font;
+  -webkit-font-smoothing: antialised;
+          font-smoothing: antialised;
 }
 
 a {
