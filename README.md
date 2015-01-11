@@ -98,7 +98,7 @@ The idea emerged within a group of PhD students in Sociology from the [Universit
 
 [Mabel](http://about.me/mabel_lazzarin) and [Cuducos](http://cuducos.me) designed the UI. 
 
-The source code is being written by [Cuducos](http://cuducos.me) and [Gabriel](http://about.me/gabrielvicente).
+The source code is being written by [Cuducos](http://cuducos.me), [Gabriel](http://about.me/gabrielvicente) and [John](http://github.com/jbaham2).
 
 ## License
 
