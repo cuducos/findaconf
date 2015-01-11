@@ -107,9 +107,6 @@ def login(provider):
                 if not user:
                     new_user = User(email=result.user.email,
                                     name=result.user.name)
-                    db.session.add(new_user)
-                    db.session.commit()
-                    user = User.query.filter_by(email=result.user.email)
 
                     # check if email address is valid
                     if not new_user.valid_email():
