@@ -96,7 +96,8 @@ You can discuss the project, further features, implementation and report issues 
 
 These are the next steps (there is a lot to be done, these are just some more short term tasks):
 
-* Enhance users login (add fields/features such as `last_seen`, `remember_me`, `created_at`, `created_with`, `last_accessed_with` – with refers to the oauth/oauth2 provider)
+* Implement tests over OAuth/OAuth2 process (no idea how to code it – anyone?)
+* Enhance users login (add fields/features such as `last_seen`, `remember_me`, `created_at`, `created_with`, `last_accessed_with` – with refers to the OAuth/OAuth2 provider)
 * Redirect users after login
 * Roles for user permissions have not been created (we have the table `Group` created, but we are not using it)
 * Threading for email notifications
