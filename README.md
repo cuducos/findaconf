@@ -29,8 +29,8 @@ This application uses some required *environment variables*. You can start costu
 
 #### Databases (required)
 
-* `DATABASE_URL: url and credentials to development database (e.g. `postgres://vagrant:vagrant@localhost/findaconf`)  
-* `DATABASE_URL_TEST: url and credentials to test database (e.g. `postgres://vagrant:vagrant@localhost/findaconf_test`)  
+* `DATABASE_URL`: url and credentials to development database (e.g. `postgres://vagrant:vagrant@localhost/findaconf`)  
+* `DATABASE_URL_TEST`: url and credentials to test database (e.g. `postgres://vagrant:vagrant@localhost/findaconf_test`)  
 
 #### Security (required)
 
