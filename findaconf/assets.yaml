@@ -38,6 +38,6 @@ style:
     - scss/_colors.scss
     - scss/_mixins.scss
     - scss/_tags.scss
-    - blocks/*
-    - elements/*
-    - modifiers/*
+    - scss/blocks/*
+    - scss/elements/*
+    - scss/modifiers/*

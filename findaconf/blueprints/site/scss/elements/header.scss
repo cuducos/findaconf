@@ -1,11 +1,11 @@
 #header {
   h1 {
+    font-size: 1em;
+    line-height: 1;
+    padding-top: .3em;
     a {
       display: block;
-      background: transparent url('/static/imgs/findaconf_navbar.png') no-repeat top left;
-      height: 2em;
-      margin-top: .2em;
-      text-indent: -9999px;
+      img { height: 100% }
     }
   }
   div > ul {
