@@ -121,10 +121,11 @@ def login(provider):
                     else:
                         db.session.add(new_user)
                         db.session.commit()
-                        user = User.query.filter_by(email=result.user.email)
+                        new_query = User.query.filter_by(email=new_user.email)
+                        user = new_query.first()
 
                 # save user info
-                login_user(user.first())
+                login_user(user)
                 flash({'type': 'success',
                        'text': 'Welcome, {}'.format(result.user.name)})
 
