@@ -20,8 +20,8 @@ class TestSiteRoutes(TestCase):
     # test routes from blueprint/site.py
     def test_index(self):
         resp = self.app.get('/')
-        assert resp.status_code == 200
-        assert resp.mimetype == 'text/html'
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.mimetype, 'text/html')
 
     def test_find(self):
         resp = self.app.get('/find', data={'query': 'sociology',
@@ -29,24 +29,24 @@ class TestSiteRoutes(TestCase):
                                            'year': 2015,
                                            'region': 'Europe',
                                            'location': 'University of Essex'})
-        assert resp.status_code == 200
-        assert resp.mimetype == 'text/html'
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.mimetype, 'text/html')
 
     def test_login_pages(self):
 
         # test if login page exists
         resp = self.app.get('/login')
-        assert resp.status_code == 200
-        assert resp.mimetype == 'text/html'
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.mimetype, 'text/html')
 
         # test if are there links to oauth/oauth2 providers
         providers = OAuthProvider()
         for provider in providers.get_slugs():
-            assert 'href="/login/{}'.format(provider) in resp.data
+            self.assertIn('href="/login/{}'.format(provider), resp.data)
 
         # test if is there a link to login in the home page
         resp = self.app.get('/')
-        assert 'href="/login"' in resp.data
+        self.assertIn('href="/login', resp.data)
 
     def test_login_providers(self):
 
@@ -54,11 +54,11 @@ class TestSiteRoutes(TestCase):
         providers = OAuthProvider()
         for provider in providers.get_slugs():
             resp = self.app.get('/login/{}'.format(provider))
-            assert resp.status_code == 302
+            self.assertEqual(resp.status_code, 302)
 
         # test if unauthorized provider returns 404
         resp = self.app.get('/login/anything_else')
-        assert resp.status_code == 404
+        self.assertEqual(resp.status_code, 404)
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_new_user_login(self, mocked):

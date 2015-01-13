@@ -18,19 +18,19 @@ class TestFileRoutes(TestCase):
 
     def test_poster(self):
         resp = self.app.get('/poster.png', data={'rand': randrange(100, 999)})
-        assert resp.status_code == 200
-        assert resp.mimetype == 'image/png'
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.mimetype, 'image/png')
 
     def test_favicon(self):
         types = ['image/vnd.microsoft.icon', 'image/x-icon']
         resp = self.app.get('/favicon.ico')
-        assert resp.status_code == 200
-        assert resp.mimetype in types
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn(resp.mimetype, types)
 
     def test_robots(self):
         resp = self.app.get('/robots.txt')
-        assert resp.status_code == 200
-        assert resp.mimetype == 'text/plain'
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.mimetype, 'text/plain')
 
     def test_foundation_icons(self):
         base_url = '/assets/'
@@ -43,7 +43,7 @@ class TestFileRoutes(TestCase):
             path = '{}foundation-icons.{}'.format(base_url, ext)
             resp = self.app.get(path)
             if ext != 'py':
-                assert resp.status_code == 200
-                assert resp.mimetype in types
+                self.assertEqual(resp.status_code, 200)
+                self.assertIn(resp.mimetype, types)
             else:
-                assert resp.status_code == 404
+                self.assertEqual(resp.status_code, 404)

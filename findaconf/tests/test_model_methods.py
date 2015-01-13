@@ -30,10 +30,10 @@ class TestModelMethods(TestCase):
         johndoe = User()
         for email in valid_emails:
             johndoe.email = email
-            assert johndoe.valid_email()
+            self.assertTrue(johndoe.valid_email())
         for email in invalid_emails:
             johndoe.email = email
-            assert not johndoe.valid_email()
+            self.assertFalse(johndoe.valid_email())
         for email in should_be_valid_emails:
             johndoe.email = email
-            assert johndoe.valid_email()
+            self.assertTrue(johndoe.valid_email())
