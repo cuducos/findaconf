@@ -25,5 +25,6 @@ sudo -u postgres createdb -O vagrant findaconf
 sudo -u postgres createdb -O vagrant findaconf_test
 
 # install project dependencies
-pip install -r /vagrant/requirements.txt
-
+cd /vagrant
+pip install -r requirements.txt
+su -c "bower install" -s /bin/sh vagrant
