@@ -124,10 +124,10 @@ def login(provider):
                         new_query = User.query.filter_by(email=new_user.email)
                         user = new_query.first()
 
-                # save user info
-                login_user(user)
-                flash({'type': 'success',
-                       'text': 'Welcome, {}'.format(result.user.name)})
+                if user and user.valid_email():
+                    login_user(user)
+                    flash({'type': 'success',
+                           'text': 'Welcome, {}'.format(result.user.name)})
 
         return redirect(url_for(next_page))
 
