@@ -20,8 +20,7 @@ ASSETS_DEBUG = config('ASSETS_DEBUG', default=False, cast=bool)
 SECRET_KEY = config('SECRET_KEY', default=False)
 
 # public api keys
-GOOGLE_PUBLIC_API = config('GOOGLE_PUBLIC_API',
-                                     default=None)
+GOOGLE_PUBLIC_API = config('GOOGLE_PUBLIC_API', default=None)
 GOOGLE_PLACES_PROXY = config('GOOGLE_PLACES_PROXY', default=None)
 
 # oauth/oauth2 providers
