@@ -13,7 +13,7 @@ Flask-Login==0.2.11
 
 # database
 
-Flask-AlchemyDumps==0.0.3
+Flask-AlchemyDumps==0.0.4
 Flask-Migrate==1.2.0
 Flask-SQLAlchemy==2.0
 psycopg2==2.5.4
