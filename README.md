@@ -96,17 +96,17 @@ You can discuss the project, further features, implementation and report issues 
 
 These are the next steps (there is a lot to be done, these are just some more short term tasks):
 
-* Enhance users login (add fields/features such as `last_seen`, `remember_me`, `created_at`, `created_with`, `last_accessed_with` – these last two fields refer to the OAuth/OAuth2 provider)
-* Implement more test for user login (error message, success message, redirect message)
-* Redirect users after login
-* Roles for user permissions have not been created (we have the table `Group` created, but we are not using it)
-* Threading for email notifications
-* Create the page to add conferences
-* Commands (via Flask-Script) to update support table (`Keywords`, `MagicNumbers`)
-* Proof read (as most of us are not native English speakers)
-* Terms of use
-* `/support` page explaining the business model, the costs and the  donations through Unlock, PayPal and Bitcoin
-* What else?
+1. Enhance users login (add fields/features such as `last_seen`, `remember_me`, `created_at`, `created_with`, `last_accessed_with` – these last two fields refer to the OAuth/OAuth2 provider)
+1. Implement more test for user login (error message, success message, redirect message)
+1. Redirect users after login
+1. Roles for user permissions have not been created (we have the table `Group` created, but we are not using it)
+1. Threading for email notifications
+1. Create the page to add conferences
+1. Commands (via Flask-Script) to update support table (`Keywords`, `MagicNumbers`)
+1. Proof read (as most of us are not native English speakers)
+1. Terms of use
+1. `/support` page explaining the business model, the costs and the  donations through Unlock, PayPal and Bitcoin
+1. What else?
 
 ## Contributors
 
