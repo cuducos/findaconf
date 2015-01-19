@@ -5,7 +5,7 @@
 _Find a Conference_ is under development. This is supposed to be a free, open source and ad free platform where:
 
 * Registered *users can post info about academic conferences* and call for papers
-* Anyone can *register with external accounts* (Google, Facebook, Twitter, Yahoo, what else?) so [we don't have to deal with passwords](http://youtu.be/8ZtInClXe1Q)
+* Anyone can *register with external accounts* (Google, Facebook, Yahoo etc.) so [we don't have to deal with passwords](http://youtu.be/8ZtInClXe1Q)
 * There is *no curatorial layer*, but we should add *report links for users to flag innapropriate and/or duplicated content*
 * Only the user *who posted a conference can edit it* 
 * The platform should not host too much stuff regarding the conferences: it is *simply a platform for users to find conferences* and then follow to universities webpages, association websites, Eventbrite registrations, planning group emails etc.
@@ -104,6 +104,8 @@ These are the next steps (there is a lot to be done, these are just some more sh
 * Create the page to add conferences
 * Commands (via Flask-Script) to update support table (`Keywords`, `MagicNumbers`)
 * Proof read (as most of us are not native English speakers)
+* Terms of use
+* `/support` page explaining the business model, the costs and the  donations through Unlock, PayPal and Bitcoin
 * What else?
 
 ## Contributors
