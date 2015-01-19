@@ -73,12 +73,12 @@ class TestSiteRoutes(TestCase):
 
             # assert that we have no users in the database
             self.assertEqual(db.session.query(User).count(), 0,
-                             'Count of users before login differs than 0')
+                             'User count before login differs than 0')
             self.app.get('/login/{}'.format(valid_providers[0]))
 
             # assert a user was created
             self.assertEqual(db.session.query(User).count(), 1,
-                             'Count of users after login differs than 1')
+                             'User count after login differs than 1')
 
             # assert user data
             u = User.query.first()
@@ -86,7 +86,7 @@ class TestSiteRoutes(TestCase):
             self.assertEqual(u.name, 'John Doe', "Name doesn't match")
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
-    def test_unsuccessful_user_login(self, mocked):
+    def test_unsuccessful_user_login_with_invalid_email(self, mocked):
 
         # get a valid login link/provider
         providers = OAuthProvider()
@@ -95,11 +95,37 @@ class TestSiteRoutes(TestCase):
 
             # create a mock object for Authomatic.login() & try to login
             mocked.return_value = MockAuthomatic(email='fulano-de.tal')
-            self.app.get('/login/{}'.format(valid_providers[0]))
+            resp = self.app.get('/login/{}'.format(valid_providers[0]),
+                                follow_redirects=True)
+
+            # assert error message was shown
+            self.assertIn('is not a valid email', resp.data,
+                          'No error shown after trying login w/ invalid email')
 
             # assert that we have no users in the database
             self.assertEqual(db.session.query(User).count(), 0,
-                             'Count of users after login differs than 0')
+                             'User count after login differs than 0')
+
+    @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
+    def test_unsuccessful_user_login_with_no_email(self, mocked):
+
+        # get a valid login link/provider
+        providers = OAuthProvider()
+        valid_providers = providers.get_slugs()
+        if valid_providers:
+
+            # create a mock object for Authomatic.login() & try to login
+            mocked.return_value = MockAuthomatic(email=None)
+            resp = self.app.get('/login/{}'.format(valid_providers[0]),
+                                follow_redirects=True)
+
+            # assert error message was shown
+            self.assertIn('refusing to send us your email address', resp.data,
+                          'No error shown after trying login without email')
+
+            # assert that we have no users in the database
+            self.assertEqual(db.session.query(User).count(), 0,
+                             'User count after login differs than 0')
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_returning_user_login(self, mocked):
@@ -112,14 +138,21 @@ class TestSiteRoutes(TestCase):
             # create a mock object for Authomatic.login()
             mocked.return_value = MockAuthomatic()
 
+            # login & assert welcome message was shown
+            resp1 = self.app.get('/login/{}'.format(valid_providers[0]),
+                                 follow_redirects=True)
+            self.assertIn('Welcome, John Doe', resp1.data,
+                          'No welcome message found after login')
 
-            self.app.get('/login/{}'.format(valid_providers[0]))
-            self.app.get('/logout')
-            self.app.get('/login/{}'.format(valid_providers[0]))
+            # logout & assert logout message was shown
+            resp2 = self.app.get('/logout', follow_redirects=True)
+            self.assertIn('You\'ve been logged out', resp2.data,
+                          'No logout message found after logout')
 
-            # assert only one user was created
+            # login again & assert only one user was created
+            self.app.get('/login/{}'.format(valid_providers[0]))
             u = User.query.first()
             self.assertEqual(u.email, 'johndoe@john.doe', "Email doesn't match")
             self.assertEqual(u.name, 'John Doe', "Name doesn't match")
             self.assertEqual(db.session.query(User).count(), 1,
-                             'Count of users after login differs than 1')
+                             'User count after login differs than 1')
