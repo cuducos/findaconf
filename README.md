@@ -101,7 +101,8 @@ These are the next steps (there is a lot to be done, these are just some more sh
 1. Roles for user permissions have not been created (we have the table `Group` created, but we are not using it)
 1. Threading for email notifications
 1. Create the page to add conferences
-1. Commands (via Flask-Script) to update support table (`Keywords`, `MagicNumbers`)
+1. Add full text search to Conference mapped class (for example, with [Whoosh](https://pypi.python.org/pypi/Whoosh))
+1. Commands (via Flask-Script or Celery) to update support table (`Keywords`, `MagicNumbers`)
 1. Proof read (as most of us are not native English speakers)
 1. Terms of use
 1. `/support` page explaining the business model, the costs and the  donations through Unlock, PayPal and Bitcoin
