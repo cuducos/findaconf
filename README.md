@@ -2,35 +2,35 @@
 
 ## About
 
-_Find a Conference_ is under development. This is supposed to be a free, open source and ad free platform where:
+_Find a Conference_ is under development. This is supposed to be a free, open source and ad-free platform where:
 
 * Registered *users can post info about academic conferences* and call for papers
 * Anyone can *register with external accounts* (Google, Facebook, Yahoo etc.) so [we don't have to deal with passwords](http://youtu.be/8ZtInClXe1Q)
-* There is *no curatorial layer*, but we should add *report links for users to flag innapropriate and/or duplicated content*
+* There is *no curatorial layer*, but we should add *report links for users to flag inappropriate and/or duplicated content*
 * Only the user *who posted a conference can edit it* 
-* The platform should not host too much stuff regarding the conferences: it is *simply a platform for users to find conferences* and then follow to universities webpages, association websites, Eventbrite registrations, planning group emails etc.
+* The platform should not host too much stuff regarding the conferences: it is *simply a platform for users to find conferences* and then follow to universities web pages, association websites, Eventbrite registrations, planning group emails etc.
 * It should be designed to be easily internationalized (*multi-language*)
 
 ## Installation
 
-If you wanr to get a development version of *Find a Conference* running, this session might be helpful. If it is not, let us know.
+If you want to get a development version of *Find a Conference* running, this session might be helpful. If it is not, let us know.
 
 ### Requirements
 
 * Python 2.7+ (but not Python 3)
 * PostgreSQL 9.3+
-* [virtualenv](https://virtualenv.pypa.io/) and [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/) are not required, but are recommended.
-* [pip](https://github.com/pypa/pip) is not required, but I’m using it in install instructions
+* [virtualenv](https://virtualenv.pypa.io/) and [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/) are not required, but are recommended
+* [pip](https://github.com/pypa/pip) is not required, but we are using it in install instructions
 * [Node.js](http://nodejs.org/) with [CoffeeScript](http://coffeescript.org/) and [Bower](http://bower.io/)
 
 ### Environment variables
 
-This application uses some required *environment variables*. You can start costumizing them using by renaming and editing the sample file included in this repository. 
+This application uses some required *environment variables*. You can copy `.env.sample` as `.env` and customize it. It is the easiest way to set these variables.
 
 #### Databases (required)
 
-* `DATABASE_URL`: url and credentials to development database (e.g. `postgres://vagrant:vagrant@localhost/findaconf`)  
-* `DATABASE_URL_TEST`: url and credentials to test database (e.g. `postgres://vagrant:vagrant@localhost/findaconf_test`)  
+* `DATABASE_URL`: URL and credentials to development database (e.g. `postgres://vagrant:vagrant@localhost/findaconf`)  
+* `DATABASE_URL_TEST`: URL and credentials to test database (e.g. `postgres://vagrant:vagrant@localhost/findaconf_test`)  
 
 #### Security (required)
 
@@ -43,7 +43,7 @@ This application uses some required *environment variables*. You can start costu
 
 #### OAuth/OAuth2 APIs (recommended)
 
-At least one of these providers should be set in order to enable users to log in. Setting a provider involves registering an app with a OAuth/OAuth2 provider, and passing the `client id` and `client secret` tokens to *Find a Conference* throght pairs from this set of variables:
+At least one of these providers should be set in order to enable users to log in. Setting a provider involves registering an application with a OAuth/OAuth2 provider, and passing the `client id` and `client secret` tokens to *Find a Conference* through pairs from this set of variables:
 
 * `AMAZON_CLIENT_ID` and `AMAZON_CLIENT_SECRET`
 * `FACEBOOK_CLIENT_ID` and `FACEBOOK_CLIENT_SECRET`
@@ -70,7 +70,7 @@ At least one of these providers should be set in order to enable users to log in
 
 ### Further installation notes
 
-If you need further instructions to configure your develeopment environment, take a look at our [Vagrant bootstrap script](/Vagrant.sh). It has all the commands to instal Python, Node.js, CoffeeScript, Bower and PostgreSQL, dependencies and to create databases and users. It is designed to work with [Ubuntu 14.04](http://releases.ubuntu.com/trusty/), but works with most [Debian](http://debian.org) distributions.
+If you need further instructions to configure your development environment, take a look at our [Vagrant bootstrap script](/Vagrant.sh). It has all the commands to install Python, Node.js, CoffeeScript, Bower and PostgreSQL dependencies, and to create databases and users. It is designed to work with [Ubuntu 14.04](http://releases.ubuntu.com/trusty/), but works with most [Debian](http://debian.org) distributions.
 
 Note that the included [.bowerrc](/.bowerrc) sets up a customized directory to store Bower files.
 
