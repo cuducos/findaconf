@@ -4,7 +4,7 @@ import sys
 
 from authomatic import Authomatic
 from authomatic.adapters import WerkzeugAdapter
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from findaconf import app, db, lm
 from findaconf.helpers.minify import render_minified
 from findaconf.helpers.titles import get_search_title
