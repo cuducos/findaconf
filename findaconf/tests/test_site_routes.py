@@ -82,7 +82,7 @@ class TestSiteRoutes(TestCase):
 
             # assert user data
             u = User.query.first()
-            self.assertEqual(u.email, 'johndoe@john.doe', "Email doesn't match")
+            self.assertEqual(u.email, 'johndoe@john.doe', "Emails don't match")
             self.assertEqual(u.name, 'John Doe', "Name doesn't match")
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
@@ -152,7 +152,39 @@ class TestSiteRoutes(TestCase):
             # login again & assert only one user was created
             self.app.get('/login/{}'.format(valid_providers[0]))
             u = User.query.first()
-            self.assertEqual(u.email, 'johndoe@john.doe', "Email doesn't match")
+            self.assertEqual(u.email, 'johndoe@john.doe', "Emails don't match")
             self.assertEqual(u.name, 'John Doe', "Name doesn't match")
             self.assertEqual(db.session.query(User).count(), 1,
                              'User count after login differs than 1')
+
+    @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
+    def test_failed_login_with_api_error(self, mocked):
+
+        # get a valid login link/provider
+        providers = OAuthProvider()
+        valid_providers = providers.get_slugs()
+        if valid_providers:
+
+            # error in HTML and parsed
+            html = """
+            <html>
+                <head>
+                    <title>Error Page</title>
+                </head>
+                <body>
+                    <div class="error">
+                        <h1>Ooops...</h1>
+                        <p>Error message</p>
+                    </div>
+                </body>
+            </html>
+            """
+            parsed = 'Error Page Ooops... Error message'
+
+            # create a mock object for Authomatic.login()
+            mocked.return_value = MockAuthomatic(error=html)
+
+            # login & assert welcome message was shown
+            resp1 = self.app.get('/login/{}'.format(valid_providers[0]),
+                                 follow_redirects=True)
+            self.assertIn(parsed, resp1.data, 'API message does not match')

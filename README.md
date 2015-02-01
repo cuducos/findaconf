@@ -89,7 +89,7 @@ Note that the included [.bowerrc](/.bowerrc) sets up a customized directory to s
 
 ## Tests
 
-We're using [Nose](https://nose.readthedocs.org) for testing. You might prefer to use `$ nosetest --rednose` for legibility. 
+We're using [Nose](https://nose.readthedocs.org) for testing. You might prefer to use `$ nosetests --rednose` for legibility. 
 
 Nose has serious difficulties in finding tests in non-executable files, thus if you wanna change the permissions of the tests files just run: `$ chmod -x $(find findaconf/tests/ -name '*.py')`.
 
