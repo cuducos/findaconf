@@ -32,7 +32,7 @@ apt-get install -y python-psycopg2
 # Install Python developer packages                                           #
 ###############################################################################
 
-pip install ipython coverage flake8
+pip install ipython coverage flake8 rednose
 
 ###############################################################################
 # Create the database and its user                                            #
