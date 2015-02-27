@@ -16,7 +16,7 @@ files_blueprint = Blueprint('file_routes', __name__, static_folder='')
 def poster():
 
     # randon backgorund color
-    rand_rgb = set([(randrange(97, 160) / 255.0) for i in range(0, 3)])
+    rand_rgb = tuple([(randrange(97, 160) / 255.0) for i in range(0, 3)])
     bg = Color(rgb=rand_rgb)
 
     # get foreground
