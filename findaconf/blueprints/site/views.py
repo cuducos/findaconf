@@ -114,11 +114,12 @@ def login(provider):
     
                 # if new user
                 else:
+                    now = datetime.now()
                     new_user = User(email=result.user.email,
                                     name=result.user.name,
                                     created_with=provider,
-                                    created_at=datetime.now(),
-                                    last_seen=datetime.now())
+                                    created_at=now,
+                                    last_seen=now)
 
                     # check if email address is valid
                     if not new_user.valid_email():

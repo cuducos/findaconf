@@ -1,5 +1,6 @@
 # coding: utf-8
 
+from datetime import datetime
 from mock import patch
 from findaconf import app, db
 from findaconf.helpers.providers import OAuthProvider
@@ -84,6 +85,10 @@ class TestSiteRoutes(TestCase):
             u = User.query.first()
             self.assertEqual(u.email, 'johndoe@john.doe', "Emails don't match")
             self.assertEqual(u.name, 'John Doe', "Name doesn't match")
+            self.assertEqual(u.created_at, u.last_seen, "Time doesn't match")
+            self.assertTrue(u.last_seen, "Last seen is blank")
+            self.assertEqual(u.created_with, valid_providers[0],
+                             "Provider doesn't match")
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_unsuccessful_user_login_with_invalid_email(self, mocked):
@@ -154,6 +159,8 @@ class TestSiteRoutes(TestCase):
             u = User.query.first()
             self.assertEqual(u.email, 'johndoe@john.doe', "Emails don't match")
             self.assertEqual(u.name, 'John Doe', "Name doesn't match")
+            self.assertNotEqual(u.created_at, u.last_seen,
+                                "Last seen wasn't updated")
             self.assertEqual(db.session.query(User).count(), 1,
                              'User count after login differs than 1')
 
