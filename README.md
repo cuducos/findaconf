@@ -110,7 +110,7 @@ You can discuss the project, further features, implementation and report issues 
 
 These are the next steps (there is a lot to be done, these are just some more short term tasks):
 
-1. Enhance users login (add fields/features such as `last_seen`, `remember_me`, `created_at`, `created_with`, `last_accessed_with` – these last two fields refer to the OAuth/OAuth2 provider)
+1. Enhance users login with a `remember_me`
 1. Redirect users after login
 1. Roles for user permissions have not been created (we have the table `Group` created, but we are not using it)
 1. Threading for email notifications
