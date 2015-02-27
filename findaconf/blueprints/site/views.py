@@ -103,9 +103,17 @@ def login(provider):
                 # convert all emails to lowercase (avoids duplicity in db)
                 result.user.email = result.user.email.lower()
 
-                # if new user
+                # if existing user
                 user = User.query.filter_by(email=result.user.email).first()
-                if not user:
+                if user:
+                    if provider != user.created_with:
+                        return redirect('/login/{}'.format(user.created_with))
+                    user.last_seen = datetime.now()
+                    db.session.add(user)
+                    db.session.commit()
+    
+                # if new user
+                else:
                     new_user = User(email=result.user.email,
                                     name=result.user.name,
                                     created_with=provider,
