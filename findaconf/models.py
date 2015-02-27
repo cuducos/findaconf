@@ -32,6 +32,9 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(256))
     language = db.Column(db.String(2))
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
+    created_with = db.Column(db.String(16))
+    created_at = db.Column(db.Date)
+    last_seen = db.Column(db.Date)
 
     def __repr__(self):
         return '<User #{}: {}>'.format(self.id, self.name)
