@@ -5,6 +5,7 @@ import sys
 from authomatic import Authomatic
 from authomatic.adapters import WerkzeugAdapter
 from bs4 import BeautifulSoup
+from datetime import datetime
 from findaconf import app, db, lm
 from findaconf.helpers.minify import render_minified
 from findaconf.helpers.titles import get_search_title
@@ -102,11 +103,23 @@ def login(provider):
                 # convert all emails to lowercase (avoids duplicity in db)
                 result.user.email = result.user.email.lower()
 
-                # if new user
+                # if existing user
                 user = User.query.filter_by(email=result.user.email).first()
-                if not user:
+                if user:
+                    if provider != user.created_with:
+                        return redirect('/login/{}'.format(user.created_with))
+                    user.last_seen = datetime.now()
+                    db.session.add(user)
+                    db.session.commit()
+    
+                # if new user
+                else:
+                    now = datetime.now()
                     new_user = User(email=result.user.email,
-                                    name=result.user.name)
+                                    name=result.user.name,
+                                    created_with=provider,
+                                    created_at=now,
+                                    last_seen=now)
 
                     # check if email address is valid
                     if not new_user.valid_email():
