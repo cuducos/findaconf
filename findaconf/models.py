@@ -18,7 +18,9 @@ class Group(db.Model):
     __tablename__ = 'group'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(16))
-    users = db.relationship('User', backref='group')
+
+    def default(self, role='user'):
+        return self.query.filter_by(title=role).first()
 
     def __repr__(self):
         return '<Group #{}: {}>'.format(self.id, self.title)
@@ -32,6 +34,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(256))
     language = db.Column(db.String(2))
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
+    group = db.relationship('Group', backref='users')
     created_with = db.Column(db.String(16))
     created_at = db.Column(db.DateTime)
     last_seen = db.Column(db.DateTime)

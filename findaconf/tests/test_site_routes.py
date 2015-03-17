@@ -86,9 +86,28 @@ class TestSiteRoutes(TestCase):
             self.assertEqual(u.email, 'johndoe@john.doe', "Emails don't match")
             self.assertEqual(u.name, 'John Doe', "Name doesn't match")
             self.assertEqual(u.created_at, u.last_seen, "Time doesn't match")
+            self.assertEqual(u.group.title, 'user')
             self.assertTrue(u.last_seen, "Last seen is blank")
             self.assertEqual(u.created_with, valid_providers[0],
                              "Provider doesn't match")
+
+    @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
+    def test_new_admin_user_login(self, mocked):
+
+        # get a valid login link/provider
+        providers = OAuthProvider()
+        valid_providers = providers.get_slugs()
+        if valid_providers:
+
+            # create a mock object for Authomatic.login()
+            mocked.return_value = MockAuthomatic(email=app.config['ADMIN'][0])
+
+            # create a new admin user
+            self.app.get('/login/{}'.format(valid_providers[0]))
+
+            # assert the new user is an admin
+            u = User.query.first()
+            self.assertEqual(u.group.title, 'admin')
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_unsuccessful_user_login_with_invalid_email(self, mocked):
@@ -195,3 +214,4 @@ class TestSiteRoutes(TestCase):
             resp1 = self.app.get('/login/{}'.format(valid_providers[0]),
                                  follow_redirects=True)
             self.assertIn(parsed, resp1.data, 'API message does not match')
+

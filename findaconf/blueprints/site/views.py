@@ -10,7 +10,7 @@ from findaconf import app, db, lm
 from findaconf.helpers.minify import render_minified
 from findaconf.helpers.titles import get_search_title
 from findaconf.helpers.providers import OAuthProvider
-from findaconf.models import Continent, Country, User, Year
+from findaconf.models import Continent, Country, Group, User, Year
 from flask import (
     abort, Blueprint, flash, g, redirect, render_template, request,
     make_response, url_for
@@ -115,12 +115,17 @@ def login(provider):
                 # if new user
                 else:
                     now = datetime.now()
+                    roles = Group()
+                    if result.user.email in app.config['ADMIN']:
+                        role = roles.default('admin')
+                    else:
+                        role = roles.default()
                     new_user = User(email=result.user.email,
                                     name=result.user.name,
                                     created_with=provider,
                                     created_at=now,
-                                    last_seen=now)
-
+                                    last_seen=now,
+                                    group=role)
                     # check if email address is valid
                     if not new_user.valid_email():
                         msg = 'The address “{}” provided by {} is not a valid '
@@ -136,7 +141,6 @@ def login(provider):
                         db.session.commit()
                         new_query = User.query.filter_by(email=new_user.email)
                         user = new_query.first()
-
                 if user and user.valid_email():
                     login_user(user)
                     flash({'type': 'success',
@@ -172,3 +176,4 @@ def inject_main_vars():
         'months': app.config['MONTHS'],
         'years': Year.query.order_by(Year.year).all()
     }
+

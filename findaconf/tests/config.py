@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from decouple import config
+from findaconf.models import Group
 from findaconf.tests.fake_data import fake_conference, seed
 
 
@@ -10,6 +11,9 @@ def set_app(app, db=False):
     app.config['TESTING'] = True
     app.config['WTF_CSRF_ENABLED'] = False
     app.config['ASSETS_DEBUG'] = False
+
+    # set an admin email address
+    app.config['ADMIN'] = ['admin@findaconf.info']
 
     # set test db
     if db:
@@ -34,6 +38,11 @@ def set_app(app, db=False):
         db.create_all()
         seed(app, db)
         [db.session.add(fake_conference(db)) for i in range(1, 43)]
+
+        # feed the Group table
+        [db.session.add(Group(title=role)) for role in ['admin', 'moderator', 'user']]
+
+        # commit everything
         db.session.commit()
 
     # return test app

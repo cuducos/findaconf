@@ -59,6 +59,10 @@ At least one of these providers should be set in order to enable users to log in
 * `DEBUG`: sets if the application is started in debug mode (e.g. `True`)
 * `ASSETS_DEBUG`: sets if [webassets](http://webassets.readthedocs.org/en/latest/environment.html?highlight=debug#webassets.env.Environment.debug) runs in debug mode (e.g. `True`)
 
+#### Administrator
+
+* `ADMIN`: when an user with an email listed in this variable (a string containing email addresses, comma separated) is created, it is created as `admin` (not as regular `user`)
+
 ### Step-by-step installation (without Vagrant)
 
 1. Clone the repository and step in its directory: `$ git clone git@github.com:cuducos/findaconf.git && cd findaconf`
@@ -112,7 +116,6 @@ These are the next steps (there is a lot to be done, these are just some more sh
 
 1. Enhance users login with a `remember_me`
 1. Redirect users after login
-1. Roles for user permissions have not been created (we have the table `Group` created, but we are not using it)
 1. Threading for email notifications
 1. Create the page to add conferences
 1. Add full text search to Conference mapped class (for example, with [Whoosh](https://pypi.python.org/pypi/Whoosh))
