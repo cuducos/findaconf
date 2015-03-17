@@ -45,7 +45,7 @@ def results():
     query = dict(zip(url_vars, req_vars))
 
     # page title
-    page_title = get_search_title(randrange(0, 8), query['query'])
+    page_title = get_search_title(randrange(8), query['query'])
 
     return render_template('results.slim', page_title=page_title, **query)
 
