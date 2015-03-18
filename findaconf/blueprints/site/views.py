@@ -131,7 +131,7 @@ def login(provider):
                     user.last_seen = datetime.now()
                     db.session.add(user)
                     db.session.commit()
-    
+
                 # if new user
                 else:
                     now = datetime.now()
@@ -198,4 +198,3 @@ def inject_main_vars():
         'months': app.config['MONTHS'],
         'years': Year.query.order_by(Year.year).all()
     }
-

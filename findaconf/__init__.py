@@ -21,7 +21,6 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # init db
 db = SQLAlchemy(app)
-from findaconf import models
 
 # init manager
 manager = Manager(app)
