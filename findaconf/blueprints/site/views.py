@@ -12,31 +12,27 @@ from findaconf.helpers.minify import render_minified
 from findaconf.helpers.providers import OAuthProvider
 from findaconf.helpers.titles import get_search_title
 from findaconf.models import Continent, Country, Group, User, Year
-from flask import (
-    abort, Blueprint, flash, g, make_response, redirect, render_template,
-    request, session, url_for
-)
+from flask import (abort, Blueprint, flash, g, make_response, redirect,
+                   render_template, request, session, url_for)
 from flask.ext.login import current_user, login_user, logout_user
 from random import randrange
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-site_blueprint = Blueprint(
-    'site',
-    __name__,
-    template_folder='templates',
-    static_folder='static'
-)
+site = Blueprint('site',
+                 __name__,
+                 template_folder='templates',
+                 static_folder='static')
 
 
-@site_blueprint.route('/')
+@site.route('/')
 @render_minified
 def index():
     return render_template('home.slim')
 
 
-@site_blueprint.route('/find')
+@site.route('/find')
 @render_minified
 def results():
 
@@ -51,7 +47,7 @@ def results():
     return render_template('results.slim', page_title=page_title, **query)
 
 
-@site_blueprint.route('/login', methods=['GET'])
+@site.route('/login', methods=['GET'])
 @render_minified
 def login_options():
     return render_template('login.slim',
@@ -60,7 +56,7 @@ def login_options():
                            form=LoginForm())
 
 
-@site_blueprint.route('/login/process', methods=('POST',))
+@site.route('/login/process', methods=('POST',))
 def login_process():
 
     form = LoginForm()
@@ -79,7 +75,7 @@ def login_process():
     return abort(404)
 
 
-@site_blueprint.route('/login/<provider>')
+@site.route('/login/<provider>')
 def login(provider):
 
     # after login url
@@ -194,7 +190,7 @@ def login(provider):
     return oauth_response
 
 
-@site_blueprint.route('/logout')
+@site.route('/logout')
 def logout():
     if g.user.is_authenticated():
         g.user.remember_me_token = ''
@@ -205,7 +201,7 @@ def logout():
     return redirect(url_for('site.index'))
 
 
-@site_blueprint.before_request
+@site.before_request
 def before_request():
     if not current_user.is_authenticated():
         remember_me = request.cookies.get('remember_me', False)
@@ -215,6 +211,9 @@ def before_request():
             if user:
                 if user.check_hash(remember_me):
                     login_user(user)
+                    user.last_seen = datetime.now()
+                    db.session.add(user)
+                    db.session.commit()
     g.user = current_user
 
 
@@ -223,7 +222,7 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-@site_blueprint.context_processor
+@site.context_processor
 def inject_main_vars():
     return {'continents': Continent.query.order_by(Continent.title).all(),
             'countries': Country.query.order_by(Country.title).all(),

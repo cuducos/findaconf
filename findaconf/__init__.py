@@ -59,9 +59,9 @@ if not app.config['DEBUG']:
     app.logger.info('{} started successfully.'.format(app.config['TITLE']))
 
 # load & register blueprints
-from blueprints.autocomplete.views import autocomplete_blueprint
-from blueprints.files.views import files_blueprint
-from blueprints.site.views import site_blueprint
-app.register_blueprint(autocomplete_blueprint, url_prefix='/autocomplete')
-app.register_blueprint(files_blueprint)
-app.register_blueprint(site_blueprint)
+from blueprints.autocomplete.views import autocomplete
+from blueprints.files.views import files
+from blueprints.site.views import site
+app.register_blueprint(autocomplete, url_prefix='/autocomplete')
+app.register_blueprint(files)
+app.register_blueprint(site)
