@@ -72,6 +72,7 @@ def login_process():
 
             # check remember_me and store it to be processed after oauth
             session['remember_me'] = form.remember_me.data
+            session['provider'] = form.provider.data
             return redirect('/login/{}'.format(provider))
 
     # abort if no provider of if form fails
@@ -93,20 +94,23 @@ def login(provider):
     authomatic = Authomatic(providers.credentials,
                             app.config['SECRET_KEY'],
                             report_errors=True)
-    response = make_response()
+    oauth_response = make_response()
 
     # try login
     provider_name = providers.get_name(provider)
-    adapter = WerkzeugAdapter(request, response)
+    adapter = WerkzeugAdapter(request, oauth_response)
     result = authomatic.login(adapter, provider_name)
     if result:
 
         # flash error message if any
         if result.error and app.debug:
+            session['remember_me'] = False
+            session['provider'] = None
             msg = BeautifulSoup(result.error.message).findAll(text=True)
             flash({'type': 'alert', 'text': ' '.join(msg)})
 
         # if success
+        redir_resp = make_response(redirect(url_for(next_page)))
         if result.user:
             result.user.update()
 
@@ -167,14 +171,29 @@ def login(provider):
                     login_user(user)
                     flash({'type': 'success',
                            'text': 'Welcome, {}'.format(result.user.name)})
+                # remember me
+                remember_me = session.get('remember_me', False)
+                if remember_me:
+                    session_provider = session.get('provider', False)
+                    if provider == session_provider:
+                        session['remember_me'] = False
+                        session['provider'] = None
+                        user.remember_me_token = user.get_token()
+                        db.session.add(user)
+                        db.session.commit()
+                        redir_resp.set_cookie('remember_me', user.get_hash())
 
-        return redirect(url_for(next_page))
+        return redir_resp
 
-    return response
+    return oauth_response
 
 
 @site_blueprint.route('/logout')
 def logout():
+    if g.user.is_authenticated():
+        g.user.remember_me_token = ''
+        db.session.add(g.user)
+        db.session.commit()
     logout_user()
     flash({'type': 'success', 'text': 'You\'ve been logged out.'})
     return redirect(url_for('site.index'))
@@ -192,9 +211,7 @@ def load_user(id):
 
 @site_blueprint.context_processor
 def inject_main_vars():
-    return {
-        'continents': Continent.query.order_by(Continent.title).all(),
-        'countries': Country.query.order_by(Country.title).all(),
-        'months': app.config['MONTHS'],
-        'years': Year.query.order_by(Year.year).all()
-    }
+    return {'continents': Continent.query.order_by(Continent.title).all(),
+            'countries': Country.query.order_by(Country.title).all(),
+            'months': app.config['MONTHS'],
+            'years': Year.query.order_by(Year.year).all()}

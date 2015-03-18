@@ -3,7 +3,9 @@
 import re
 from findaconf import db
 from flask.ext.login import UserMixin
-from hashlib import md5
+from hashlib import md5, sha512
+from os import urandom
+from uuid import uuid4
 
 conferences_keywords = db.Table(
     'conferences_keywords',
@@ -54,6 +56,16 @@ class User(db.Model, UserMixin):
         if email_regex.match(self.email):
             return True
         return False
+
+    @staticmethod
+    def get_token():
+        return str(uuid4())
+
+    def get_hash(self):
+        return sha512(self.remember_me_token).hexdigest()
+
+    def check_hash(self, hash):
+        return hash == self.get_hash()
 
 
 class Conference(db.Model):
