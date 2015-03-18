@@ -43,7 +43,7 @@ class TestSiteRoutes(TestCase):
         # test if are there links to oauth/oauth2 providers
         providers = OAuthProvider()
         for provider in providers.get_slugs():
-            self.assertIn('href="/login/{}'.format(provider), resp.data)
+            self.assertIn(' data-oauth="{}"'.format(provider), resp.data)
 
         # test if is there a link to login in the home page
         resp = self.app.get('/')

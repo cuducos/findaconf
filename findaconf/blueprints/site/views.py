@@ -7,13 +7,14 @@ from authomatic.adapters import WerkzeugAdapter
 from bs4 import BeautifulSoup
 from datetime import datetime
 from findaconf import app, db, lm
+from findaconf.forms import LoginForm
 from findaconf.helpers.minify import render_minified
-from findaconf.helpers.titles import get_search_title
 from findaconf.helpers.providers import OAuthProvider
+from findaconf.helpers.titles import get_search_title
 from findaconf.models import Continent, Country, Group, User, Year
 from flask import (
-    abort, Blueprint, flash, g, redirect, render_template, request,
-    make_response, url_for
+    abort, Blueprint, flash, g, make_response, redirect, render_template,
+    request, session, url_for
 )
 from flask.ext.login import current_user, login_user, logout_user
 from random import randrange
@@ -55,10 +56,29 @@ def results():
 def login_options():
     return render_template('login.slim',
                            page_title='Log in',
-                           providers=OAuthProvider())
+                           providers=OAuthProvider(),
+                           form=LoginForm())
 
 
-@site_blueprint.route('/login/<provider>', methods=['GET', 'POST'])
+@site_blueprint.route('/login/process', methods=('POST',))
+def login_process():
+
+    form = LoginForm()
+    if form.validate_on_submit():
+
+        # redirect to provider
+        provider = form.provider.data
+        if provider:
+
+            # check remember_me and store it to be processed after oauth
+            session['remember_me'] = form.remember_me.data
+            return redirect('/login/{}'.format(provider))
+
+    # abort if no provider of if form fails
+    return abort(404)
+
+
+@site_blueprint.route('/login/<provider>')
 def login(provider):
 
     # after login url
@@ -141,6 +161,8 @@ def login(provider):
                         db.session.commit()
                         new_query = User.query.filter_by(email=new_user.email)
                         user = new_query.first()
+
+                # login user
                 if user and user.valid_email():
                     login_user(user)
                     flash({'type': 'success',

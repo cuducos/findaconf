@@ -4,18 +4,22 @@
     .small-12.columns
       h1 Log in
     .small-7.columns
-      .row
-        - for provider in providers.get_slugs()
-          div class="login_button {{ provider }} small-6 columns {% if loop.last %} end{% endif %}"
-            a href="/login/{{ provider }}" title="Login with {{ providers.get_name(provider) }}"
-              %i class="fi-social-{{ provider }}"
-              span Log in with {{ providers.get_name(provider) }}
+      form method="post" action="/login/process" id="login_form"
+        .row
+          - for provider in providers.get_slugs()
+            div class="login_button {{ provider }} small-6 columns {% if loop.last %} end{% endif %}"
+              a data-oauth="{{ provider }}" title="Login with {{ providers.get_name(provider) }}"
+                %i class="fi-social-{{ provider }}"
+                span Log in with {{ providers.get_name(provider) }}
+        .row
+          .small-12.columns
+            {{ form.hidden_tag() }}
+            {{ form.remember_me }}
+            {{ form.remember_me.label }}
     .small-5.columns
       h6 We will <strong>never</strong> post anything to your profile
       p.small Find a Conference will access only your name and email to create your account here with us.
-      h6 Use any account that shares the same email
-      p.small Your email is used as your unique ID here at Find a Conference. If you use the same email address accross multiple platforms, you can log in using any of them.
       h6 Where is Twitter?
       p.small We cannot log you in using Twitter because Twitter API deliberatively does not provide user's email address.
       h6 Problems with GitHub?
-      p.small Depending on user settings GitHub account might not provide it either, raising an error in the login process. If that is the case, please, make your email public in your GitHub profile or use other service.
+      p.small Depending on user settings GitHub account might not provide your email address either, raising an error in the login process. If that is the case, please, make your email public in your GitHub profile or use another service.
