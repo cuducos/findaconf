@@ -17,10 +17,11 @@ If you want to get a development version of *Find a Conference* running, this se
 
 ### Requirements
 
-* Python 2.7+ (but not Python 3, many of the dependencies/packages are not compatible with Python 3 yet)
+* Python 2.7+ (many of the dependencies are not Python 3 compatible yet)
 * PostgreSQL 9.3+
-* [pip](https://github.com/pypa/pip) is not required, but we are using it in install instructions
 * [Node.js](http://nodejs.org/) with [CoffeeScript](http://coffeescript.org/) and [Bower](http://bower.io/)
+
+[pip](https://github.com/pypa/pip) is not required, but we are using it in install instructions.
 
 [virtualenv](https://virtualenv.pypa.io/) and [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/) are not required but are *highly recommended*.
 
@@ -70,8 +71,6 @@ Setting a provider involves registering an application with a OAuth/OAuth2 provi
 
 ### Step-by-step installation with Vagrant
 
-The `Vagrant.sh` file is our provision file and it does a lot of the job for you: installs everything your virtual machine needs, creates and migrates the databases, installs project dependencies, and creates the basic environment variables to get the server running. However you still need to make further changes in the `.env` file such as setting your API credentials.
-
 1. Clone the repository and step in its directory: `$ git clone git@github.com:cuducos/findaconf.git && cd findaconf`
 1. Start create, provision and log into your virtual machine: `$ vagrant up && vagrant ssh`
 1. Go to the application directory: `$ cd /vagrant`
@@ -79,8 +78,6 @@ The `Vagrant.sh` file is our provision file and it does a lot of the job for you
 1. Run the server with something like: `$ python manage.py runserver -r -d -h 0.0.0.0`
 
 ### Step-by-step installation without Vagrant
-
-If you do not use vagrant, make sure you create a database and user for *Find a Conference* in your PostgreSQL. Also make sure to have Python and Node.JS installed and, if you want, your virtualenv activated.
 
 1. Clone the repository and step in its directory: `$ git clone git@github.com:cuducos/findaconf.git && cd findaconf`
 1. Install the dependencies: `$ pip install -r requirements.txt && bower install` 
