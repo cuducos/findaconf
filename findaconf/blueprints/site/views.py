@@ -47,7 +47,7 @@ def results():
     return render_template('results.slim', page_title=page_title, **query)
 
 
-@site.route('/login', methods=['GET'])
+@site.route('/login')
 @render_minified
 def login_options():
     return render_template('login.slim',
@@ -56,7 +56,7 @@ def login_options():
                            form=LoginForm())
 
 
-@site.route('/login/process', methods=('POST',))
+@site.route('/login/process', methods=['POST'])
 def login_process():
 
     form = LoginForm()
