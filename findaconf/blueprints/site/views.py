@@ -181,7 +181,13 @@ def login(provider):
                         user.remember_me_token = user.get_token()
                         db.session.add(user)
                         db.session.commit()
-                        redir_resp.set_cookie('remember_me', user.get_hash())
+                        max_age = 60 * 60 * 24 * 30
+                        redir_resp.set_cookie('remember_me',
+                                              user.get_hash(),
+                                              max_age=max_age)
+                        redir_resp.set_cookie('user_id',
+                                              str(user.id),
+                                              max_age=max_age)
 
         return redir_resp
 
@@ -201,6 +207,14 @@ def logout():
 
 @site_blueprint.before_request
 def before_request():
+    if not current_user.is_authenticated():
+        remember_me = request.cookies.get('remember_me', False)
+        user_id = request.cookies.get('user_id', False)
+        if remember_me and user_id:
+            user = User.query.get(int(user_id))
+            if user:
+                if user.check_hash(remember_me):
+                    login_user(user)
     g.user = current_user
 
 

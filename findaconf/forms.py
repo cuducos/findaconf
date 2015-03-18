@@ -7,6 +7,6 @@ providers = OAuthProvider()
 
 
 class LoginForm(Form):
-    remember_me = BooleanField('Remember me')
+    remember_me = BooleanField('Remember me (for a month)')
     provider = HiddenField(default='google-plus',
                            validators=[AnyOf(providers.get_slugs())])
