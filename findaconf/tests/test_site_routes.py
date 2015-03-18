@@ -18,6 +18,13 @@ class TestSiteRoutes(TestCase):
     def tearDown(self):
         self.test.unset_app()
 
+    def read_cookie(self, key):
+        try:
+            cookie = self.app.cookie_jar._cookies['localhost.local']['/'][key]
+            return cookie.value
+        except (KeyError, AttributeError):
+            return False
+
     # test routes from blueprint/site.py
     def test_index(self):
         resp = self.app.get('/')
@@ -182,6 +189,64 @@ class TestSiteRoutes(TestCase):
                                 "Last seen wasn't updated")
             self.assertEqual(db.session.query(User).count(), 1,
                              'User count after login differs than 1')
+
+    @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
+    def test_login_with_remember_me(self, mocked):
+
+        # get a valid login link/provider
+        providers = OAuthProvider()
+        valid_providers = providers.get_slugs()
+        if valid_providers:
+
+            # create a mock object for Authomatic.login()
+            mocked.return_value = MockAuthomatic()
+
+            # create new user
+            self.app.delete_cookie('localhost', 'user_id')
+            self.app.delete_cookie('localhost', 'remember_me')
+            self.app.post('/login/process',
+                          follow_redirects=True,
+                          data={'remember_me': '1',
+                                'provider': valid_providers[0]})
+
+            # assert cookies were created accordingly
+            user = User.query.first()
+            self.assertEqual(user.id, int(self.read_cookie('user_id')))
+            self.assertTrue(user.check_hash(self.read_cookie('remember_me')))
+
+            # clean cookis for next sessions
+            self.app.delete_cookie('localhost', 'user_id')
+            self.app.delete_cookie('localhost', 'remember_me')
+
+    @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
+    def test_returning_user_with_remember_me(self, mocked):
+
+        # get a valid login link/provider
+        providers = OAuthProvider()
+        valid_providers = providers.get_slugs()
+        if valid_providers:
+
+            # create a mock object for Authomatic.login()
+            mocked.return_value = MockAuthomatic()
+
+            # create user and token
+            user = User(email='user@remember.me')
+            user.remember_me_token = user.get_token()
+            db.session.add(user)
+            db.session.commit()
+
+            # create cookies
+            self.app.set_cookie('localhost', 'user_id', '1')
+            self.app.set_cookie('localhost', 'remember_me', user.get_hash())
+
+            # assert user is logged in
+            resp = self.app.get('/')
+            self.assertIn('href="/logout"', resp.data)
+            self.assertNotIn('href="/login', resp.data)
+
+            # clean cookis for next sessions
+            self.app.delete_cookie('localhost', 'user_id')
+            self.app.delete_cookie('localhost', 'remember_me')
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_failed_login_with_api_error(self, mocked):

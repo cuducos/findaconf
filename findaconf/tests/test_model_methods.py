@@ -17,6 +17,7 @@ class TestModelMethods(TestCase):
         self.test.unset_app()
 
     # test methods from User
+
     def test_valid_email(self):
         fake = Factory.create()
         valid_emails = ['USER@foo.COM',
@@ -38,3 +39,9 @@ class TestModelMethods(TestCase):
         for email in should_be_valid_emails:
             johndoe.email = email
             self.assertTrue(johndoe.valid_email())
+
+    def test_token_and_hash(self):
+        user = User()
+        user.remember_me_token = user.get_token()
+        self.assertTrue(user.check_hash(user.get_hash()))
+        self.assertFalse(user.check_hash(''))
