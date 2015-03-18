@@ -2,7 +2,7 @@
 
 from csv import reader
 from datetime import datetime
-from findaconf.models import Conference, Continent, Country, Keyword
+from findaconf.models import Conference, Continent, Country, Group, Keyword
 from random import choice
 import faker
 
@@ -54,7 +54,7 @@ def fake_conference(db):
     return Conference(**conf)
 
 
-def seed(app, db):
+def seed(app, db, conferences=42):
 
     # only feed if tables are empty
     if not Country.query.first():
@@ -101,6 +101,12 @@ def seed(app, db):
                     db.session.add(Country(alpha2=item['country'].lower(),
                                            title=country_name,
                                            continent_id=continent.id))
+        # user groups
+        [db.session.add(Group(title=role)) for role in ['admin', 'user']]
+
+        # add fake confereces
+        if conferences:
+            [db.session.add(fake_conference(db)) for i in range(conferences)]
 
         # insert data
         db.session.commit()
