@@ -31,7 +31,7 @@ sweet_hide = ->
 
 check_flash = ->
   flash_area = $('#flash')
-  flash_area.slideUp() if $('li', flash_area).length?
+  flash_area.slideUp() if not flash_area.find('li:visible').length
 
 fix_lang_menu = ->
   lang_menu = $('li.lang').first()
