@@ -114,7 +114,6 @@ You can discuss the project, further features, implementation and report issues 
 
 These are the next steps (there is a lot to be done, these are just some more short term tasks):
 
-1. Enhance users login with a `remember_me`
 1. Redirect users after login
 1. Threading for email notifications
 1. Create the page to add conferences
