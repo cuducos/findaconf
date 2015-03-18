@@ -38,6 +38,7 @@ class User(db.Model, UserMixin):
     created_with = db.Column(db.String(16))
     created_at = db.Column(db.DateTime)
     last_seen = db.Column(db.DateTime)
+    remember_me_token = db.Column(db.String(128))
 
     def __repr__(self):
         return '<User #{}: {}>'.format(self.id, self.name)
