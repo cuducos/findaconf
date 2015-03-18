@@ -1,18 +1,19 @@
 # coding: utf-8
 
-from unittest import TestCase
-from random import randrange
 from findaconf import app
-from findaconf.tests.config import set_app, unset_app
+from findaconf.tests.config import TestApp
+from random import randrange
+from unittest import TestCase
 
 
 class TestFileRoutes(TestCase):
 
     def setUp(self):
-        self.app = set_app(app)
+        self.test = TestApp(app)
+        self.app = self.test.get_app()
 
     def tearDown(self):
-        unset_app()
+        self.test.unset_app()
 
     # test routes from blueprint/file_routes.py
 

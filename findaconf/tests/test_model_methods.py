@@ -1,23 +1,24 @@
 # coding: utf-8
 
-import faker
-from unittest import TestCase
+from faker import Factory
 from findaconf import app
 from findaconf.models import User
-from findaconf.tests.config import set_app, unset_app
+from findaconf.tests.config import TestApp
+from unittest import TestCase
 
 
 class TestModelMethods(TestCase):
 
     def setUp(self):
-        self.app = set_app(app)
+        self.test = TestApp(app)
+        self.app = self.test.get_app()
 
     def tearDown(self):
-        unset_app()
+        self.test.unset_app()
 
     # test methods from User
     def test_valid_email(self):
-        fake = faker.Factory.create()
+        fake = Factory.create()
         valid_emails = ['USER@foo.COM',
                         'THE_US-ER@foo.bar.org',
                         'first.last@foo.jp']

@@ -1,17 +1,18 @@
 # coding: utf-8
 
 from findaconf import app, db
+from findaconf.tests.config import TestApp
 from unittest import TestCase
-from findaconf.tests.config import set_app, unset_app
 
 
 class TestAutoCompleteRoutes(TestCase):
 
     def setUp(self):
-        self.app = set_app(app, db)
+        self.test = TestApp(app, db)
+        self.app = self.test.get_app()
 
     def tearDown(self):
-        unset_app(db)
+        self.test.unset_app()
 
     # test routes from blueprint/autocomplete.py
 

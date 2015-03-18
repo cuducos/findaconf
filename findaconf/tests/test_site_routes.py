@@ -1,22 +1,22 @@
 # coding: utf-8
 
-from datetime import datetime
-from mock import patch
 from findaconf import app, db
 from findaconf.helpers.providers import OAuthProvider
 from findaconf.models import User
-from findaconf.tests.config import set_app, unset_app
+from findaconf.tests.config import TestApp
 from findaconf.tests.mocks import MockAuthomatic
+from mock import patch
 from unittest import TestCase
 
 
 class TestSiteRoutes(TestCase):
 
     def setUp(self):
-        self.app = set_app(app, db)
+        self.test = TestApp(app, db)
+        self.app = self.test.get_app()
 
     def tearDown(self):
-        unset_app(db)
+        self.test.unset_app()
 
     # test routes from blueprint/site.py
     def test_index(self):
@@ -214,4 +214,3 @@ class TestSiteRoutes(TestCase):
             resp1 = self.app.get('/login/{}'.format(valid_providers[0]),
                                  follow_redirects=True)
             self.assertIn(parsed, resp1.data, 'API message does not match')
-
