@@ -1,11 +1,12 @@
 # coding: utf-8
 
+import faker
+from authomatic.providers.oauth2 import Google
 from csv import reader
 from datetime import datetime
 from decouple import config
 from findaconf.models import Conference, Continent, Country, Group, Keyword
 from random import choice
-import faker
 
 
 class TestApp(object):
@@ -23,6 +24,9 @@ class TestApp(object):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['ADMIN'] = ['admin@findaconf.info']
+        app.config['OAUTH_CREDENTIALS'] = {'test': {'class_': Google,
+                                                    'consumer_key': True,
+                                                    'consumer_secret': True}}
 
         # config and create db
         self.db = db
