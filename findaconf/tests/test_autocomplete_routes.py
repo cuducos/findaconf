@@ -31,7 +31,6 @@ class TestAutoCompleteRoutes(TestCase):
     def test_google_places_blank(self):
         resp = self.app.get('/autocomplete/places?query=')
         self.assertEqual(resp.status_code, 404)
-        print resp.data
 
     def test_google_places_wrong_proxy(self):
         original_proxy = app.config['GOOGLE_PLACES_PROXY']

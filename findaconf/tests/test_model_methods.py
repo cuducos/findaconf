@@ -28,7 +28,7 @@ class TestModelMethods(TestCase):
                           'user.name@example.',
                           'foo@bar_baz.com',
                           'foo@bar+baz.com']
-        should_be_valid_emails = [fake.email() for i in range(0, 42)]
+        should_be_valid_emails = [fake.email() for i in range(42)]
         johndoe = User()
         for email in valid_emails:
             johndoe.email = email
