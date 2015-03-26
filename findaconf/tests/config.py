@@ -28,7 +28,9 @@ class TestApp(object):
         app.config['ASSETS_DEBUG'] = False
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
-        app.config['ADMIN'] = ['admin@findaconf.info']
+        app.config['ADMIN'] = ['admin@findaconf.info',
+                                'second.admin@findaconf.info',
+                                'third.admin@findaconf.info']
         app.config['OAUTH_CREDENTIALS'] = oauth
 
         # config and create db

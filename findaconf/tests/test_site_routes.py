@@ -6,6 +6,7 @@ from findaconf.models import User
 from findaconf.tests.config import TestApp
 from findaconf.tests.mocks import MockAuthomatic
 from mock import patch
+from random import choice as random_choice
 from unittest import TestCase
 
 
@@ -107,8 +108,11 @@ class TestSiteRoutes(TestCase):
         valid_providers = providers.get_slugs()
         self.assertTrue(valid_providers)
 
+        # random pick an admin email from the config
+        admin_email = random_choice(app.config['ADMIN'])
+
         # create a mock object for Authomatic.login()
-        mocked.return_value = MockAuthomatic(email=app.config['ADMIN'][0])
+        mocked.return_value = MockAuthomatic(email=admin_email)
 
         # create a new admin user
         self.app.get('/login/{}'.format(valid_providers[0]))
