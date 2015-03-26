@@ -38,7 +38,8 @@ class TestFileRoutes(TestCase):
         extensions = ['eot', 'svg', 'ttf', 'woff', 'py']
         types = ['application/vnd.ms-fontobject',
                  'application/octet-stream',
-                 'application/x-font-woff',
+                 'application/font-woff',
+                 'application/font-sfnt',
                  'image/svg+xml']
         for ext in extensions:
             path = '{}foundation-icons.{}'.format(base_url, ext)
