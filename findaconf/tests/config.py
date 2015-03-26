@@ -19,14 +19,17 @@ class TestApp(object):
         self.basedir = app.config['BASEDIR']
         self.testdir = app.config['BASEDIR'].child('findaconf', 'tests')
 
+        # default oauth (as in findaconf/forms.py)
+        oauth = {'Google Plus': {'class_': Google,
+                                 'consumer_key': True,
+                                 'consumer_secret': True}}
+
         # config test app
         app.config['ASSETS_DEBUG'] = False
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['ADMIN'] = ['admin@findaconf.info']
-        app.config['OAUTH_CREDENTIALS'] = {'test': {'class_': Google,
-                                                    'consumer_key': True,
-                                                    'consumer_secret': True}}
+        app.config['OAUTH_CREDENTIALS'] = oauth
 
         # config and create db
         self.db = db
