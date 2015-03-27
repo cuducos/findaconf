@@ -12,6 +12,7 @@ down_revision = '1c5f54d4aa34'
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.sql import table, column
 
 from csv import reader
 from findaconf import app
@@ -51,8 +52,15 @@ def upgrade():
                              'title': country_name,
                              'continent_id': continent.id})
 
-    # insert data
-    op.bulk_insert(Country.__table__, data)
+    # Create an ad-hoc table to use for the insert statement.
+    country_table = table('country',
+        column('alpha2', sa.String),
+        column('title', sa.String),
+        column('continent_id', sa.Integer),
+    )
+
+    # Insert data.
+    op.bulk_insert(country_table, data)
 
 
 def downgrade():
