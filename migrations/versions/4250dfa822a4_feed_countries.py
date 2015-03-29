@@ -17,6 +17,15 @@ from sqlalchemy.sql import table, column
 from csv import reader
 from findaconf import app
 from findaconf.models import Continent, Country
+# Create ad-hoc tables to use for the insert statement.
+country = table('country',
+                column('alpha2', sa.String),
+                column('title', sa.String),
+                column('continent_id', sa.Integer))
+continent = table('continent',
+                  column('id', sa.Integer),
+                  column('alpha2', sa.String),
+                  column('title', sa.String))
 
 
 def upgrade():
@@ -52,16 +61,9 @@ def upgrade():
                              'title': country_name,
                              'continent_id': continent.id})
 
-    # Create an ad-hoc table to use for the insert statement.
-    country_table = table('country',
-        column('alpha2', sa.String),
-        column('title', sa.String),
-        column('continent_id', sa.Integer),
-    )
-
     # Insert data.
     op.bulk_insert(country_table, data)
 
 
 def downgrade():
-    op.execute(Country.__table__.delete())
+    op.execute(country.delete())

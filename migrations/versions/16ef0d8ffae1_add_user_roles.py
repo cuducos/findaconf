@@ -14,21 +14,17 @@ from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.sql import table, column
 
-from findaconf.models import Group
+# Create an ad-hoc table to use for the insert statement.
+group_table = table('group', column('title', sa.String))
 
 
 def upgrade():
     roles = ['user', 'moderator', 'admin']
     data = [{'title': r} for r in roles]
 
-    # Create an ad-hoc table to use for the insert statement.
-    group_table = table('group',
-        column('title', sa.String),
-    )
-
     # Insert data.
     op.bulk_insert(group_table, data)
 
 
 def downgrade():
-    op.execute(Group.__table__.delete())
+    op.execute(group_table.delete())
