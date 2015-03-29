@@ -50,6 +50,9 @@ def upgrade():
             continent_countries[row[1]] = continent_countries.get(row[1], [])
             continent_countries[row[1]].append(row[0].lower())
 
+    # 4 countries non-classified in the CSV
+    continent_countries['SA'].extend(['cw', 'bq', 'sx'])
+    continent_countries['AF'].append('cw')
 
     # update country table with continent data
     bind = op.get_bind()
