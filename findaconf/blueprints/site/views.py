@@ -71,7 +71,7 @@ def login_process():
             session['provider'] = form.provider.data
             return redirect('/login/{}'.format(provider))
 
-    # abort if no provider of if form fails
+    # abort if no provider or if form fails
     return abort(404)
 
 

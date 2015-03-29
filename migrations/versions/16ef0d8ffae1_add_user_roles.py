@@ -12,17 +12,23 @@ down_revision = '8acb1453abb'
 
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.sql import table, column
 
-from findaconf import db
 from findaconf.models import Group
 
 
 def upgrade():
     roles = ['user', 'moderator', 'admin']
-    [db.session.add(Group(title=role)) for role in roles]
-    db.session.commit()
+    data = [{'title': r} for r in roles]
+
+    # Create an ad-hoc table to use for the insert statement.
+    group_table = table('group',
+        column('title', sa.String),
+    )
+
+    # Insert data.
+    op.bulk_insert(group_table, data)
 
 
 def downgrade():
-    [db.session.delete(role) for role in Group.query.all()]
-    db.session.commit()
+    op.execute(Group.__table__.delete())

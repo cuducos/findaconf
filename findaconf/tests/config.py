@@ -1,11 +1,12 @@
 # coding: utf-8
 
+import faker
+from authomatic.providers.oauth2 import Google
 from csv import reader
 from datetime import datetime
 from decouple import config
 from findaconf.models import Conference, Continent, Country, Group, Keyword
 from random import choice
-import faker
 
 
 class TestApp(object):
@@ -18,11 +19,19 @@ class TestApp(object):
         self.basedir = app.config['BASEDIR']
         self.testdir = app.config['BASEDIR'].child('findaconf', 'tests')
 
+        # default oauth (as in findaconf/forms.py)
+        oauth = {'Google Plus': {'class_': Google,
+                                 'consumer_key': True,
+                                 'consumer_secret': True}}
+
         # config test app
         app.config['ASSETS_DEBUG'] = False
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
-        app.config['ADMIN'] = ['admin@findaconf.info']
+        app.config['ADMIN'] = ['admin@findaconf.info',
+                                'second.admin@findaconf.info',
+                                'third.admin@findaconf.info']
+        app.config['OAUTH_CREDENTIALS'] = oauth
 
         # config and create db
         self.db = db

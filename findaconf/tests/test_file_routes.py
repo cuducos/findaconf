@@ -36,8 +36,10 @@ class TestFileRoutes(TestCase):
     def test_foundation_icons(self):
         base_url = '/assets/'
         extensions = ['eot', 'svg', 'ttf', 'woff', 'py']
-        types = ['application/vnd.ms-fontobject',
+        types = ['application/font-sfnt',
+                 'application/font-woff',
                  'application/octet-stream',
+                 'application/vnd.ms-fontobject',
                  'application/x-font-woff',
                  'image/svg+xml']
         for ext in extensions:
