@@ -16,7 +16,6 @@ from sqlalchemy.sql import table, column
 
 from csv import reader
 from findaconf import app
-from findaconf.models import Continent, Country
 # Create ad-hoc tables to use for the insert statement.
 country = table('country',
                 column('alpha2', sa.String),
@@ -31,38 +30,42 @@ continent = table('continent',
 def upgrade():
 
     # load countries iso3166.csv and build a dictionary
+    data = list()
     csv_path = app.config['BASEDIR'].child('migrations', 'csv', 'en')
     csv_file = csv_path.child('iso3166.csv')
-    countries = dict()
     with open(csv_file) as file_handler:
         csv = list(reader(file_handler))
-        for c in csv:
-            countries[c[0]] = c[1]
+        for row in csv:
+                data.append({'alpha2': row[0].lower(), 'title': row[1]})
+
+    # insert data
+    op.bulk_insert(country, data)
 
     # load countries-continents from country_continent.csv
+    continent_countries = dict()
     csv_file = csv_path.child('country_continent.csv')
     with open(csv_file) as file_handler:
         csv = list(reader(file_handler))
-        country_continent = [{'country': c[0], 'continent': c[1]} for c in csv]
+        for row in csv:
+            continent_countries[row[1]] = continent_countries.get(row[1], [])
+            continent_countries[row[1]].append(row[0].lower())
 
-    # loop and feed countries table
-    data = list()
-    for item in country_continent:
+
+    # update country table with continent data
+    bind = op.get_bind()
+    for key in continent_countries.iterkeys():
 
         # get continent id
-        continent_guess = item['continent'].lower()
-        continent = Continent.query.filter_by(alpha2=continent_guess).first()
+        query = bind.execute(continent.select().
+                             where(continent.c.alpha2 == key.lower()))
+        result = query.first()
+        if result:
+            continent_id = result.id
 
-        # include country
-        if continent is not None:
-            country_name = countries.get(item['country'], False)
-            if country_name:
-                data.append({'alpha2': item['country'].lower(),
-                             'title': country_name,
-                             'continent_id': continent.id})
-
-    # Insert data.
-    op.bulk_insert(country_table, data)
+            # update country row
+            op.execute(country.update().
+                       where(country.c.alpha2.in_(continent_countries[key])).
+                       values({'continent_id': continent_id}))
 
 
 def downgrade():
