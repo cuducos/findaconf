@@ -16,6 +16,8 @@ from sqlalchemy.sql import table, column
 
 from csv import reader
 from findaconf import app
+from string import letters
+
 # Create ad-hoc tables to use for the insert statement.
 country = table('country',
                 column('alpha2', sa.String),
@@ -36,6 +38,7 @@ def upgrade():
     with open(csv_file) as file_handler:
         csv = list(reader(file_handler))
         for row in csv:
+            if len(row[0]) == 2 and all(c in letters for c in row[0]):
                 data.append({'alpha2': row[0].lower(), 'title': row[1]})
 
     # insert data
