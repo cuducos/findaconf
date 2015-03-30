@@ -14,6 +14,7 @@ from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.sql import table, column
 
+from collections import defaultdict
 from csv import reader
 from findaconf import app
 from string import letters
@@ -45,13 +46,12 @@ def upgrade():
     op.bulk_insert(country, data)
 
     # load countries-continents from country_continent.csv
-    continent_countries = dict()
+    continent_countries = defaultdict(list)
     csv_file = csv_path.child('country_continent.csv')
     with open(csv_file) as file_handler:
         csv = list(reader(file_handler))
-        for row in csv:
-            continent_countries[row[1]] = continent_countries.get(row[1], [])
-            continent_countries[row[1]].append(row[0].lower())
+        for country_code, continent_code in csv:
+            continent_countries[continent_code].append(country_code.lower())
 
     # 4 countries non-classified in the CSV
     continent_countries['SA'].extend(['cw', 'bq', 'sx'])
