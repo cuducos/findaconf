@@ -1,18 +1,19 @@
 # coding: utf-8
 
-from unittest import TestCase
-from random import randrange
 from findaconf import app
-from findaconf.tests.config import set_app, unset_app
+from findaconf.tests.config import TestApp
+from random import randrange
+from unittest import TestCase
 
 
 class TestFileRoutes(TestCase):
 
     def setUp(self):
-        self.app = set_app(app)
+        self.test = TestApp(app)
+        self.app = self.test.get_app()
 
     def tearDown(self):
-        unset_app()
+        self.test.unset_app()
 
     # test routes from blueprint/file_routes.py
 
@@ -35,8 +36,10 @@ class TestFileRoutes(TestCase):
     def test_foundation_icons(self):
         base_url = '/assets/'
         extensions = ['eot', 'svg', 'ttf', 'woff', 'py']
-        types = ['application/vnd.ms-fontobject',
+        types = ['application/font-sfnt',
+                 'application/font-woff',
                  'application/octet-stream',
+                 'application/vnd.ms-fontobject',
                  'application/x-font-woff',
                  'image/svg+xml']
         for ext in extensions:

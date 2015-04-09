@@ -1,17 +1,18 @@
 # coding: utf-8
 
 from findaconf import app, db
+from findaconf.tests.config import TestApp
 from unittest import TestCase
-from findaconf.tests.config import set_app, unset_app
 
 
 class TestAutoCompleteRoutes(TestCase):
 
     def setUp(self):
-        self.app = set_app(app, db)
+        self.test = TestApp(app, db)
+        self.app = self.test.get_app()
 
     def tearDown(self):
-        unset_app(db)
+        self.test.unset_app()
 
     # test routes from blueprint/autocomplete.py
 
@@ -30,7 +31,6 @@ class TestAutoCompleteRoutes(TestCase):
     def test_google_places_blank(self):
         resp = self.app.get('/autocomplete/places?query=')
         self.assertEqual(resp.status_code, 404)
-        print resp.data
 
     def test_google_places_wrong_proxy(self):
         original_proxy = app.config['GOOGLE_PLACES_PROXY']

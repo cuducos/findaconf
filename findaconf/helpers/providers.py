@@ -10,9 +10,9 @@ class OAuthProvider(object):
         Loads oauth/oauth2 credentials from app.config['OAUTH_CREDENTIALS'] and
         sets the following instance attributes:
 
-        * original_credetials: (dictionary) the same credentials as loaded
+        * original_credentials: (dictionary) the same credentials as loaded
 
-        * credetnials: (dictionary) filtered version of the loaded credentials
+        * credentials: (dictionary) filtered version of the loaded credentials
         keeping only `valid` oauth/oauth2 providers, i.e. the ones  with client
         key and secret properly set
 

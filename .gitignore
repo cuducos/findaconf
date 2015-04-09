@@ -7,6 +7,7 @@
 .coverage
 .coveragerc
 htmlcov/
+cover/
 
 # bower and processed assets
 findaconf/assets

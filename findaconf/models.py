@@ -3,7 +3,9 @@
 import re
 from findaconf import db
 from flask.ext.login import UserMixin
-from hashlib import md5
+from hashlib import md5, sha512
+from os import urandom
+from uuid import uuid4
 
 conferences_keywords = db.Table(
     'conferences_keywords',
@@ -18,7 +20,9 @@ class Group(db.Model):
     __tablename__ = 'group'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(16))
-    users = db.relationship('User', backref='group')
+
+    def default(self, role='user'):
+        return self.query.filter_by(title=role).first()
 
     def __repr__(self):
         return '<Group #{}: {}>'.format(self.id, self.title)
@@ -32,9 +36,11 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(256))
     language = db.Column(db.String(2))
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
+    group = db.relationship('Group', backref='users')
     created_with = db.Column(db.String(16))
     created_at = db.Column(db.DateTime)
     last_seen = db.Column(db.DateTime)
+    remember_me_token = db.Column(db.String(128))
 
     def __repr__(self):
         return '<User #{}: {}>'.format(self.id, self.name)
@@ -50,6 +56,16 @@ class User(db.Model, UserMixin):
         if email_regex.match(self.email):
             return True
         return False
+
+    @staticmethod
+    def get_token():
+        return str(uuid4())
+
+    def get_hash(self):
+        return sha512(self.remember_me_token).hexdigest()
+
+    def check_hash(self, hash):
+        return hash == self.get_hash()
 
 
 class Conference(db.Model):

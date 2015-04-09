@@ -7,35 +7,32 @@ from authomatic.adapters import WerkzeugAdapter
 from bs4 import BeautifulSoup
 from datetime import datetime
 from findaconf import app, db, lm
+from findaconf.forms import LoginForm
 from findaconf.helpers.minify import render_minified
-from findaconf.helpers.titles import get_search_title
 from findaconf.helpers.providers import OAuthProvider
-from findaconf.models import Continent, Country, User, Year
-from flask import (
-    abort, Blueprint, flash, g, redirect, render_template, request,
-    make_response, url_for
-)
+from findaconf.helpers.titles import get_search_title
+from findaconf.models import Continent, Country, Group, User, Year
+from flask import (abort, Blueprint, flash, g, make_response, redirect,
+                   render_template, request, session, url_for)
 from flask.ext.login import current_user, login_user, logout_user
 from random import randrange
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-site_blueprint = Blueprint(
-    'site',
-    __name__,
-    template_folder='templates',
-    static_folder='static'
-)
+site = Blueprint('site',
+                 __name__,
+                 template_folder='templates',
+                 static_folder='static')
 
 
-@site_blueprint.route('/')
+@site.route('/')
 @render_minified
 def index():
     return render_template('home.slim')
 
 
-@site_blueprint.route('/find')
+@site.route('/find')
 @render_minified
 def results():
 
@@ -45,20 +42,40 @@ def results():
     query = dict(zip(url_vars, req_vars))
 
     # page title
-    page_title = get_search_title(randrange(0, 8), query['query'])
+    page_title = get_search_title(randrange(8), query['query'])
 
     return render_template('results.slim', page_title=page_title, **query)
 
 
-@site_blueprint.route('/login', methods=['GET'])
+@site.route('/login')
 @render_minified
 def login_options():
     return render_template('login.slim',
                            page_title='Log in',
-                           providers=OAuthProvider())
+                           providers=OAuthProvider(),
+                           form=LoginForm())
 
 
-@site_blueprint.route('/login/<provider>', methods=['GET', 'POST'])
+@site.route('/login/process', methods=['POST'])
+def login_process():
+
+    form = LoginForm()
+    if form.validate_on_submit():
+
+        # redirect to provider
+        provider = form.provider.data
+        if provider:
+
+            # check remember_me and store it to be processed after oauth
+            session['remember_me'] = form.remember_me.data
+            session['provider'] = form.provider.data
+            return redirect('/login/{}'.format(provider))
+
+    # abort if no provider or if form fails
+    return abort(404)
+
+
+@site.route('/login/<provider>')
 def login(provider):
 
     # after login url
@@ -73,20 +90,23 @@ def login(provider):
     authomatic = Authomatic(providers.credentials,
                             app.config['SECRET_KEY'],
                             report_errors=True)
-    response = make_response()
+    oauth_response = make_response()
 
     # try login
     provider_name = providers.get_name(provider)
-    adapter = WerkzeugAdapter(request, response)
+    adapter = WerkzeugAdapter(request, oauth_response)
     result = authomatic.login(adapter, provider_name)
     if result:
 
         # flash error message if any
         if result.error and app.debug:
+            session['remember_me'] = False
+            session['provider'] = None
             msg = BeautifulSoup(result.error.message).findAll(text=True)
             flash({'type': 'alert', 'text': ' '.join(msg)})
 
         # if success
+        redir_resp = make_response(redirect(url_for(next_page)))
         if result.user:
             result.user.update()
 
@@ -111,16 +131,21 @@ def login(provider):
                     user.last_seen = datetime.now()
                     db.session.add(user)
                     db.session.commit()
-    
+
                 # if new user
                 else:
                     now = datetime.now()
+                    roles = Group()
+                    if result.user.email in app.config['ADMIN']:
+                        role = roles.default('admin')
+                    else:
+                        role = roles.default()
                     new_user = User(email=result.user.email,
                                     name=result.user.name,
                                     created_with=provider,
                                     created_at=now,
-                                    last_seen=now)
-
+                                    last_seen=now,
+                                    group=role)
                     # check if email address is valid
                     if not new_user.valid_email():
                         msg = 'The address “{}” provided by {} is not a valid '
@@ -137,25 +162,58 @@ def login(provider):
                         new_query = User.query.filter_by(email=new_user.email)
                         user = new_query.first()
 
+                # login user
                 if user and user.valid_email():
                     login_user(user)
                     flash({'type': 'success',
                            'text': 'Welcome, {}'.format(result.user.name)})
+                # remember me
+                remember_me = session.get('remember_me', False)
+                if remember_me:
+                    session_provider = session.get('provider', False)
+                    if provider == session_provider:
+                        session['remember_me'] = False
+                        session['provider'] = None
+                        user.remember_me_token = user.get_token()
+                        db.session.add(user)
+                        db.session.commit()
+                        max_age = 60 * 60 * 24 * 30
+                        redir_resp.set_cookie('remember_me',
+                                              user.get_hash(),
+                                              max_age=max_age)
+                        redir_resp.set_cookie('user_id',
+                                              str(user.id),
+                                              max_age=max_age)
 
-        return redirect(url_for(next_page))
+        return redir_resp
 
-    return response
+    return oauth_response
 
 
-@site_blueprint.route('/logout')
+@site.route('/logout')
 def logout():
+    if g.user.is_authenticated():
+        g.user.remember_me_token = ''
+        db.session.add(g.user)
+        db.session.commit()
     logout_user()
     flash({'type': 'success', 'text': 'You\'ve been logged out.'})
     return redirect(url_for('site.index'))
 
 
-@site_blueprint.before_request
+@site.before_request
 def before_request():
+    if not current_user.is_authenticated():
+        remember_me = request.cookies.get('remember_me', False)
+        user_id = request.cookies.get('user_id', False)
+        if remember_me and user_id:
+            user = User.query.get(int(user_id))
+            if user:
+                if user.check_hash(remember_me):
+                    login_user(user)
+                    user.last_seen = datetime.now()
+                    db.session.add(user)
+                    db.session.commit()
     g.user = current_user
 
 
@@ -164,11 +222,9 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-@site_blueprint.context_processor
+@site.context_processor
 def inject_main_vars():
-    return {
-        'continents': Continent.query.order_by(Continent.title).all(),
-        'countries': Country.query.order_by(Country.title).all(),
-        'months': app.config['MONTHS'],
-        'years': Year.query.order_by(Year.year).all()
-    }
+    return {'continents': Continent.query.order_by(Continent.title).all(),
+            'countries': Country.query.order_by(Country.title).all(),
+            'months': app.config['MONTHS'],
+            'years': Year.query.order_by(Year.year).all()}

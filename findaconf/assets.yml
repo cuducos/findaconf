@@ -14,6 +14,7 @@ init:
   contents:
     - coffeescript/init.coffee
     - coffeescript/results.coffee
+    - coffeescript/login.coffee
 
 libs.css:
   output: libs.min.css

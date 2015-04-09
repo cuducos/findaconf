@@ -10,10 +10,10 @@ from hashlib import sha512
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-autocomplete_blueprint = Blueprint('autocomplete', __name__)
+autocomplete = Blueprint('autocomplete', __name__)
 
 
-@autocomplete_blueprint.route('/keywords', methods=['GET'])
+@autocomplete.route('/keywords', methods=['GET'])
 def ajax_keywords():
 
     # basic vars
@@ -34,7 +34,7 @@ def ajax_keywords():
     return jsonify(results=[{'label': r} for r in sorted_results[0:limit]])
 
 
-@autocomplete_blueprint.route('/places', methods=['GET'])
+@autocomplete.route('/places', methods=['GET'])
 def ajax_google_places():
 
     # check if the query term was sent
@@ -43,11 +43,9 @@ def ajax_google_places():
         abort(404)
 
     # get places from Google Places API
-    api_url_vars = {
-        'input': query,
-        'language': 'en',
-        'key': app.config['GOOGLE_PUBLIC_API']
-    }
+    api_url_vars = {'input': query,
+                    'language': 'en',
+                    'key': app.config['GOOGLE_PUBLIC_API']}
     api_url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json'
     if app.config['GOOGLE_PLACES_PROXY']:
         api_url = app.config['GOOGLE_PLACES_PROXY']

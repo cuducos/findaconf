@@ -21,7 +21,6 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 # init db
 db = SQLAlchemy(app)
-from findaconf import models
 
 # init manager
 manager = Manager(app)
@@ -43,7 +42,7 @@ bower_path = app.config['BASEDIR'].child('findaconf', 'bower')
 assets = Environment(app)
 assets.config['PYSCSS_LOAD_PATHS'] = [bower_path.child('foundation', 'scss')]
 assets.load_path = [site_path, bower_path]
-assets.from_yaml(app.config['BASEDIR'].child('findaconf', 'assets.yaml'))
+assets.from_yaml(app.config['BASEDIR'].child('findaconf', 'assets.yml'))
 
 # manage errors
 if not app.config['DEBUG']:
@@ -60,9 +59,9 @@ if not app.config['DEBUG']:
     app.logger.info('{} started successfully.'.format(app.config['TITLE']))
 
 # load & register blueprints
-from blueprints.autocomplete.views import autocomplete_blueprint
-from blueprints.files.views import files_blueprint
-from blueprints.site.views import site_blueprint
-app.register_blueprint(autocomplete_blueprint, url_prefix='/autocomplete')
-app.register_blueprint(files_blueprint)
-app.register_blueprint(site_blueprint)
+from blueprints.autocomplete.views import autocomplete
+from blueprints.files.views import files
+from blueprints.site.views import site
+app.register_blueprint(autocomplete, url_prefix='/autocomplete')
+app.register_blueprint(files)
+app.register_blueprint(site)

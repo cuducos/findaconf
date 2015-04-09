@@ -16,8 +16,13 @@ SQLALCHEMY_DATABASE_URI = config('DATABASE_URL', default=uri)
 DEBUG = config('DEBUG', default=False, cast=bool)
 ASSETS_DEBUG = config('ASSETS_DEBUG', default=False, cast=bool)
 
-# security keys
+# security keys & settings
 SECRET_KEY = config('SECRET_KEY', default=False)
+WTF_CSRF_ENABLED = True
+
+# site admins
+ADMIN = config('ADMIN', default=list(),
+               cast=lambda x: [s.strip() for s in x.split(',')])
 
 # public api keys
 GOOGLE_PUBLIC_API = config('GOOGLE_PUBLIC_API', default=None)

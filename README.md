@@ -5,10 +5,10 @@
 _Find a Conference_ is under development. This is supposed to be a free, open source and ad-free platform where:
 
 * Registered *users can post info about academic conferences* and call for papers
-* Anyone can *register with external accounts* (Google, Facebook, Yahoo etc.) so [we don't have to deal with passwords](http://youtu.be/8ZtInClXe1Q)
-* There is *no curatorial layer*, but we should add *report links for users to flag inappropriate and/or duplicated content*
+* There is *no curatorial layer*…
+* …but users can *report inappropriate/duplicated contents*
 * Only the user *who posted a conference can edit it* 
-* The platform should not host too much stuff regarding the conferences: it is *simply a platform for users to find conferences* and then follow to universities web pages, association websites, Eventbrite registrations, planning group emails etc.
+* The platform should not host too much stuff regarding the conferences, instead *it should point to* universities/association websites, Eventbrite, planning group emails etc.
 * It should be designed to be easily internationalized (*multi-language*)
 
 ## Installation
@@ -17,15 +17,19 @@ If you want to get a development version of *Find a Conference* running, this se
 
 ### Requirements
 
-* Python 2.7+ (but not Python 3)
+* Python 2.7+ (many of the dependencies are not Python 3 compatible yet)
 * PostgreSQL 9.3+
-* [virtualenv](https://virtualenv.pypa.io/) and [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/) are not required, but are recommended
-* [pip](https://github.com/pypa/pip) is not required, but we are using it in install instructions
 * [Node.js](http://nodejs.org/) with [CoffeeScript](http://coffeescript.org/) and [Bower](http://bower.io/)
+
+[pip](https://github.com/pypa/pip) is not required, but we are using it in install instructions.
+
+[virtualenv](https://virtualenv.pypa.io/) and [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/) are not required but are *highly recommended*.
 
 ### Environment variables
 
-This application uses some required *environment variables*. You can copy `.env.sample` as `.env` and customize it. It is the easiest way to set these variables.
+This application requires *environment variables* in order to work properly.
+
+Usually they are read from a `.env` (not included in the repository for security reasons). But you can copy `.env.sample` as `.env` and customize it – it is the easiest way to set these variables.
 
 #### Databases (required)
 
@@ -34,7 +38,7 @@ This application uses some required *environment variables*. You can copy `.env.
 
 #### Security (required)
 
-* `SECRET_KEY`: [Flask's default secret key](http://flask.pocoo.org/docs/0.10/api/#flask.Flask.secret_key)
+* `SECRET_KEY`: [Flask's default secret key variable](http://flask.pocoo.org/docs/0.10/api/#flask.Flask.secret_key), i.e. just a random and long string
 
 #### Public APIs (recommended)
 
@@ -43,7 +47,9 @@ This application uses some required *environment variables*. You can copy `.env.
 
 #### OAuth/OAuth2 APIs (recommended)
 
-At least one of these providers should be set in order to enable users to log in. Setting a provider involves registering an application with a OAuth/OAuth2 provider, and passing the `client id` and `client secret` tokens to *Find a Conference* through pairs from this set of variables:
+At least one of these providers should be set in order to enable users to log in.
+
+Setting a provider involves registering an application with a OAuth/OAuth2 provider, and passing the `client id` and `client secret` tokens to *Find a Conference* through pairs from this set of variables:
 
 * `AMAZON_CLIENT_ID` and `AMAZON_CLIENT_SECRET`
 * `FACEBOOK_CLIENT_ID` and `FACEBOOK_CLIENT_SECRET`
@@ -59,41 +65,41 @@ At least one of these providers should be set in order to enable users to log in
 * `DEBUG`: sets if the application is started in debug mode (e.g. `True`)
 * `ASSETS_DEBUG`: sets if [webassets](http://webassets.readthedocs.org/en/latest/environment.html?highlight=debug#webassets.env.Environment.debug) runs in debug mode (e.g. `True`)
 
-### Step-by-step installation (without Vagrant)
+#### Administrator
+
+* `ADMIN`: when an user with an email listed in this variable (a string containing email addresses, comma separated) is created, it is created as `admin` (not as regular `user`)
+
+### Step-by-step installation with Vagrant
 
 1. Clone the repository and step in its directory: `$ git clone git@github.com:cuducos/findaconf.git && cd findaconf`
-1. If you want, get your [virtualenv](https://pypi.python.org/pypi/virtualenv) running
+1. Start create, provision and log into your virtual machine: `$ vagrant up && vagrant ssh`
+1. Go to the application directory: `$ cd /vagrant`
+1. Set up your [API credentials](#oauthoauth2-apis-recommended) editing the `.env` file accordingly
+1. Run the server with something like: `$ python manage.py runserver -r -d -h 0.0.0.0`
+
+### Step-by-step installation without Vagrant
+
+1. Clone the repository and step in its directory: `$ git clone git@github.com:cuducos/findaconf.git && cd findaconf`
 1. Install the dependencies: `$ pip install -r requirements.txt && bower install` 
 1. Set up your [environment variables](#environment-variables): `$ mv .env.sample .env` and then edit `.env` accordingly
 1. Create and feed the database: `$ python manage.py db upgrade`
 1. Run the server with something like: `$ python manage.py runserver -r -d -h 0.0.0.0`
 
-### Step-by-step installation with Vagrant
-
-The `Vagrant.sh` file is our provision file and it does a lot of the job for you: installs everything your virtual machine might need, creates and migrates the databases, installs project dependencies, and creates the basic environment variables to get the server running.
-
-However you might need to make further changes in the `.env` file, such as setting your API credentials and a safer `SECRET_KEY`.
-
-1. Clone the repository and step in its directory: `$ git clone git@github.com:cuducos/findaconf.git && cd findaconf`
-1. Start create, provision and log into your virtual machine: `$ vagrant up && vagrant ssh`
-1. Go to the application directory: `$ cd /vagrant`
-1. Run the server with something like: `$ python manage.py runserver -r -d -h 0.0.0.0`
-
 ### Further installation notes
 
-If you need further instructions to configure your development environment, take a look at our [Vagrant bootstrap script](/Vagrant.sh). It has all the commands to install Python, Node.js, CoffeeScript, Bower and PostgreSQL dependencies, and to create databases and users. It is designed to work with [Ubuntu 14.04](http://releases.ubuntu.com/trusty/), but works with most [Debian](http://debian.org) distributions.
-
-We suggest running the server with the optional arguments `-r -d -h 0.0.0.0`. Just in case you are not familiar with them: `-d` enables the debug mode, `-r` reloads the server in case you change any file, and `-h 0.0.0.0` starts the server at this (local) IP.
+If you need further instructions to configure your development environment, take a look at our [Vagrant bootstrap script](/Vagrant.sh). It has all the commands to install Python, Node.js, CoffeeScript, Bower and PostgreSQL dependencies, and the commands to create databases and users. It is designed to work with [Ubuntu 14.04](http://releases.ubuntu.com/trusty/), but it should work with most [Debian](http://debian.org) distributions.
 
 Note that the included [.bowerrc](/.bowerrc) sets up a customized directory to store Bower files.
+
+We suggest running the server with these optional arguments: `-d` enables the debug mode, `-r` reloads the server in case you change any file, and `-h 0.0.0.0` starts the server at this (local) IP.
 
 ## Tests
 
 We're using [Nose](https://nose.readthedocs.org) for testing: `$ nosetests` from the project directory is the standard. 
 
-If Nose isn't finding any test, it worth it to remember that the [default behavior of Nose is to not include tests from files which are executable](http://nose.readthedocs.org/en/latest/usage.html#extended-usage). You can overcome this situation by any of this ways:
+If Nose isn't finding any test, it worth it to remember that [Nose's default behavior is to ignore executable files](http://nose.readthedocs.org/en/latest/usage.html#extended-usage). You can overcome this situation by any of this ways:
 
-* Changing the permissions of  tests files: `$ chmod -x $(find findaconf/tests/ -name '*.py')`
+* Changing the permissions of tests files: `$ chmod -x $(find findaconf/tests/ -name '*.py')`
 * Running Nose with the `--exe` flag
 
 ## Contributing
@@ -108,15 +114,13 @@ You can discuss the project, further features, implementation and report issues 
 
 ### To do list
 
-These are the next steps (there is a lot to be done, these are just some more short term tasks):
+These are the next steps (there is a lot to be done, these are just some short term tasks):
 
-1. Enhance users login with a `remember_me`
-1. Redirect users after login
-1. Roles for user permissions have not been created (we have the table `Group` created, but we are not using it)
-1. Threading for email notifications
 1. Create the page to add conferences
+1. Redirect users after login (when restricted pages exist)
+1. Threading for email notifications
 1. Add full text search to Conference mapped class (for example, with [Whoosh](https://pypi.python.org/pypi/Whoosh))
-1. Commands (via Flask-Script or Celery) to update support table (`Keywords`, `MagicNumbers`)
+1. Commands (via [Flask-Script](http://flask-script.readthedocs.org/) or [Celery](https://pypi.python.org/pypi/celery/3.1.17)) to update support table (`Keywords`, `MagicNumbers`)
 1. Proof read (as most of us are not native English speakers)
 1. Terms of use
 1. `/support` page explaining the business model, the costs and the  donations through Unlock, PayPal and Bitcoin
@@ -132,11 +136,11 @@ The source code is being written by:
 
 * [Cuducos](http://cuducos.me)
 * [Gabriel](http://about.me/gabrielvicente)
-* [John](http://github.com/jbaham2)
 * [Lorenzo](http://github.com/lorenzo-pasa)
+* [John](http://github.com/jbaham2)
 
 ## License
 
-Copyright (c) 2015 Eduardo Cuducos and Gabriel Vicente
+Copyright (c) 2015 Eduardo Cuducos, Gabriel Vicente and Lorenzo Pascucci
 
 Licensed under the [MIT LICENSE](LICENSE).
