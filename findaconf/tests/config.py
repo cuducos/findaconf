@@ -99,7 +99,7 @@ class TestApp(object):
         csv_path = self.basedir.child('migrations', 'csv', 'en')
         csv_file = csv_path.child('continents.csv')
         with open(csv_file) as file_handler:
-            csv = list(reader(file_handler))
+            csv = [row for row in reader(file_handler) if any(row)]
             csv.pop(0)
             for c in csv:
                 yield Continent(alpha2=c[0].lower(), title=c[1])
@@ -112,14 +112,14 @@ class TestApp(object):
         csv_file = csv_path.child('iso3166.csv')
         countries = dict()
         with open(csv_file) as file_handler:
-            csv = list(reader(file_handler))
+            csv = [row for row in reader(file_handler) if any(row)]
             for c in csv:
                 countries[c[0]] = c[1]
 
         # load countries-continents relationship from country_continent.csv
         csv_file = csv_path.child('country_continent.csv')
         with open(csv_file) as file_handler:
-            csv = list(reader(file_handler))
+            csv = [row for row in reader(file_handler) if any(row)]
             country_continent = list()
             for c in csv:
                 row = {'country': c[0], 'continent': c[1]}

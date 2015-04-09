@@ -26,8 +26,14 @@ continent_table = table('continent',
 def upgrade():
     csv_path = app.config['BASEDIR'].child('migrations', 'csv', 'en')
     csv_file = csv_path.child('continents.csv')
+
     with open(csv_file) as file_handler:
-        csv = list(reader(file_handler))
+
+        # Get all the lines from the CSV file, while skipping:
+        # - blank lines
+        # - lines with all blank fields (e.g. "","")
+        csv = [row for row in reader(file_handler) if any(row)]
+
         csv.pop(0)
         data = [{'alpha2': c[0].lower(), 'title': c[1]} for c in csv]
 

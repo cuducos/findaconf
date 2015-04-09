@@ -32,24 +32,31 @@ continent = table('continent',
 
 def upgrade():
 
+    # get the path of the folder containing all the CSV files
+    csv_path = app.config['BASEDIR'].child('migrations', 'csv', 'en')
+
     # load countries iso3166.csv and build a dictionary
     data = list()
-    csv_path = app.config['BASEDIR'].child('migrations', 'csv', 'en')
     csv_file = csv_path.child('iso3166.csv')
     with open(csv_file) as file_handler:
-        csv = list(reader(file_handler))
+        csv = [row for row in reader(file_handler) if row]
         for row in csv:
             if len(row[0]) == 2 and all(c in letters for c in row[0]):
                 data.append({'alpha2': row[0].lower(), 'title': row[1]})
-
     # insert data
     op.bulk_insert(country, data)
 
     # load countries-continents from country_continent.csv
     continent_countries = defaultdict(list)
     csv_file = csv_path.child('country_continent.csv')
+
     with open(csv_file) as file_handler:
-        csv = list(reader(file_handler))
+
+        # Get all the lines from the CSV file, while skipping:
+        # - blank lines
+        # - lines with all blank fields (e.g. "","")
+        csv = [row for row in reader(file_handler) if any(row)]
+
         for country_code, continent_code in csv:
             continent_countries[continent_code].append(country_code.lower())
 
