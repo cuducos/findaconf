@@ -114,17 +114,7 @@ You can discuss the project, further features, implementation and report issues 
 
 ### To do list
 
-These are the next steps (there is a lot to be done, these are just some short term tasks):
-
-1. Create the page to add conferences
-1. Redirect users after login (when restricted pages exist)
-1. Threading for email notifications
-1. Add full text search to Conference mapped class (for example, with [Whoosh](https://pypi.python.org/pypi/Whoosh))
-1. Commands (via [Flask-Script](http://flask-script.readthedocs.org/) or [Celery](https://pypi.python.org/pypi/celery/3.1.17)) to update support table (`Keywords`, `MagicNumbers`)
-1. Proof read (as most of us are not native English speakers)
-1. Terms of use
-1. `/support` page explaining the business model, the costs and the  donations through Unlock, PayPal and Bitcoin
-1. What else?
+We keep track of ideas, enhancements etc. in our [TODO list](TODO.md), check it out and join us making the list longer or shorter.
 
 ## Contributors
 
