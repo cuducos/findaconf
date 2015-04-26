@@ -35,17 +35,18 @@ class OAuthProvider(object):
                 key = credentials.get('consumer_key')
                 secret = credentials.get('consumer_secret')
                 if key and secret:
-                    provider = ProviderUI(name=provider)
-                    yield provider.slug, self.original[provider.name]
+                    ui = ProviderUI(name=provider)
+                    self.original[provider]['ui'] = ui
+                    yield ui.slug, self.original[provider]
 
     @property
     def ordered(self):
-        """ List generator with OAuthProvider objects ordered by name  """
+        """ List generator with OAuthProvider objects ordered by slug """
         credentials = dict(self.credentials)
-        names = sorted([name for name in credentials.iterkeys()])
-        for name in names:
-            yield ProviderUI(name=name) 
-            
+        slugs = sorted([slug for slug in credentials.iterkeys()])
+        for slug in slugs:
+            yield credentials[slug]['ui'] 
+
     def name(self, slug):
         """Returns a provider name given its slug"""
         for provider in self.ordered:
