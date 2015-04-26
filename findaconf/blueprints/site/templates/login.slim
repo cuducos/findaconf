@@ -6,11 +6,11 @@
     .small-7.columns
       form method="post" action="/login/process" id="login_form"
         .row
-          - for provider in providers.get_slugs()
-            div class="login_button {{ provider }} small-6 columns {% if loop.last %} end{% endif %}"
-              a data-oauth="{{ provider }}" title="Login with {{ providers.get_name(provider) }}"
-                %i class="fi-social-{{ provider }}"
-                span Log in with {{ providers.get_name(provider) }}
+          - for provider in providers
+            div class="login_button {{ provider.slug }} small-6 columns {% if loop.last %} end{% endif %}"
+              a data-oauth="{{ provider.slug }}" title="Login with {{ provider.name }}"
+                %i class="fi-social-{{ provider.slug }}"
+                span Log in with {{ provider.name }}
         .row
           .small-12.columns
             {{ form.hidden_tag() }}

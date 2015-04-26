@@ -50,9 +50,10 @@ def results():
 @site.route('/login')
 @render_minified
 def login_options():
+    providers = OAuthProvider()
     return render_template('login.slim',
                            page_title='Log in',
-                           providers=OAuthProvider(),
+                           providers=providers.ordered,
                            form=LoginForm())
 
 
@@ -83,19 +84,19 @@ def login(provider):
 
     # check if provider is valid
     providers = OAuthProvider()
-    if provider not in providers.get_slugs():
+    credentials = dict(providers.credentials)
+    if provider not in credentials.keys():
         abort(404)
 
     # create authomatic and response objects
-    authomatic = Authomatic(providers.credentials,
+    authomatic = Authomatic(credentials,
                             app.config['SECRET_KEY'],
                             report_errors=True)
     oauth_response = make_response()
 
     # try login
-    provider_name = providers.get_name(provider)
     adapter = WerkzeugAdapter(request, oauth_response)
-    result = authomatic.login(adapter, provider_name)
+    result = authomatic.login(adapter, provider)
     if result:
 
         # flash error message if any
@@ -114,7 +115,8 @@ def login(provider):
             if not result.user.email:
                 msg = '{} is refusing to send us your email address. '
                 msg += 'Please, try another log in provider.'
-                flash({'type': 'error', 'text': msg.format(provider_name)})
+                flash({'type': 'error', 
+                       'text': msg.format(providers.name(provider))})
                 next_page = 'site.login_options'
 
             # manage user data in db
@@ -152,7 +154,7 @@ def login(provider):
                         msg += 'email. Please, try another log in provider.'
                         flash({'type': 'error',
                                'text': msg.format(new_user.email,
-                                                  provider_name)})
+                                                  providers.name(provider))})
                         next_page = 'site.login_options'
 
                     # save user to db

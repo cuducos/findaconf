@@ -15,6 +15,9 @@ class TestSiteRoutes(TestCase):
     def setUp(self):
         self.test = TestApp(app, db)
         self.app = self.test.get_app()
+        self.providers = OAuthProvider()
+        self.credentials = dict(self.providers.credentials)
+        self.default_provider = random_choice(self.credentials.keys())
 
     def tearDown(self):
         self.test.unset_app()
@@ -27,6 +30,7 @@ class TestSiteRoutes(TestCase):
             return False
 
     # test routes from blueprint/site.py
+
     def test_index(self):
         resp = self.app.get('/')
         self.assertEqual(resp.status_code, 200)
@@ -41,6 +45,10 @@ class TestSiteRoutes(TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.mimetype, 'text/html')
 
+    def test_oauth_settings(self):
+        self.assertTrue(self.credentials)
+        self.assertTrue(self.default_provider)
+
     def test_login_pages(self):
 
         # test if login page exists
@@ -49,8 +57,7 @@ class TestSiteRoutes(TestCase):
         self.assertEqual(resp.mimetype, 'text/html')
 
         # test if are there links to oauth/oauth2 providers
-        providers = OAuthProvider()
-        for provider in providers.get_slugs():
+        for provider in self.credentials.keys():
             self.assertIn(' data-oauth="{}"'.format(provider), resp.data)
 
         # test if is there a link to login in the home page
@@ -60,8 +67,7 @@ class TestSiteRoutes(TestCase):
     def test_login_providers(self):
 
         # test if links to the ouauth/oauth2 providers (20X or 30X)
-        providers = OAuthProvider()
-        for provider in providers.get_slugs():
+        for provider in self.credentials.keys():
             resp = self.app.get('/login/{}'.format(provider))
             self.assertEqual(resp.status_code, 302)
 
@@ -72,18 +78,13 @@ class TestSiteRoutes(TestCase):
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_new_user_login(self, mocked):
 
-        # get a valid login link/provider
-        providers = OAuthProvider()
-        valid_providers = providers.get_slugs()
-        self.assertTrue(valid_providers)
-
         # create a mock object for Authomatic.login()
         mocked.return_value = MockAuthomatic()
 
         # assert that we have no users in the database
         self.assertEqual(db.session.query(User).count(), 0,
                          'User count before login differs than 0')
-        self.app.get('/login/{}'.format(valid_providers[0]))
+        self.app.get('/login/{}'.format(self.default_provider))
 
         # assert a user was created
         self.assertEqual(db.session.query(User).count(), 1,
@@ -96,17 +97,11 @@ class TestSiteRoutes(TestCase):
         self.assertEqual(u.created_at, u.last_seen, "Time doesn't match")
         self.assertEqual(u.group.title, 'user')
         self.assertTrue(u.last_seen, "Last seen is blank")
-        self.assertEqual(u.created_with, valid_providers[0],
+        self.assertEqual(u.created_with, self.default_provider,
                          "Provider doesn't match")
-
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_new_admin_user_login(self, mocked):
-
-        # get a valid login link/provider
-        providers = OAuthProvider()
-        valid_providers = providers.get_slugs()
-        self.assertTrue(valid_providers)
 
         # random pick an admin email from the config
         admin_email = random_choice(app.config['ADMIN'])
@@ -115,7 +110,7 @@ class TestSiteRoutes(TestCase):
         mocked.return_value = MockAuthomatic(email=admin_email)
 
         # create a new admin user
-        self.app.get('/login/{}'.format(valid_providers[0]))
+        self.app.get('/login/{}'.format(self.default_provider))
 
         # assert the new user is an admin
         u = User.query.first()
@@ -131,7 +126,7 @@ class TestSiteRoutes(TestCase):
 
         # create a mock object for Authomatic.login() & try to login
         mocked.return_value = MockAuthomatic(email='fulano-de.tal')
-        resp = self.app.get('/login/{}'.format(valid_providers[0]),
+        resp = self.app.get('/login/{}'.format(self.default_provider),
                             follow_redirects=True)
 
         # assert error message was shown
@@ -152,7 +147,7 @@ class TestSiteRoutes(TestCase):
 
         # create a mock object for Authomatic.login() & try to login
         mocked.return_value = MockAuthomatic(email=None)
-        resp = self.app.get('/login/{}'.format(valid_providers[0]),
+        resp = self.app.get('/login/{}'.format(self.default_provider),
                             follow_redirects=True)
 
         # assert error message was shown
@@ -166,16 +161,11 @@ class TestSiteRoutes(TestCase):
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_returning_user_login(self, mocked):
 
-        # get a valid login link/provider
-        providers = OAuthProvider()
-        valid_providers = providers.get_slugs()
-        self.assertTrue(valid_providers)
-
         # create a mock object for Authomatic.login()
         mocked.return_value = MockAuthomatic()
 
         # login & assert welcome message was shown
-        resp1 = self.app.get('/login/{}'.format(valid_providers[0]),
+        resp1 = self.app.get('/login/{}'.format(self.default_provider),
                              follow_redirects=True)
         self.assertIn('Welcome, John Doe', resp1.data,
                       'No welcome message found after login')
@@ -186,7 +176,7 @@ class TestSiteRoutes(TestCase):
                       'No logout message found after logout')
 
         # login again & assert only one user was created
-        self.app.get('/login/{}'.format(valid_providers[0]))
+        self.app.get('/login/{}'.format(self.default_provider))
         u = User.query.first()
         self.assertEqual(u.email, 'johndoe@john.doe', "Emails don't match")
         self.assertEqual(u.name, 'John Doe', "Name doesn't match")
@@ -212,7 +202,7 @@ class TestSiteRoutes(TestCase):
         self.app.post('/login/process',
                       follow_redirects=True,
                       data={'remember_me': '1',
-                            'provider': valid_providers[0]})
+                            'provider': self.default_provider})
 
         # assert cookies were created accordingly
         user = User.query.first()
@@ -281,6 +271,6 @@ class TestSiteRoutes(TestCase):
         mocked.return_value = MockAuthomatic(error=html)
 
         # login & assert welcome message was shown
-        resp1 = self.app.get('/login/{}'.format(valid_providers[0]),
+        resp1 = self.app.get('/login/{}'.format(self.default_provider),
                              follow_redirects=True)
         self.assertIn(parsed, resp1.data, 'API message does not match')
