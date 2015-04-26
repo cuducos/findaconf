@@ -119,11 +119,6 @@ class TestSiteRoutes(TestCase):
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_unsuccessful_user_login_with_invalid_email(self, mocked):
 
-        # get a valid login link/provider
-        providers = OAuthProvider()
-        valid_providers = providers.get_slugs()
-        self.assertTrue(valid_providers)
-
         # create a mock object for Authomatic.login() & try to login
         mocked.return_value = MockAuthomatic(email='fulano-de.tal')
         resp = self.app.get('/login/{}'.format(self.default_provider),
@@ -139,11 +134,6 @@ class TestSiteRoutes(TestCase):
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_unsuccessful_user_login_with_no_email(self, mocked):
-
-        # get a valid login link/provider
-        providers = OAuthProvider()
-        valid_providers = providers.get_slugs()
-        self.assertTrue(valid_providers)
 
         # create a mock object for Authomatic.login() & try to login
         mocked.return_value = MockAuthomatic(email=None)
@@ -188,11 +178,6 @@ class TestSiteRoutes(TestCase):
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_login_with_remember_me(self, mocked):
 
-        # get a valid login link/provider
-        providers = OAuthProvider()
-        valid_providers = providers.get_slugs()
-        self.assertTrue(valid_providers)
-
         # create a mock object for Authomatic.login()
         mocked.return_value = MockAuthomatic()
 
@@ -215,11 +200,6 @@ class TestSiteRoutes(TestCase):
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_returning_user_with_remember_me(self, mocked):
-
-        # get a valid login link/provider
-        providers = OAuthProvider()
-        valid_providers = providers.get_slugs()
-        self.assertTrue(valid_providers)
 
         # create a mock object for Authomatic.login()
         mocked.return_value = MockAuthomatic()
@@ -245,11 +225,6 @@ class TestSiteRoutes(TestCase):
 
     @patch('findaconf.blueprints.site.views.Authomatic', autospec=True)
     def test_failed_login_with_api_error(self, mocked):
-
-        # get a valid login link/provider
-        providers = OAuthProvider()
-        valid_providers = providers.get_slugs()
-        self.assertTrue(valid_providers)
 
         # error in HTML and parsed
         html = """

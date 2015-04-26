@@ -4,7 +4,6 @@ import re
 from findaconf import db
 from flask.ext.login import UserMixin
 from hashlib import md5, sha512
-from os import urandom
 from uuid import uuid4
 
 conferences_keywords = db.Table(
