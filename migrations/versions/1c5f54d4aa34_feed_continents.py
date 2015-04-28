@@ -18,9 +18,10 @@ from csv import reader
 from findaconf import app
 
 # Create an ad-hoc table to use for the insert statement.
-continent_table = table('continent',
-                        column('alpha2', sa.String),
-                        column('title', sa.String))
+continent = table('continent',
+                  column('id', sa.Integer),
+                  column('alpha2', sa.String),
+                  column('title', sa.String))
 
 
 def upgrade():
@@ -38,8 +39,10 @@ def upgrade():
         data = [{'alpha2': c[0].lower(), 'title': c[1]} for c in csv]
 
     # Insert data.
-    op.bulk_insert(continent_table, data)
+    op.bulk_insert(continent, data)
 
 
 def downgrade():
-    op.execute(continent_table.delete())
+    bind = op.get_bind()
+    for row in bind.execute(continent.select()):
+        op.execute(continent.delete().where(continent.c.id == row.id))

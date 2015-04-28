@@ -21,6 +21,7 @@ from string import letters
 
 # Create ad-hoc tables to use for the insert statement.
 country = table('country',
+                column('id', sa.Integer),
                 column('alpha2', sa.String),
                 column('title', sa.String),
                 column('continent_id', sa.Integer))
@@ -82,4 +83,6 @@ def upgrade():
 
 
 def downgrade():
-    op.execute(country.delete())
+    bind = op.get_bind()
+    for row in bind.execute(country.select()):
+        op.execute(country.delete().where(country.c.id == row.id))
